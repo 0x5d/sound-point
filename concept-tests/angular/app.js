@@ -1,7 +1,7 @@
 var app = angular.module('home', []);
 app.controller('bodyController', ['$scope',
 	function($scope){
-		$scope.userName = 'My Nigga';
+		$scope.username = 'My Nigga';
 		// $scope.submit = function(text){
 		// 	alert('You wrote ' + text);
 		// };

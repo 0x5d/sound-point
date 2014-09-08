@@ -43,23 +43,23 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Hello, {{userName}} </h1>
+        <h1>Hello, {{username}} </h1>
         <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
         <p><a class="btn btn-primary btn-lg" role="button">Learn more »</a></p>
       </div>
     </div>
 
     <div class="container" ng-controller="stationsController">
-    <p><button class="btn btn-default" href="#" role="button" ng-click="createNew()">+ Create new station</button></p>
-    <div class="container">
-        <!-- Example row of columns -->
-        <div class="row">
-          <div class="col-md-4" ng-repeat="station in stations">
-            <h2>{{station.stationName}}</h2>
-            <p>{{station.description}}</p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+      <p><button class="btn btn-default" href="#" role="button" ng-click="createNew()">+ Create new station</button></p>
+      <div class="container">
+          <!-- Example row of columns -->
+          <div class="row">
+            <div class="col-md-4" ng-repeat="station in stations">
+              <h2>{{station.stationName}}</h2>
+              <p>{{station.description}}</p>
+              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+            </div>
           </div>
-        </div>
       </div>
 
       <hr>
