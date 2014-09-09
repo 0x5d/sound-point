@@ -4,7 +4,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-        <meta name="Juan Castillo" content="">
+
         <link rel="icon" href="../../favicon.ico">
 
         <title>Soundpoint</title>
@@ -44,25 +44,34 @@
         <div class="jumbotron">
             <div class="container">
                 <h1>Hello, {{username}} </h1>
-                <p>This are the songs in {{stationName}} </p>
+                <p>These are the songs in {{stationName}}</p>
                 <p><a class="btn btn-primary btn-lg" role="button">Learn more »</a></p>
             </div>
         </div>
 
         <div class="container" ng-controller="songsController">
+            <div class="container">
+                <!-- Example row of columns -->
+                <div class="list-group">
+                    <div class="list-group-item" ng-repeat="song in songs">
+                        <p> {{song.title}} </p>
+                        <p>{{song.artist}}</p>
+                        <img ng-src="{{song.artwork}}"/>
+                    </div>
+                </div>
+            </div>
             <input ng-model="searchText" type="search">
             <p><button class="btn btn-default" href="#" role="button" ng-click="search(searchText)">Search</button></p>
             <div class="container">
                 <!-- Example row of columns -->
-                <div class="row">
-                    <div class="col-md-4" ng-repeat="song in songs">
-                        <h2>{{song.stationName}}</h2>
-                        <p>{{song.description}}</p>
-                        <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+                <div class="list-group">
+                    <div class="list-group-item" ng-repeat="result in results">
+                        <p>{{result.title}}</p>
+                        <p>{{result.artist}}</p>
+                        <img ng-src="{{result.artwork}}"/>
                     </div>
                 </div>
             </div>
-
             <hr>
 
             <footer>
@@ -76,9 +85,11 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="./lib/jquery-1.11.1.min.js" type="text/javascript"></script>
         <script src="./lib/bootstrap-3.2.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="//connect.soundcloud.com/sdk.js"></script>
         <script src="./lib/angular.min.js" type="text/javascript"></script>
         <script src="./app.js" type="text/javascript"></script>
         <script src="./crudRequests.js" type="text/javascript"></script>
 
 
-    </body></html>
+    </body>
+</html>
