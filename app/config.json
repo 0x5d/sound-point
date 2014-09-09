@@ -1,0 +1,5 @@
+{
+    "serverAddress" : "mongodb://localhost:27017/soundpoint",
+    "serverPort" : 8888,
+    "staticContentFolder" : "public"    
+}
