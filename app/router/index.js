@@ -1,7 +1,9 @@
+var RequestsHandler = require('./requests');
 
 module.exports = function(app, db){
-    var usersHandler = new UsersHandler(db);
+    var reqHandler = new RequestsHandler(db);
     
+    app.post('/login', reqHandler.logIn);
 };
 
 

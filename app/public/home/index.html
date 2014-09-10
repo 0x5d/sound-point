@@ -25,17 +25,6 @@
                     </button>
                     <a class="navbar-brand" href="#">Project name</a>
                 </div>
-                <div class="navbar-collapse collapse">
-                    <form class="navbar-form navbar-right" role="form">
-                        <div class="form-group">
-                            <input type="text" placeholder="Email" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" placeholder="Password" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-success">Sign in</button>
-                    </form>
-                </div><!--/.navbar-collapse -->
             </div>
         </div>
 
@@ -51,17 +40,17 @@
             <div class="container">
                 <!-- Example row of columns -->
                 <div class="row">
-                    <div class="col-md-4" ng-repeat="station in stations" ng-click="printName(station.stationName)">
-                        <h2>{{station.stationName}}</h2>
-                        <p>{{station.description}}</p>
-                    </div>
+                    <ul class="list-group" ng-hide="showSubmitButton">
+                        <li class="list-group-item" ng-repeat="station in stations" ng-click="printName(station.stationName)">
+                            <h2>{{station.stationName}}</h2>
+                            <p>{{station.description}}</p>
+                        </li>
+                    </ul>
                 </div>
             </div>
-
             <hr>
-
             <footer>
-                <p>© Company 2014</p>
+                <p>© Soundpoint 2014</p>
             </footer>
         </div> <!-- /container -->
 

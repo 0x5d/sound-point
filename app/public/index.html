@@ -4,7 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html ng-app="logIn">
     <head>
         <title>Login</title>
         <meta charset="UTF-8">
@@ -12,9 +12,14 @@ and open the template in the editor.
         <!-- Bootstrap core CSS -->
         <link href="./lib/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
-    <body>
+    <body ng-controller="bodyController">
         <div>This is supposed to be a log in page.</div>
         <p>Press this link for now:</p>
-        <a href="/home">"Log in"</a>
+        <a href="/home" ng-click="logIn()">"Log in"</a>
+        
+        <script src="./lib/angular.min.js" type="text/javascript"></script>
+        <script src="./lib/jquery-1.11.1.min.js" type="text/javascript"></script>
+        <script src="./lib/bootstrap-3.2.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="./logInApp.js" type="text/javascript"></script>
     </body>
 </html>
