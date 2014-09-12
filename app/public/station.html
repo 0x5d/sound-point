@@ -1,15 +1,14 @@
-<html ng-app="home" lang="en">
+<html ng-app="station" lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-        <meta name="Juan Castillo" content="">
 
         <title>Soundpoint</title>
 
         <!-- Bootstrap core CSS -->
-        <link href="../lib/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./lib/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
 
     <body ng-controller="bodyController">
@@ -31,19 +30,19 @@
         <!-- Main jumbotron for a primary marketing message or call to action -->
         <div class="jumbotron">
             <div class="container">
-                <h1>Hello, {{username}} </h1>
-                <p>These are your stations</p>
+                <p>These are your songs</p>
             </div>
         </div>
 
-        <div class="container" ng-controller="stationsController">
+        <div class="container" ng-controller="songsController">
+            A "play" button should go here.
             <div class="container">
                 <!-- Example row of columns -->
                 <div class="row">
-                    <ul class="list-group" ng-hide="showSubmitButton">
-                        <li class="list-group-item" ng-repeat="station in stations" ng-click="printName(station.stationName)">
-                            <h2>{{station.stationName}}</h2>
-                            <p>{{station.description}}</p>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="song in songs">
+                            <h2>Songname</h2>
+                            <p>Artist</p>
                         </li>
                     </ul>
                 </div>
@@ -55,10 +54,10 @@
         </div> <!-- /container -->
 
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="../lib/jquery-1.11.1.min.js" type="text/javascript"></script>
-        <script src="../lib/bootstrap-3.2.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="../lib/angular.min.js" type="text/javascript"></script>
-        <script src="./homeApp.js" type="text/javascript"></script>
+        <script src="./lib/jquery-1.11.1.min.js" type="text/javascript"></script>
+        <script src="./lib/bootstrap-3.2.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="./lib/angular.min.js" type="text/javascript"></script>
+        <script src="./js//homeApp.js" type="text/javascript"></script>
         <!-- <script src="./crudRequests.js" type="text/javascript"></script> -->
 
 

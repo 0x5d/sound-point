@@ -39,6 +39,7 @@ app.controller('songsController', ['$scope',
                         $scope.results[i] = result;
                     }
                     $scope.$apply();
+                    console.log(tracks);
                 }
             );
 //            var newStation = {stationName: 'new one', description: 'This is new as fuck.'};
