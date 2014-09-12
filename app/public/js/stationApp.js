@@ -8,20 +8,18 @@ app.controller('bodyController',
         function($scope, $http, $window){
             
             $scope.songs = [];
-            
-            $scope.logIn = function(){
-                $http.get('/station', {stationId : localStorage.getItem('stationId')}).
-                    success(
-                        function(data, status){
-                            setupSongs(data.songs);
-                        }
-                    ).
-                    error(
-                        function(data, status){
-                            
-                        }
-                    );
-            };
+            alert(localStorage.getItem('stationId'));
+            $http.get('/station/' + localStorage.getItem('stationId')).
+                success(
+                    function(data, status){
+                        setupSongs(data);
+                    }
+                ).
+                error(
+                    function(data, status){
+
+                    }
+                );
             
             function setupSongs(songs){
                 for(var i = 0; i < songs.length; i++){
