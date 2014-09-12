@@ -13,10 +13,33 @@ and open the template in the editor.
         <link href="./lib/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body ng-controller="bodyController">
+
+        <script>
+                window.fbAsyncInit = function() {
+                    FB.init({
+                        appId: '690519131028878',
+                        xfbml: true,
+                        version: 'v2.0',
+                        status: true
+                    });
+                };
+
+                (function(d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {
+                        return;
+                    }
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//connect.facebook.net/en_US/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+        </script>
+
         <div>This is supposed to be a log in page.</div>
         <p>Press this link for now:</p>
         <a ng-click="logIn()">"Log in"</a>
-        
+
         <script src="./lib/angular.min.js" type="text/javascript"></script>
         <script src="./lib/jquery-1.11.1.min.js" type="text/javascript"></script>
         <script src="./lib/bootstrap-3.2.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
