@@ -32,9 +32,10 @@ module.exports = function RequestsHandler(db){
             ];
         }
         else if(req.params.stationId == 1){
+            status = 200;
             songs = [
-                32476280,
-                31216220
+                31216220,
+                32476280
             ];
         }
         res.status(status).send(songs);

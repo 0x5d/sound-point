@@ -25,7 +25,7 @@ app.controller('stationsController', [
     '$http',
     '$window',
     function($scope, $http, $window){
-        $http.get('http://localhost:8888/stations').success(
+        $http.get('http://localhost:8888/home').success(
             function(data, status){
                     $scope.stations = data;
                     setupData();
@@ -51,9 +51,9 @@ app.controller('stationsController', [
         }
 
         $scope.goToStation = function(id){
-//            alert($scope.stationsMap[name]);
-            localStorage.setItem({'stationId' : id});
-            $window.location.href = '/stations.html';
+//            alert(id);
+            localStorage.setItem('stationId', id);
+            $window.location.href = '/station.html';
         };
                 
             $scope.createNew = function(){
