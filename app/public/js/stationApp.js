@@ -1,3 +1,9 @@
+window.onload = function(){
+      SC.initialize({
+        client_id: "d00547f88a72d9a987b70342928f1a61"
+    });
+};
+
 var app = angular.module('station', []);
 
 app.controller('bodyController', 
@@ -8,7 +14,6 @@ app.controller('bodyController',
         function($scope, $http, $window){
             
             $scope.songs = [];
-            alert(localStorage.getItem('stationId'));
             $http.get('/station/' + localStorage.getItem('stationId')).
                 success(
                     function(data, status){
@@ -21,9 +26,24 @@ app.controller('bodyController',
                     }
                 );
             
-            function setupSongs(songs){
-                for(var i = 0; i < songs.length; i++){
-                    $scope.songs.push(songs[i]);
+            function setupSongs(songIDs){
+                console.log(songIDs);
+                if(songIDs.length>0){
+                    var ids = songIDs[0];
+                    for(var i = 1; i < songIDs.length; i++){
+                        ids += "," + songIDs[i];
+                    }
+                    SC.get('/tracks',{ids : ids},
+                        function(tracks) {
+                            console.log(tracks);
+                            var track;
+                            for(var i = 0; i < tracks.length; i++){
+                                track = ({title:tracks[i].title})
+                                $scope.songs.push(track);
+                            }
+                            $scope.$apply();
+                        }
+                    );
                 }
             }
         }
