@@ -6,6 +6,7 @@ window.onload = function(){
 
 var app = angular.module('station', []);
 
+
 app.controller('bodyController', 
     [
         '$scope',
@@ -27,7 +28,6 @@ app.controller('bodyController',
                 );
             
             function setupSongs(songIDs){
-                console.log(songIDs);
                 if(songIDs.length>0){
                     var ids = songIDs[0];
                     for(var i = 1; i < songIDs.length; i++){
@@ -38,18 +38,41 @@ app.controller('bodyController',
                             console.log(tracks);
                             var track;
                             for(var i = 0; i < tracks.length; i++){
-                                track = ({title:tracks[i].title})
+                                track = ({title:tracks[i].title,
+                                          artwork:tracks[i].artwork_url,
+                                          usr:tracks[i].user.username,
+                                          description:tracks[i].description,
+                                          url:tracks[i].stream_url});
                                 $scope.songs.push(track);
                             }
                             $scope.$apply();
+                            qmanager($scope.songs[0]);
+                            /*
+                            SC.stream($scope.songs[0].url, function(sound){
+                                sound.play();
+                            });
+                            $scope.songs.shift();
+                            $scope.$apply();*/
+                            //soundcloud.getPlayer("myPlayer");
                         }
                     );
                 }
             }
+            function qmanager(song){
+                SC.stream(song.url, function(sound){
+                    sound.play('mySound',{
+                         onfinish: function() {
+                            alert('The sound '+this.id+' finished playing.');
+                            $scope.songs.shift();
+                            $scope.$apply();
+                            qmanager($scope.songs[0]);
+                        }
+                    });
+                });
+            }
         }
     ]
 );
-
 app.controller('songsController', 
     [
         '$scope',
