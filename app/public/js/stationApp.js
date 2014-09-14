@@ -59,16 +59,16 @@ app.controller('bodyController',
                 }
             }
             function qmanager(song){
-                SC.stream(song.url, function(sound){
-                    sound.play('mySound',{
-                         onfinish: function() {
-                            alert('The sound '+this.id+' finished playing.');
-                            $scope.songs.shift();
-                            $scope.$apply();
-                            qmanager($scope.songs[0]);
-                        }
-                    });
-                });
+                console.log(song);
+                SC.stream(song.url, {onfinish:
+                            function(){ 
+                                $scope.songs.shift();
+                                $scope.$apply();
+                                qmanager($scope.songs[0]);
+                            }}, 
+                        function(sound){
+                             sound.play();
+                        });
             }
         }
     ]
