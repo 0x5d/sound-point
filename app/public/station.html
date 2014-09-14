@@ -23,7 +23,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Project name</a>
+                    <a class="navbar-brand" href="/home.html">Soundpoint</a>
                 </div>
             </div>
         </div>
@@ -37,19 +37,22 @@
         </div>
 
         <div class="container" ng-controller="songsController">
-            A "play" button should go here.
+            <h1>A "play" button should go here.</h1>
+            <hr>
                 <ul class="media-list">
                     <li class="media" ng-repeat="song in songs">
-                        <h4 class="media-heading">{{song.title}}</h4>
-                        <a class="pull-left" href="#">
-                            <img class="media-object" ng-src="{{song.artwork}}" alt="...">
-                        </a>
+                        <h3 class="media-heading">{{song.title}}</h3>
+                        
                         <div class="media-body">
-                            Artist: {{song.usr}}
-                            {{song.description}}
-                      </div>
+                            <p><h4>by {{song.usr}}</h4></p>
+                            <p>{{song.description}}</p>
+                        </div>
+                        <a class="pull-left" href="#">
+                            <img class="media-object" ng-src="{{song.artwork}}" alt="">
+                        </a>
                     </li>
               </ul>
+            <p><a href="/home.html" class="btn btn-primary" role="button">Back</a> </p>
             <hr>
             <footer>
                 <p>© Soundpoint 2014</p>

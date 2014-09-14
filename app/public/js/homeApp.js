@@ -1,31 +1,17 @@
 var app = angular.module('home', []);
 app.controller('bodyController', ['$scope',
     function($scope){
-        $scope.username = 'My Nigga';
-        // $scope.submit = function(text){
-        // 	alert('You wrote ' + text);
-        // };
+        $scope.username = 'Juan';
     }]
 );
-
-//app.config(['$routeProvider',
-//    function($routeProvider) {
-//        $routeProvider.
-//                when('/', {
-//                    templateUrl: './index.html',
-//                    controller: 'homeApp'
-//                }).
-//                otherwise({
-//                    redirectTo: '/'
-//                });
-//    }]);
 
 app.controller('stationsController', [
     '$scope',
     '$http',
     '$window',
     function($scope, $http, $window){
-        $http.get('http://localhost:8888/home').success(
+        $http.get('/home').success(
+        //$http.get('http://localhost:8888/home').success(
             function(data, status){
                     $scope.stations = data;
                     setupData();
@@ -59,7 +45,8 @@ app.controller('stationsController', [
             $scope.createNew = function(){
                     //do stuff.
                 var newStation = {stationName : 'new one', description : 'This is new as fuck.'};
-                $http.post('http://localhost:8888/newStation', {'newStation' : newStation}).success(
+                $http.post('/newStation', {'newStation' : newStation}).success(
+                //$http.post('http://localhost:8888/newStation', {'newStation' : newStation}).success(
                     function(data, status){
                             $scope.stations.push(data);
                     }
