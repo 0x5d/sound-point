@@ -6,7 +6,7 @@ window.onload = function(){
 
 var app = angular.module('station', []);
 
-
+var currentTrack;
 app.controller('bodyController', 
     [
         '$scope',
@@ -15,6 +15,7 @@ app.controller('bodyController',
         function($scope, $http, $window){
             
             $scope.songs = [];
+            $scope.results = [];
             $http.get('/station/' + localStorage.getItem('stationId')).
                 success(
                     function(data, status){
@@ -35,7 +36,6 @@ app.controller('bodyController',
                     }
                     SC.get('/tracks',{ids : ids},
                         function(tracks) {
-                            console.log(tracks);
                             var track;
                             for(var i = 0; i < tracks.length; i++){
                                 track = ({title:tracks[i].title,
@@ -59,17 +59,69 @@ app.controller('bodyController',
                 }
             }
             function qmanager(song){
-                console.log(song);
                 SC.stream(song.url, {onfinish:
+                            function(){
+                                console.log("well fuck")
+                                $scope.songs.shift();
+                                $scope.$apply();
+                                qmanager($scope.songs[0]);
+                            }}, 
+                        function(sound){
+                            currentTrack = sound;
+                            sound.play();
+                        });
+            }
+            
+           $scope.next = function (){
+               currentTrack.stop();
+               $scope.songs.shift();
+               SC.stream($scope.songs[0].url, {onfinish:
                             function(){ 
                                 $scope.songs.shift();
                                 $scope.$apply();
                                 qmanager($scope.songs[0]);
                             }}, 
                         function(sound){
-                             sound.play();
+                            currentTrack = sound;
+                            sound.play();
                         });
-            }
+           };
+           
+            $scope.search = function(text) {
+                SC.get('/tracks', {'q' : text},
+                    function(tracks){
+                        for(var i = 0; i < tracks.length; i++){
+                            var track = ({title:tracks[i].title,
+                                      artwork:tracks[i].artwork_url,
+                                      usr:tracks[i].user.username,
+                                      description:tracks[i].description,
+                                      url:tracks[i].stream_url
+                                  });
+                            $scope.results.push(track);
+                        }
+                        $scope.$apply();
+                    }
+                );
+            };
+            
+            $scope.addSong= function(i){
+                console.log("lol"+ i);
+                $scope.songs.push($scope.results[i]);
+                $scope.results = [];
+                $scope.$apply();
+            };
+            
+            $scope.isPlaying = false;
+            
+            $scope.pause= function(){
+                currentTrack.pause();
+                $scope.isPlaying = true;
+            }; 
+            
+            $scope.play= function(){
+                currentTrack.play();
+                $scope.isPlaying = false;
+            };
         }
     ]
 );

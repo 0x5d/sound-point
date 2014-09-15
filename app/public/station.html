@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-<br><br><br>
+        <br><br><br>
         <!-- Main jumbotron for a primary marketing message or call to action -->
 
         <div class="jumbotron">
@@ -38,24 +38,55 @@
 
         <div class="container" ng-controller="songsController">
             A "play" button should go here.
+            <ul class="media-list">
+                <li class="media" ng-repeat="song in songs">
+                    <h4 class="media-heading">{{song.title}}</h4>
+                    <a class="pull-left" href="#">
+                        <img class="media-object" ng-src="{{song.artwork}}" alt="...">
+                    </a>
+                    <div class="media-body">
+                        Artist: {{song.usr}}<br>
+                        {{song.description}}
+                    </div>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-default btn-lg" ng-click="pause()" ng-hide="isPlaying" >
+                <span class="glyphicon glyphicon-pause" ></span>
+            </button>
+            <button type="button" class="btn btn-default btn-lg" ng-click="play()" ng-hide="!isPlaying">
+                <span class="glyphicon glyphicon-play" ></span>
+            </button>
+            <button type="button" class="btn btn-default btn-lg" ng-click="next()">
+                <span class="glyphicon glyphicon-step-forward" ></span>
+            </button>
+            <hr>
+            <input ng-model="searchText" type="search">
+            <p><button class="btn btn-default" href="#" role="button" ng-click="search(searchText)">Search</button></p>
+            <div class="container">
+                <!-- Example row of columns -->
                 <ul class="media-list">
-                    <li class="media" ng-repeat="song in songs">
-                        <h4 class="media-heading">{{song.title}}</h4>
+                    <li class="media" ng-repeat="(i,result) in results" >
+                        <h4 class="media-heading">{{result.title}}</h4>
                         <a class="pull-left" href="#">
-                            <img class="media-object" ng-src="{{song.artwork}}" alt="...">
+                            <img class="media-object" ng-src="{{result.artwork}}" >
                         </a>
                         <div class="media-body">
-                            Artist: {{song.usr}}
-                            {{song.description}}
-                      </div>
+                            Artist: {{result.usr}}<br>
+                            {{result.description}}
+                        </div>
+                            <button type="button" class="btn btn-default btn-lg" ng-click="addSong(i)">
+                                <span class="glyphicon glyphicon-plus" ></span>
+                            </button>
                     </li>
-              </ul>
-            <hr>
+                </ul>
+            </div>
+        </div>
+        <div class="container">
             <footer>
                 <p>© Soundpoint 2014</p>
             </footer>
         </div> <!-- /container -->
-        
+
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="./lib/jquery-1.11.1.min.js" type="text/javascript"></script>
         <script src="./lib/bootstrap-3.2.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
@@ -65,4 +96,5 @@
         <!-- <script src="./crudRequests.js" type="text/javascript"></script> -->
 
 
-    </body></html>
+    </body>
+</html>
