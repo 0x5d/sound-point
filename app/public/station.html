@@ -37,19 +37,6 @@
         </div>
 
         <div class="container" ng-controller="songsController">
-            A "play" button should go here.
-            <ul class="media-list">
-                <li class="media" ng-repeat="song in songs">
-                    <h4 class="media-heading">{{song.title}}</h4>
-                    <a class="pull-left" href="#">
-                        <img class="media-object" ng-src="{{song.artwork}}" alt="...">
-                    </a>
-                    <div class="media-body">
-                        Artist: {{song.usr}}<br>
-                        {{song.description}}
-                    </div>
-                </li>
-            </ul>
             <button type="button" class="btn btn-default btn-lg" ng-click="pause()" ng-hide="isPlaying" >
                 <span class="glyphicon glyphicon-pause" ></span>
             </button>
@@ -60,23 +47,37 @@
                 <span class="glyphicon glyphicon-step-forward" ></span>
             </button>
             <hr>
+            <ul class="media-list">
+                <li class="media" ng-repeat="song in songs">
+                    <h4 class="media-heading">{{song.title}}</h4>
+                    <a class="pull-left" href="#">
+                        <img class="media-object" ng-src="{{song.artwork}}" alt="...">
+                    </a>
+                    <div class="media-body">
+                        by {{song.usr}}<br>
+                    </div>
+                </li>
+            </ul>
+            <hr>
+            <p><a href="/home.html" class="btn btn-primary" role="button">Back</a> </p>
+            <hr>
             <input ng-model="searchText" type="search">
             <p><button class="btn btn-default" href="#" role="button" ng-click="search(searchText)">Search</button></p>
             <div class="container">
                 <!-- Example row of columns -->
                 <ul class="media-list">
-                    <li class="media" ng-repeat="(i,result) in results" >
+                    <li class="media" ng-repeat="(i, result) in results" >
                         <h4 class="media-heading">{{result.title}}</h4>
                         <a class="pull-left" href="#">
                             <img class="media-object" ng-src="{{result.artwork}}" >
                         </a>
                         <div class="media-body">
-                            Artist: {{result.usr}}<br>
+                            by {{result.usr}}<br>
                             {{result.description}}
                         </div>
-                            <button type="button" class="btn btn-default btn-lg" ng-click="addSong(i)">
-                                <span class="glyphicon glyphicon-plus" ></span>
-                            </button>
+                        <button type="button" class="btn btn-default btn-lg" ng-click="addSong(i)">
+                            <span class="glyphicon glyphicon-plus" ></span>
+                        </button>
                     </li>
                 </ul>
             </div>
