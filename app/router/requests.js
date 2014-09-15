@@ -9,13 +9,13 @@ module.exports = function RequestsHandler(db){
         var stationsInfo = [
                 {
                     stationId : 0,
-                    stationName : 'My niggas\' station, yo',
+                    stationName : 'Chilling',
                     description : 'SWAG'
                 },
                 {
                     stationId : 1,
-                    stationName : 'Gentlemen',
-                    description : 'Style only'
+                    stationName : 'Estación de estudio',
+                    description : 'Focus.'
                 }
         ];
         res.send(stationsInfo);
