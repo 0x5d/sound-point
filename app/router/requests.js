@@ -1,8 +1,104 @@
 
 module.exports = function RequestsHandler(db){
+    //POST
     this.logIn = function(req, res){
         req.session.userId = req.body.userId;
         res.status(200).send({'login' : req.body.userId});
+    };
+    
+    //POST
+    this.register = function(req, res){
+        var user = {
+            _id : req.body.userId,
+            username : req.body.username,
+            stations : []
+        };
+        db.collection('users').insert(user,
+            function(err, inserted){
+                if(err){
+                    res.status(500).send({'error' : err});
+                }
+                else{
+                    res.status(200).send({'inserted' : inserted});
+                }
+            }
+        );
+    };
+    
+    //POST
+    this.addStationToUser = function(req, res){
+        var query = {_id : req.body.userId};
+        var update = {'$push' : {'stations' : req.body.station}};
+        
+        db.collection('users').update(query, update,
+            function(err, updated){
+                if(err){
+                    res.status(501).send({'err' : err});
+                }
+                else{
+                    if(updated == 1){
+                        res.status(200).send({'updated' : updated});
+                    }
+                    else{
+                        res.status(404).send({'error' : 'User not updated'});
+                    }
+                }
+            }
+        );
+    };
+    
+    //POST
+    this.createStation = function(req, res){
+        var station = {
+            stationName : req.body.stationName,
+            songs : []
+        };
+        db.collection('stations').insert(station,
+            function(err, inserted){
+                if(err){
+                    res.status(500).send({'error' : err});
+                }
+                else{
+                    res.status(200).send({'inserted' : inserted});
+                }
+            }
+        );
+    };
+    
+    //GET
+    this.getStationsByUser = function(req, res){
+        var query = {_id : req.params.userId};
+        db.collection('users').findOne(query,
+            function(err, foundUser){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(!((foundUser == null) || (foundUser == undefined))){
+                    var stations = foundUser.stations;
+                    res.status(200).send({'stations' : stations});
+                }
+                else{
+                    res.status(404).send({'error' : 'User not found.'});
+                }
+            }
+        );
+    };
+    
+    this.getStationById = function(req, res){
+        var query = {_id : req.body.stationId};
+        db.collection('stations').findOne(query,
+            function(err, foundStation){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(!((foundStation == null) || (foundStation == undefined))){
+                    res.status(200).send({station : foundStation});
+                }
+                else{
+                    res.status(404).send({'error' : 'Station not found'});
+                }
+            }
+        );
     };
     
     this.getStations = function(req, res){

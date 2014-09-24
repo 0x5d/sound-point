@@ -1,0 +1,16 @@
+{
+    "_id" : "p0we8qe09rfqergqpoerg",
+    "stationName": "SWAG",
+    "songs" : [
+        {
+            "songId" : "10976",
+            "songName" : "Oblivion",
+            "artist" : "Grimes"
+        },
+        {
+            "songId" : "6474354",
+            "songName" : "Sweet Buffalo",
+            "artist" : "The Ol' Commanders"
+        }
+    ]
+}
