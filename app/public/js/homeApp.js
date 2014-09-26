@@ -1,16 +1,13 @@
 var app = angular.module('home', []);
-app.controller('bodyController', ['$scope',
-    function($scope){
-        $scope.username = 'Juan';
-    }]
-);
 
 app.controller('stationsController', [
     '$scope',
     '$http',
     '$window',
     function($scope, $http, $window){
+        $scope.username = 'Juan';
         $scope.stations = [];
+        $scope.showCreateStation = true;
         $http.get('/home').
             success(
             //$http.get('http://localhost:8888/home').success(
@@ -48,18 +45,31 @@ app.controller('stationsController', [
             localStorage.setItem('stationId', id);
             $window.location.href = '/station.html';
         };
-                
-        $scope.createNew = function(){
+        
+        
+        $scope.showCreate = function(){
+            $scope.showCreateStation = !$scope.showCreateStation;
+        };
+        
+        $scope.createNewStation = function(){
             //do stuff.
-            var newStation = {stationName : 'new one', description : 'This is new as fuck.'};
-            $http.post('/newStation', {'newStation' : newStation}).
-                success(
-                //$http.post('http://localhost:8888/newStation', {'newStation' : newStation}).success(
-                    function(data, status){
+            if($scope.stationName != ''){
+                var newStation = {'stationName' : $scope.newStationName, desc : 'Fresh.'};
+                $http.post('/newStation', newStation).
+                    success(
+                    //$http.post('http://localhost:8888/newStation', {'newStation' : newStation}).success(
+                        function(data, status){
+                            console.log(data);
                             $scope.stations.push(data);
-                    }
-                );
-            };
+                        }
+                    ).
+                    error(
+                        function(data, status){
+                            console.log(data);
+                        }
+                    );
+                };
+            }
 	}
     ]
 );

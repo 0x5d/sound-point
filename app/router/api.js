@@ -1,3 +1,5 @@
+var ObjectID = require('../node_modules/mongodb').BSONPure.ObjectID;
+
 
 module.exports = function RequestsHandler(db){
     //POST
@@ -26,6 +28,7 @@ module.exports = function RequestsHandler(db){
     this.register = function(req, res){
         var user = {
             _id : req.body.userId,
+            email : req.body.email,
             username : req.body.username,
             stations : []
         };
@@ -67,6 +70,7 @@ module.exports = function RequestsHandler(db){
     this.createStation = function(req, res){
         var station = {
             stationName : req.body.stationName,
+            description : req.body.desc,
             songs : []
         };
         db.collection('stations').insert(station,
@@ -76,20 +80,20 @@ module.exports = function RequestsHandler(db){
                 }
                 else{
                     var query = {
-                        _id : req.session.userId
+                        _id : req.session.userId + ''
                     };
                     var update = {
                         '$push' : {
-                            stations : inserted._id
+                            stations : inserted[0]
                         }
                     };
-                    db.collection('users').update(query,
+                    db.collection('users').update(query, update,
                         function(err, updated){
                             if(err){
                                 res.status(500).send({'err' : err});
                             }
                             else if(updated){
-                                res.status(200).send();
+                                res.status(200).send(inserted[0]);
                             }
                             else{
                                 res.status(404).send({err : 'No user found.'});
@@ -121,7 +125,7 @@ module.exports = function RequestsHandler(db){
     };
     
     this.getStationById = function(req, res){
-        var query = {_id : req.body.stationId};
+        var query = {_id : new ObjectID.createFromHexString(req.params.stationId)};
         db.collection('stations').findOne(query,
             function(err, foundStation){
                 if(err){

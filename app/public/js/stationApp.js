@@ -24,7 +24,7 @@ app.controller('bodyController',
                 ).
                 error(
                     function(data, status){
-
+                        console.log(data);
                     }
                 );
             
