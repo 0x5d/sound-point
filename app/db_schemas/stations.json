@@ -5,12 +5,14 @@
         {
             "songId" : "10976",
             "songName" : "Oblivion",
-            "artist" : "Grimes"
+            "artist" : "Grimes",
+            "thumbnail" : "http://www.url.com/img.jpg"
         },
         {
             "songId" : "6474354",
             "songName" : "Sweet Buffalo",
-            "artist" : "The Ol' Commanders"
+            "artist" : "The Ol' Commanders",
+            "thumbnail" : "http://www.url.com/img.jpg"
         }
     ]
 }

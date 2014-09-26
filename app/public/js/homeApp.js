@@ -10,13 +10,20 @@ app.controller('stationsController', [
     '$http',
     '$window',
     function($scope, $http, $window){
-        $http.get('/home').success(
-        //$http.get('http://localhost:8888/home').success(
-            function(data, status){
-                    $scope.stations = data;
+        $scope.stations = [];
+        $http.get('/home').
+            success(
+            //$http.get('http://localhost:8888/home').success(
+                function(data, status){
+                    $scope.stations = data.stations;
                     setupData();
-            }
-        );
+                }
+            ).
+            error(
+                function(data, status){
+                    console.log('Server returned with status ' + status + ': ' + data);
+                }
+            );
             
 //		$scope.stations = [
 //			{
@@ -42,15 +49,17 @@ app.controller('stationsController', [
             $window.location.href = '/station.html';
         };
                 
-            $scope.createNew = function(){
-                    //do stuff.
-                var newStation = {stationName : 'new one', description : 'This is new as fuck.'};
-                $http.post('/newStation', {'newStation' : newStation}).success(
+        $scope.createNew = function(){
+            //do stuff.
+            var newStation = {stationName : 'new one', description : 'This is new as fuck.'};
+            $http.post('/newStation', {'newStation' : newStation}).
+                success(
                 //$http.post('http://localhost:8888/newStation', {'newStation' : newStation}).success(
                     function(data, status){
                             $scope.stations.push(data);
                     }
                 );
             };
-	}]
+	}
+    ]
 );

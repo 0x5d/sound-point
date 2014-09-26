@@ -3,7 +3,23 @@ module.exports = function RequestsHandler(db){
     //POST
     this.logIn = function(req, res){
         req.session.userId = req.body.userId;
-        res.status(200).send({'login' : req.body.userId});
+        //res.status(200).send({'login' : req.body.userId});
+        var query = {
+            _id : req.body.userId + ''
+        };
+        db.collection('users').findOne(query,
+            function(err, foundUser){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(foundUser){
+                    res.status(200).send({'user' : foundUser});
+                }
+                else{
+                    res.status(404).send({err : 'User not found.'});
+                }
+            }
+        );
     };
     
     //POST
@@ -59,7 +75,27 @@ module.exports = function RequestsHandler(db){
                     res.status(500).send({'error' : err});
                 }
                 else{
-                    res.status(200).send({'inserted' : inserted});
+                    var query = {
+                        _id : req.session.userId
+                    };
+                    var update = {
+                        '$push' : {
+                            stations : inserted._id
+                        }
+                    };
+                    db.collection('users').update(query,
+                        function(err, updated){
+                            if(err){
+                                res.status(500).send({'err' : err});
+                            }
+                            else if(updated){
+                                res.status(200).send();
+                            }
+                            else{
+                                res.status(404).send({err : 'No user found.'});
+                            }
+                        }
+                    );
                 }
             }
         );
@@ -67,13 +103,13 @@ module.exports = function RequestsHandler(db){
     
     //GET
     this.getStationsByUser = function(req, res){
-        var query = {_id : req.params.userId};
+        var query = {_id : req.session.userId + ''};
         db.collection('users').findOne(query,
             function(err, foundUser){
                 if(err){
                     res.status(500).send({'err' : err});
                 }
-                else if(!((foundUser == null) || (foundUser == undefined))){
+                else if(foundUser){
                     var stations = foundUser.stations;
                     res.status(200).send({'stations' : stations});
                 }
@@ -91,7 +127,7 @@ module.exports = function RequestsHandler(db){
                 if(err){
                     res.status(500).send({'err' : err});
                 }
-                else if(!((foundStation == null) || (foundStation == undefined))){
+                else if(foundStation){
                     res.status(200).send({station : foundStation});
                 }
                 else{
@@ -115,6 +151,36 @@ module.exports = function RequestsHandler(db){
                 }
         ];
         res.send(stationsInfo);
+    };
+    
+    this.addSongToStation = function(req, res){
+        console.log(req.body);
+        var query = {
+            _id : req.body.stationId
+        };
+        var update = {
+            '$push' : {
+                song : {
+                    songId : req.body.song.songId,
+                    songName : req.body.song.songName,
+                    artist : req.body.song.artist,
+                    thumbnail : req.body.song.thumbnail
+                }
+            }
+        };
+        db.collection('stations').update(query, update,
+            function(err, updated){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(updated){
+                    res.status(200).send({'updated' : updated});
+                }
+                else{
+                    res.status(404).send({'err' : 'Song not added.'});
+                }
+            }
+        );
     };
     
     this.getSongs = function(req, res){

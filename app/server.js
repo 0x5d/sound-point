@@ -26,15 +26,15 @@ var soundPoint = function(){
         };
 
         // default to a 'localhost' configuration:
-		self.connection_string = '127.0.0.1:27017/nodejs';
-		// if OPENSHIFT env variables are present, use the available connection info:
-		if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
-		  self.connection_string = 'admin' + ":" +
-		  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-		  process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-		  process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-		  process.env.OPENSHIFT_APP_NAME;
-		}
+        self.connection_string = '127.0.0.1:27017/nodejs';
+        // if OPENSHIFT env variables are present, use the available connection info:
+        if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
+          self.connection_string = 'admin' + ":" +
+          process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+          process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+          process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+          process.env.OPENSHIFT_APP_NAME;
+        }
     };
 
 

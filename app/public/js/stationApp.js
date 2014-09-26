@@ -38,11 +38,14 @@ app.controller('bodyController',
                         function(tracks) {
                             var track;
                             for(var i = 0; i < tracks.length; i++){
-                                track = ({title:tracks[i].title,
-                                          artwork:tracks[i].artwork_url,
-                                          usr:tracks[i].user.username,
-                                          description:tracks[i].description,
-                                          url:tracks[i].stream_url});
+                                track = {
+                                    title:tracks[i].title,
+                                    artwork:tracks[i].artwork_url,
+                                    usr:tracks[i].user.username,
+                                    description:tracks[i].description,
+                                    songId : tracks[i].id,
+                                    url:tracks[i].stream_url
+                                };
                                 $scope.songs.push(track);
                             }
                             $scope.$apply();
@@ -61,7 +64,7 @@ app.controller('bodyController',
             function qmanager(song){
                 SC.stream(song.url, {onfinish:
                             function(){
-                                console.log("well fuck")
+                                console.log("well fuck");
                                 $scope.songs.shift();
                                 $scope.$apply();
                                 qmanager($scope.songs[0]);
@@ -91,12 +94,14 @@ app.controller('bodyController',
                 SC.get('/tracks', {'q' : text},
                     function(tracks){
                         for(var i = 0; i < tracks.length; i++){
-                            var track = ({title:tracks[i].title,
-                                      artwork:tracks[i].artwork_url,
-                                      usr:tracks[i].user.username,
-                                      description:tracks[i].description,
-                                      url:tracks[i].stream_url
-                                  });
+                            var track = {
+                                title : tracks[i].title,
+                                artwork : tracks[i].artwork_url,
+                                usr : tracks[i].user.username,
+                                description : tracks[i].description,
+                                songId : tracks[i].id,
+                                url : tracks[i].stream_url
+                            };
                             $scope.results.push(track);
                         }
                         $scope.$apply();
@@ -104,11 +109,31 @@ app.controller('bodyController',
                 );
             };
             
-            $scope.addSong= function(i){
-                console.log("lol"+ i);
+            $scope.addSong = function(i){
+                var song = {
+                    songId : $scope.results[i].songId,
+                    songName : $scope.results[i].title,
+                    artist : $scope.results[i].usr,
+                    thumbnail : $scope.results[i].artwork
+                };
+                var postData = {
+                    stationId : localStorage.getItem('stationId'),
+                    'song' : song
+                };
+                $http.post('/newSong', postData).
+                    success(
+                        function(data, status){
+                            $scope.results.push(data.song);
+                        }
+                    ).
+                    error(
+                        function(data, status){
+                            //TODO handle error
+                        }
+                    );
                 $scope.songs.push($scope.results[i]);
                 $scope.results = [];
-                $scope.$apply();
+                //$scope.$apply();
             };
             
             $scope.isPlaying = false;
@@ -118,7 +143,7 @@ app.controller('bodyController',
                 $scope.isPlaying = true;
             }; 
             
-            $scope.play= function(){
+            $scope.play = function(){
                 currentTrack.play();
                 $scope.isPlaying = false;
             };
