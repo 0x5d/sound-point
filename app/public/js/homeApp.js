@@ -5,10 +5,56 @@ app.controller('stationsController', [
     '$http',
     '$window',
     function($scope, $http, $window){
-        $scope.username = 'Juan';
+        $scope.username ;
         $scope.stations = [];
         $scope.showCreateStation = true;
-        $http.get('/home').
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '690519131028878',
+                xfbml: true,
+                version: 'v2.0',
+                status: true
+            });
+             FB.getLoginStatus(
+                function(response1) {
+                    if (response1 && !response1.error) {
+                        FB.api(
+                        "/me",
+                        function (response) {
+                            $http.get('/home/' + response.id).
+                                success(
+                                //$http.get('http://localhost:8888/home').success(
+                                    function(data, status){
+                                        $scope.username = response.first_name;
+                                        
+                                        console.log($scope.username);
+                                        $scope.stations = data.stations;
+                                        setupData();
+                                    }
+                                ).
+                                error(
+                                    function(data, status){
+                                        console.log('Server returned with status ' + status + ': ' + data);
+                                    }
+                                );
+                        });
+                    }
+                }
+            );
+        };
+                (function(d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {
+                        return;
+                    }
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//connect.facebook.net/en_US/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+       
+      
+        /*$http.get('/home').
             success(
             //$http.get('http://localhost:8888/home').success(
                 function(data, status){
@@ -20,7 +66,7 @@ app.controller('stationsController', [
                 function(data, status){
                     console.log('Server returned with status ' + status + ': ' + data);
                 }
-            );
+            );*/
             
 //		$scope.stations = [
 //			{

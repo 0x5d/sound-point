@@ -7,7 +7,7 @@ module.exports = function(app, db){
     app.post('/login', reqHandler.logIn);
     app.post('/newStation', reqHandler.createStation);
     app.post('/newSong', reqHandler.addSongToStation);
-    app.get('/home', reqHandler.getStationsByUser);
+    app.get('/home/:userId', reqHandler.getStationsByUser);
     app.get('/station/:stationId', reqHandler.getStationById);
 };
 
