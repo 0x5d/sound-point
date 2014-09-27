@@ -59,7 +59,6 @@ app.controller('stationsController', [
                     success(
                     //$http.post('http://localhost:8888/newStation', {'newStation' : newStation}).success(
                         function(data, status){
-                            console.log(data);
                             $scope.stations.push(data);
                         }
                     ).
@@ -68,8 +67,8 @@ app.controller('stationsController', [
                             console.log(data);
                         }
                     );
-                };
-            }
+                }
+            };
 	}
     ]
 );

@@ -27,9 +27,9 @@ module.exports = function RequestsHandler(db){
     //POST
     this.register = function(req, res){
         var user = {
-            _id : req.body.user.userId + '',
-            email : req.body.user.email,
-            username : req.body.user.username,
+            _id : req.body.userId + '',
+            email : req.body.email,
+            username : req.body.username,
             stations : []
         };
         db.collection('users').insert(user,
@@ -158,13 +158,12 @@ module.exports = function RequestsHandler(db){
     };
     
     this.addSongToStation = function(req, res){
-        console.log(req.body);
         var query = {
-            _id : req.body.stationId
+            _id : new ObjectID.createFromHexString(req.body.stationId)
         };
         var update = {
             '$push' : {
-                song : {
+                songs : {
                     songId : req.body.song.songId,
                     songName : req.body.song.songName,
                     artist : req.body.song.artist,
