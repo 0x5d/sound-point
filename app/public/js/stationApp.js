@@ -124,6 +124,7 @@ app.controller('bodyController',
                 $http.post('/newSong', postData).
                     success(
                         function(data, status){
+                            console.log(data);
                             $scope.songs.push(data.song);
                         }
                     ).
