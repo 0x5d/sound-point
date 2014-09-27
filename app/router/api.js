@@ -107,7 +107,7 @@ module.exports = function RequestsHandler(db){
     
     //GET
     this.getStationsByUser = function(req, res){
-        var query = {_id : req.session.userId + ''};
+        var query = {_id : req.params.userId + ''};
         db.collection('users').findOne(query,
             function(err, foundUser){
                 if(err){
