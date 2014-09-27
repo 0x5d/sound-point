@@ -54,7 +54,7 @@
                         <img class="media-object" ng-src="{{song.artwork}}" alt="...">
                     </a>
                     <div class="media-body">
-                        by {{song.usr}}<br>
+                        by {{song.artist}}<br>
                     </div>
                 </li>
             </ul>
@@ -72,8 +72,7 @@
                             <img class="media-object" ng-src="{{result.artwork}}" >
                         </a>
                         <div class="media-body">
-                            by {{result.usr}}<br>
-                            {{result.description}}
+                            by {{result.artist}}<br>
                         </div>
                         <button type="button" class="btn btn-default btn-lg" ng-click="addSong(i)">
                             <span class="glyphicon glyphicon-plus" ></span>

@@ -161,14 +161,15 @@ module.exports = function RequestsHandler(db){
         var query = {
             _id : new ObjectID.createFromHexString(req.body.stationId)
         };
+        var song = {
+            songId : req.body.song.songId,
+            title : req.body.song.title,
+            artist : req.body.song.artist,
+            artwork : req.body.song.artwork
+        };
         var update = {
             '$push' : {
-                songs : {
-                    songId : req.body.song.songId,
-                    songName : req.body.song.songName,
-                    artist : req.body.song.artist,
-                    thumbnail : req.body.song.thumbnail
-                }
+                songs : song
             }
         };
         db.collection('stations').update(query, update,
@@ -177,7 +178,7 @@ module.exports = function RequestsHandler(db){
                     res.status(500).send({'err' : err});
                 }
                 else if(updated){
-                    res.status(200).send({'updated' : updated});
+                    res.status(200).send({'song' : song});
                 }
                 else{
                     res.status(404).send({'err' : 'Song not added.'});

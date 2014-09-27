@@ -41,12 +41,12 @@ app.controller('bodyController',
                             var track;
                             for(var i = 0; i < tracks.length; i++){
                                 track = {
-                                    title:tracks[i].title,
-                                    artwork:tracks[i].artwork_url,
-                                    usr:tracks[i].user.username,
+                                    title : tracks[i].title,
+                                    artwork : tracks[i].artwork_url,
+                                    artist : tracks[i].user.username,
                                     description:tracks[i].description,
                                     songId : tracks[i].id,
-                                    url:tracks[i].stream_url
+                                    url : tracks[i].stream_url
                                 };
                                 $scope.songs.push(track);
                             }
@@ -98,8 +98,7 @@ app.controller('bodyController',
                             var track = {
                                 title : tracks[i].title,
                                 artwork : tracks[i].artwork_url,
-                                usr : tracks[i].user.username,
-                                description : tracks[i].description,
+                                artist : tracks[i].user.username,
                                 songId : tracks[i].id,
                                 url : tracks[i].stream_url
                             };
@@ -113,9 +112,9 @@ app.controller('bodyController',
             $scope.addSong = function(i){
                 var song = {
                     songId : $scope.results[i].songId,
-                    songName : $scope.results[i].title,
-                    artist : $scope.results[i].usr,
-                    thumbnail : $scope.results[i].artwork
+                    title : $scope.results[i].title,
+                    artist : $scope.results[i].artist,
+                    artwork : $scope.results[i].artwork
                 };
                 var postData = {
                     stationId : localStorage.getItem('stationId'),
@@ -124,7 +123,7 @@ app.controller('bodyController',
                 $http.post('/newSong', postData).
                     success(
                         function(data, status){
-                            console.log(data);
+                            console.log(data.song);
                             $scope.songs.push(data.song);
                         }
                     ).
