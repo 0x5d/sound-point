@@ -29,13 +29,13 @@ app.controller('bodyController',
                                                         email: response1.email,
                                                         username: response1.first_name
                                                     };
-                                                    $http.post('/register',
-                                                    user).
+                                                    $http.post('/register', user).
                                                         success(
                                                             function(data, status){
                                                                 $window.location.href = '/home.html';
                                                             }
-                                                        ).error(
+                                                        ).
+                                                        error(
                                                             function (data, status) {
 
                                                             }

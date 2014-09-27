@@ -19,7 +19,9 @@ app.controller('bodyController',
             $http.get('/station/' + localStorage.getItem('stationId')).
                 success(
                     function(data, status){
-                        setupSongs(data);
+                        if(data.station.songs){
+                            setupSongs(data.station.songs);
+                        }
                     }
                 ).
                 error(
@@ -28,11 +30,11 @@ app.controller('bodyController',
                     }
                 );
             
-            function setupSongs(songIDs){
-                if(songIDs.length>0){
-                    var ids = songIDs[0];
-                    for(var i = 1; i < songIDs.length; i++){
-                        ids += "," + songIDs[i];
+            function setupSongs(songs){
+                if(songs.length > 0){
+                    var ids = songs[0].songId;
+                    for(var i = 1; i < songs.length; i++){
+                        ids += "," + songs[i].songId;
                     }
                     SC.get('/tracks',{ids : ids},
                         function(tracks) {
@@ -64,7 +66,6 @@ app.controller('bodyController',
             function qmanager(song){
                 SC.stream(song.url, {onfinish:
                             function(){
-                                console.log("well fuck");
                                 $scope.songs.shift();
                                 $scope.$apply();
                                 qmanager($scope.songs[0]);
@@ -123,7 +124,7 @@ app.controller('bodyController',
                 $http.post('/newSong', postData).
                     success(
                         function(data, status){
-                            $scope.results.push(data.song);
+                            $scope.songs.push(data.song);
                         }
                     ).
                     error(
@@ -131,7 +132,7 @@ app.controller('bodyController',
                             //TODO handle error
                         }
                     );
-                $scope.songs.push($scope.results[i]);
+                //$scope.songs.push($scope.results[i]);
                 $scope.results = [];
                 //$scope.$apply();
             };
