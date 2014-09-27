@@ -118,7 +118,7 @@ module.exports = function RequestsHandler(db){
                     res.status(200).send({'stations' : stations});
                 }
                 else{
-                    res.status(404).send({'error' : 'User not found.'});
+                    res.status(404).send({'err' : 'User not found.'});
                 }
             }
         );
@@ -135,7 +135,7 @@ module.exports = function RequestsHandler(db){
                     res.status(200).send({station : foundStation});
                 }
                 else{
-                    res.status(404).send({'error' : 'Station not found'});
+                    res.status(404).send({'err' : 'Station not found'});
                 }
             }
         );
