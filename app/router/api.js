@@ -27,9 +27,9 @@ module.exports = function RequestsHandler(db){
     //POST
     this.register = function(req, res){
         var user = {
-            _id : req.body.userId,
-            email : req.body.email,
-            username : req.body.username,
+            _id : req.body.user.userId + '',
+            email : req.body.user.email,
+            username : req.body.user.username,
             stations : []
         };
         db.collection('users').insert(user,
