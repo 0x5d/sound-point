@@ -20,6 +20,7 @@ app.controller('bodyController',
                 success(
                     function(data, status){
                         if(data.station.songs){
+                           // setTimeout(setupSongs(data.station.songs), 100000);
                             setupSongs(data.station.songs);
                         }
                     }
@@ -36,8 +37,18 @@ app.controller('bodyController',
                     for(var i = 1; i < songs.length; i++){
                         ids += "," + songs[i].songId;
                     }
-                    SC.get('/tracks',{ids : ids},
+                        getTracks(ids);
+               
+                }
+            }
+            
+            function getTracks(ids){
+               SC.get('/tracks',{ids : ids},
                         function(tracks) {
+                            if(tracks.errors){
+                                getTracks(ids);
+                                return;
+                            }
                             var track;
                             for(var i = 0; i < tracks.length; i++){
                                 track = {
@@ -60,9 +71,9 @@ app.controller('bodyController',
                             $scope.$apply();*/
                             //soundcloud.getPlayer("myPlayer");
                         }
-                    );
-                }
+                    ); 
             }
+            
             function qmanager(song){
                 SC.stream(song.url, {onfinish:
                             function(){
