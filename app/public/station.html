@@ -85,8 +85,18 @@
             <hr>
             <p><a href="/home.html" class="btn btn-primary" role="button">Back</a> </p>
             <hr>
+             
             <input ng-model="searchText" type="search">
+            <div class="container-fluid">
+            <div class="row">
+            <div class="col-xs-1">
             <p><button class="btn btn-default" href="#" role="button" ng-click="search(searchText)">Search</button></p>
+            </div>
+            <div class="col-xs-1">
+            <p><button class="btn btn-default" ng-click="dsearch()" role="button" >Clean search</button></p>
+            </div>
+            </div>
+            </div>
             <div class="container">
                 <!-- Example row of columns -->
                 <ul class="media-list">

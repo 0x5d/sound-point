@@ -119,6 +119,10 @@ app.controller('bodyController',
                     }
                 );
             };
+            $scope.dsearch = function() {
+                 $scope.results = [];
+                    $scope.$apply();
+            };
             
             $scope.addSong = function(i){
                 var song = {
