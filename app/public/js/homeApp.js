@@ -86,9 +86,10 @@ app.controller('stationsController', [
             }
         }
 
-        $scope.goToStation = function(id){
+        $scope.goToStation = function(id, stationName){
 //            alert(id);
             localStorage.setItem('stationId', id);
+            localStorage.setItem('stationName', stationName);
             $window.location.href = '/station.html';
         };
         
