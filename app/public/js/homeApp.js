@@ -92,8 +92,11 @@ app.controller('stationsController', [
             localStorage.setItem('stationName', stationName);
             $window.location.href = '/station.html';
         };
-        
-        
+        $scope.logout= function(){
+            FB.logout(function(response) {
+            // user is now logged out
+            });
+         };
         $scope.showCreate = function(){
             $scope.showCreateStation = !$scope.showCreateStation;
         };
