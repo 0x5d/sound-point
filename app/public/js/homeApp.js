@@ -104,20 +104,28 @@ app.controller('stationsController', [
         $scope.createNewStation = function(){
             //do stuff.
             if($scope.stationName != ''){
-                var newStation = {'stationName' : $scope.newStationName, desc : 'Fresh.'};
-                $http.post('/newStation', newStation).
-                    success(
-                    //$http.post('http://localhost:8888/newStation', {'newStation' : newStation}).success(
-                        function(data, status){
-                            $scope.stations.push(data);
-                        }
-                    ).
-                    error(
-                        function(data, status){
-                            console.log(data);
-                        }
-                    );
+                var exist="dont";
+                for(i=0;i<$scope.stations.length; i++){
+                    if($scope.stations[i].stationName==$scope.newStationName){
+                        exist="exist";
+                    }
                 }
+                if(exist=="dont"){
+                    var newStation = {'stationName' : $scope.newStationName, desc : 'Fresh.'};
+                    $http.post('/newStation', newStation).
+                        success(
+                        //$http.post('http://localhost:8888/newStation', {'newStation' : newStation}).success(
+                            function(data, status){
+                            $scope.stations.push(data);
+                            }
+                        ).
+                        error(
+                        function(data, status){
+                        console.log(data);
+                        }
+                        );
+                    }else alert("Try other name!");
+                }    
             };
 	}
     ]
