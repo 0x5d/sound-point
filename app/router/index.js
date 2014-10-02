@@ -9,6 +9,7 @@ module.exports = function(app, db){
     app.post('/newSong', reqHandler.addSongToStation);
     app.get('/home/:userId', reqHandler.getStationsByUser);
     app.get('/station/:stationId', reqHandler.getStationById);
+    app.get('/removeStation/:stationId/:userId', reqHandler.removeStation);
 };
 
 

@@ -206,6 +206,27 @@ module.exports = function RequestsHandler(db){
         }
         res.status(status).send(songs);
     };
+    
+    
+     this.removeStation = function(req, res){
+        var query = { _id : req.params.userId };
+        var update = { $pull : { stations : {_id :  new ObjectID.createFromHexString(req.params.stationId)}}} ;
+        db.collection('users').update(query,update,
+            function(err, updated){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(updated){
+                    res.status(200).send({'removeStation' : "ok"});
+                }
+                else{
+                    res.status(404).send({'err' : 'station wasn´t remove.'});
+                }
+            }
+         );
+
+    };
+    
 };
 
 

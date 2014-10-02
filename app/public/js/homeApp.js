@@ -4,8 +4,9 @@ app.controller('stationsController', [
     '$scope',
     '$http',
     '$window',
-    function($scope, $http, $window){
+    function($scope, $http, $window, $modal){
         $scope.username ;
+        $scope.userId;
         $scope.stations = [];
         $scope.showCreateStation = true;
         window.fbAsyncInit = function() {
@@ -26,7 +27,7 @@ app.controller('stationsController', [
                                 //$http.get('http://localhost:8888/home').success(
                                     function(data, status){
                                         $scope.username = response.first_name;
-                                        
+                                        $scope.userId=response.id;
                                         console.log($scope.username);
                                         $scope.stations = data.stations;
                                         setupData();
@@ -106,6 +107,7 @@ app.controller('stationsController', [
                     //$http.post('http://localhost:8888/newStation', {'newStation' : newStation}).success(
                         function(data, status){
                             $scope.stations.push(data);
+                            console.log(data._id);
                         }
                     ).
                     error(
@@ -115,6 +117,54 @@ app.controller('stationsController', [
                     );
                 }
             };
+            
+          
+            $scope.open = function (station) {
+
+                var modalInstance = $modal.open({
+                  templateUrl: 'myModalContent.html',
+                  controller: 'ModalInstanceCtrl',
+                  size: "",
+                  resolve: { }
+                });
+
+                modalInstance.result.then(function (deleted) {
+                  if(deleted){
+                       var btn = $(this);
+                        btn.button('loading');
+                        $http.get('/removeStation/' + station._id+'/'+ $scope.userId).
+                        success(
+                            function (data,status){                       
+                                var index = $scope.stations.indexOf(station);
+                                if(index>-1){
+                                    $scope.stations.splice(index, 1);
+                                }
+                            }
+                        ).
+                        error(
+                            function(data, status){
+                                console.log('Server returned with status ' + status + ': ' + data);
+                            }
+                        );
+
+                        btn.button('reset');
+                  }
+                }, function () {
+                  $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+            
 	}
     ]
 );
+
+app.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
+
+  $scope.ok = function () {
+    $modalInstance.close(true);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});

@@ -33,6 +33,7 @@ app.controller('bodyController',
                                                         success(
                                                             function(data, status){
                                                                 $window.location.href = '/home.html';
+                                                                console.log("aui");
                                                             }
                                                         ).
                                                         error(
