@@ -1,10 +1,12 @@
-var app = angular.module('home', []);
+var app = angular.module('home', ['ui.bootstrap']);
 
 app.controller('stationsController', [
     '$scope',
     '$http',
     '$window',
-    function($scope, $http, $window, $modal){
+    '$modal',
+    '$log',
+    function($scope, $http, $window, $modal, $log){
         $scope.username ;
         $scope.userId;
         $scope.stations = [];
@@ -87,9 +89,10 @@ app.controller('stationsController', [
             }
         }
 
-        $scope.goToStation = function(id){
+        $scope.goToStation = function(id, stationName){
 //            alert(id);
             localStorage.setItem('stationId', id);
+            localStorage.setItem('stationName', stationName);
             $window.location.href = '/station.html';
         };
         
@@ -119,13 +122,11 @@ app.controller('stationsController', [
             };
             
           
-            $scope.open = function (station) {
+            $scope.removeStation  = function (station) {
 
                 var modalInstance = $modal.open({
                   templateUrl: 'myModalContent.html',
-                  controller: 'ModalInstanceCtrl',
-                  size: "",
-                  resolve: { }
+                  controller: 'ModalInstanceCtrl'
                 });
 
                 modalInstance.result.then(function (deleted) {
@@ -146,8 +147,6 @@ app.controller('stationsController', [
                                 console.log('Server returned with status ' + status + ': ' + data);
                             }
                         );
-
-                        btn.button('reset');
                   }
                 }, function () {
                   $log.info('Modal dismissed at: ' + new Date());

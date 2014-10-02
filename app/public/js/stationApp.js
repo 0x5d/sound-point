@@ -4,7 +4,7 @@ window.onload = function(){
     });
 };
 
-var app = angular.module('station', []);
+var app = angular.module('station', ['ui.bootstrap']);
 
 var currentTrack;
 app.controller('bodyController', 
@@ -160,16 +160,7 @@ app.controller('bodyController',
                 $scope.isPlaying = false;
             };
             
-            $scope.addFriend = function(){
-                 FB.api(
-                    "/me/friends",
-                    function (response) {
-                      if (response && !response.error) {
-                          console.log(response);
-                      }
-                    }
-                );
-            };
+            
         }
     ]
 );
@@ -183,5 +174,115 @@ app.controller('songsController',
         }
     ]
 );
+
+//prueba
+globalFriends=[];
+app.factory('Friends',function(){
+    return globalFriends;
+});
+
+app.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
+  
+  
+  $scope.items = [];
+  $scope.friends = [];
+  
+  $scope.addFriend = function(){
+        FB.api(
+           "/me/friends?fields=id,name,picture",
+           function (response) {
+             if (response && !response.error) {
+                 console.log(response.data.length);
+                 $scope.items=[];
+                 response.data.forEach(function(friend) {
+                    //console.log(friend);
+                    var obj ={
+                        name:friend.name,
+                        id:friend.id,
+                        picture:friend.picture,
+                        selected:false
+                    };
+                    $scope.items.push(obj  );
+                });
+                globalFriends = $scope.items;
+                $scope.$apply();
+                $scope.open();
+             }
+           }
+       );
+   };
+  
+
+  $scope.open = function () {
+
+    var modalInstance = $modal.open({
+      templateUrl: 'myModalContent.html',
+      controller: 'ModalInstanceCtrl',
+      resolve: {
+        items: function () {
+          console.log($scope.items);
+          return $scope.items;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+});
+
+// Please note that $modalInstance represents a modal window (instance) dependency.
+// It is not the same as the $modal service used above.
+
+app.controller('ModalInstanceCtrl', function ($scope, $http,$modalInstance, items,Friends) {
+
+  $scope.items = Friends;
+  $scope.selected = {
+    item: $scope.items[0]
+  };
+
+  $scope.ok = function () {
+    $modalInstance.close($scope.selected.item);
+    console.log( "ok");
+    for(var i = 0; i < globalFriends.length;i++){
+        if(globalFriends[i].selected==true){
+            var Station = {
+                stationName : localStorage.getItem('stationName'), 
+                desc : 'Invited.',
+                staionId : localStorage.getItem('stationId'),
+                userId : globalFriends[i].id
+            };
+            $http.post('/invite', Station).
+                success(
+                //$http.post('http://localhost:8888/newStation', {'newStation' : newStation}).success(
+                    function(data, status){
+                        console.log("done");
+                    }
+                ).
+                error(
+                    function(data, status){
+                        console.log(data);
+                    }
+                );
+        }
+    }
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+    console.log( "cancel");
+    console.log(localStorage.getItem('stationName'))
+  };
+  
+  $scope.selectFriend = function(i){
+    console.log("heal yes "+i);
+    globalFriends[i].selected=!globalFriends[i].selected;
+    console.log(globalFriends);
+  };
+});
+
 
 

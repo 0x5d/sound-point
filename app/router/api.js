@@ -187,6 +187,36 @@ module.exports = function RequestsHandler(db){
         );
     };
     
+    this.invite = function(req,res){
+        var push={
+            stationName : req.body.stationName,
+            description : req.body.desc,
+            songs : [],
+            _id : req.body.staionId
+        };
+        var query = {
+            _id : req.body.userId + ''
+        };
+        var update = {
+            '$push' : {
+                stations : push
+            }
+        };
+        db.collection('users').update(query, update,
+            function(err, updated){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(updated){
+                    res.status(200).send(push);
+                }
+                else{
+                    res.status(404).send({err : 'No user found.'});
+                }
+            }
+        );
+    };
+    
     this.getSongs = function(req, res){
         var songs = null;
         var status = 404;
