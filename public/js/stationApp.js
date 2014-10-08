@@ -176,15 +176,15 @@ app.controller('songsController',
 );
 
 //prueba
-globalFriends=[];
-app.factory('Friends',function(){
-    return globalFriends;
-});
+
 
 app.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
   
   
-  $scope.items = [];
+  $scope.items = [{name:"juanda",
+                        id:123,
+                        picture:"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpa1/v/t1.0-1/r180/p50x50/994478_10203871345159922_4483923506299465616_n.jpg?oh=9ca995da60254972a51e1ffc31ddce6c&oe=54B5844C&__gda__=1421252505_e788835e0c185215f4f726141ae055c0",
+                        selected:false}];
   $scope.friends = [];
   
   $scope.addFriend = function(){
@@ -192,7 +192,6 @@ app.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
            "/me/friends?fields=id,name,picture",
            function (response) {
              if (response && !response.error) {
-                 console.log(response.data.length);
                  $scope.items=[];
                  response.data.forEach(function(friend) {
                     //console.log(friend);
@@ -204,7 +203,7 @@ app.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
                     };
                     $scope.items.push(obj  );
                 });
-                globalFriends = $scope.items;
+                //globalFriends = $scope.items;
                 $scope.$apply();
                 $scope.open();
              }
@@ -237,9 +236,9 @@ app.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.
 
-app.controller('ModalInstanceCtrl', function ($scope, $http,$modalInstance, items,Friends) {
+app.controller('ModalInstanceCtrl', function ($scope, $http,$modalInstance, items) {
 
-  $scope.items = Friends;
+  $scope.items = items;
   $scope.selected = {
     item: $scope.items[0]
   };
@@ -247,13 +246,13 @@ app.controller('ModalInstanceCtrl', function ($scope, $http,$modalInstance, item
   $scope.ok = function () {
     $modalInstance.close($scope.selected.item);
     console.log( "ok");
-    for(var i = 0; i < globalFriends.length;i++){
-        if(globalFriends[i].selected==true){
+    for(var i = 0; i < $scope.items.length;i++){
+        if($scope.items[i].selected==true){
             var Station = {
                 stationName : localStorage.getItem('stationName'), 
                 desc : 'Invited.',
                 staionId : localStorage.getItem('stationId'),
-                userId : globalFriends[i].id
+                userId : $scope.items[i].id
             };
             $http.post('/invite', Station).
                 success(
@@ -279,8 +278,8 @@ app.controller('ModalInstanceCtrl', function ($scope, $http,$modalInstance, item
   
   $scope.selectFriend = function(i){
     console.log("heal yes "+i);
-    globalFriends[i].selected=!globalFriends[i].selected;
-    console.log(globalFriends);
+    $scope.items[i].selected=!$scope.items[i].selected;
+    console.log($scope.items);
   };
 });
 

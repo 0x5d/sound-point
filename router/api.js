@@ -1,6 +1,5 @@
 var ObjectID = require('../node_modules/mongodb').BSONPure.ObjectID;
 
-
 module.exports = function RequestsHandler(db){
     //POST
     this.logIn = function(req, res){
@@ -192,14 +191,14 @@ module.exports = function RequestsHandler(db){
             stationName : req.body.stationName,
             description : req.body.desc,
             songs : [],
-            _id : req.body.staionId
+            _id : new ObjectID.createFromHexString(req.body.staionId) 
         };
         var query = {
             _id : req.body.userId + ''
         };
         var update = {
             '$push' : {
-                stations : push
+                notifications : push
             }
         };
         db.collection('users').update(query, update,
