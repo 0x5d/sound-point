@@ -10,6 +10,7 @@ module.exports = function(app, db){
     app.post('/invite', reqHandler.invite);    
     app.get('/home/:userId', reqHandler.getStationsByUser);
     app.get('/station/:stationId', reqHandler.getStationById);
+    app.get('/invitation/:userId',reqHandler.pollInvitation);
     app.get('/removeStation/:stationId/:userId', reqHandler.removeStation);
 };
 
