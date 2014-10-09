@@ -216,30 +216,22 @@ module.exports = function RequestsHandler(db){
         );
     };
     
-    this.getSongs = function(req, res){
-        var songs = null;
-        var status = 404;
-        if(req.params.stationId == 0){
-            status = 200;
-            songs = [
-                32476280,
-                31216220
-            ];
-        }
-        else if(req.params.stationId == 1){
-            status = 200;
-            songs = [
-                31216220,
-                32476280
-            ];
-        }
-        res.status(status).send(songs);
+    this.removeSong = function(req, res){
+        var query = {
+            _id : new ObjectID.createFromHexString(req.body.stationId)
+        };
+        var update = {
+            
+        };
     };
-    
     
      this.removeStation = function(req, res){
         var query = { _id : req.params.userId };
-        var update = { $pull : { stations : {_id :  new ObjectID.createFromHexString(req.params.stationId)}}} ;
+        var update = {
+            $pull : {
+                stations : {_id :  new ObjectID.createFromHexString(req.params.stationId)}
+            }
+        };
         db.collection('users').update(query,update,
             function(err, updated){
                 if(err){
