@@ -91,15 +91,16 @@ app.controller('bodyController',
                currentTrack.stop();
                $scope.songs.shift();
                SC.stream($scope.songs[0].url, {onfinish:
-                            function(){ 
-                                $scope.songs.shift();
-                                $scope.$apply();
-                                qmanager($scope.songs[0]);
-                            }}, 
-                        function(sound){
-                            currentTrack = sound;
-                            sound.play();
-                        });
+                    function(){ 
+                            $scope.songs.shift();
+                            $scope.$apply();
+                            qmanager($scope.songs[0]);
+                        }}, 
+                    function(sound){
+                        currentTrack = sound;
+                        sound.play();
+                    }
+                );
            };
            
             $scope.search = function(text) {

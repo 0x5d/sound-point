@@ -12,6 +12,7 @@ app.controller('stationsController', [
         $scope.userId;
         $scope.stations = [];
         $scope.showCreateStation = true;
+        $scope.invitations =[];
         fbAsyncInit = function() {
             FB.init({
                 appId: '690519131028878',
@@ -39,7 +40,7 @@ app.controller('stationsController', [
                                 ).
                                 error(
                                     function(data, status){
-                                        console.log('Server returned with status ' + status + ': ' + data);
+                                        //console.log('Server returned with status ' + status + ': ' + data);
                                     }
                                 );
                         });
@@ -112,12 +113,11 @@ app.controller('stationsController', [
                     //$http.post('http://localhost:8888/newStation', {'newStation' : newStation}).success(
                         function(data, status){
                             $scope.stations.push(data);
-                            console.log(data._id);
                         }
                     ).
                     error(
                         function(data, status){
-                            console.log(data);
+                            //console.log(data);
                         }
                     );
                 }
@@ -146,7 +146,7 @@ app.controller('stationsController', [
                         ).
                         error(
                             function(data, status){
-                                console.log('Server returned with status ' + status + ': ' + data);
+                               // console.log('Server returned with status ' + status + ': ' + data);
                             }
                         );
                   }
@@ -154,14 +154,19 @@ app.controller('stationsController', [
                   $log.info('Modal dismissed at: ' + new Date());
                 });
             };
-             var poller = function() {
-                 
-                 $http.get('/invitation/'+$scope.userId).
+            
+            var poller = function() {
+                var loaded = $scope.invitations;
+                $http.get('/invitation/'+$scope.userId+'/'+JSON.stringify(loaded)).
                     success(
-                      function(data,status) {
-                          console.log(data);
-                          $timeout(poller, 1000)
-                      }
+                        function(data,status) {
+                            if(data.notifications){
+                                for(var i = 0; i < data.notifications.length; i++){
+                                    $scope.invitations.push(data.notifications[i]);
+                                }
+                            }
+                            $timeout(poller, 1000);
+                        }
                     );
               };
             

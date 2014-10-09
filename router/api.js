@@ -262,6 +262,7 @@ module.exports = function RequestsHandler(db){
     
     getInvitation = function(req,res,count){
         var query = { _id : req.params.userId };
+        var loaded = JSON.parse(req.params.loaded);
         db.collection('users').findOne(query,
             function(err, foundUser){
                 if(err){
@@ -271,11 +272,34 @@ module.exports = function RequestsHandler(db){
                 else if(foundUser){
                     if( foundUser.notifications){
                         var notifications = foundUser.notifications;
-                        res.status(200).send({'notifications' : notifications});
+                        var send = [];
+                        if(loaded[0]){
+                            for(var i = 0; i < loaded.length; i++){
+                                for(var j = 0; j<notifications.length; j++){
+                                    if(loaded[i]._id==notifications[j]._id){
+                                        break;
+                                    }
+                                    if(j==notifications.length-1){
+                                        send.push(notifications[j]);
+                                    }
+                                }
+                            }
+                        }else{
+                            send = notifications;
+                        }
+                        if(send[0]){
+                            res.status(200).send({'notifications' : send});
+                        }else{
+                            if(count<15){
+                                count++;
+                                setTimeout( function(){getInvitation(req,res,count);}, 1000);
+                            }else{
+                                res.status(200).send({'msg':"not found"});
+                            }
+                        }
                     }else{
                         if(count<15){
                             count++;
-                            console.log(count);
                             setTimeout( function(){getInvitation(req,res,count);}, 1000);
                         }else{
                             res.status(200).send({'msg':"not found"});
