@@ -1,17 +1,18 @@
 var app = angular.module('home', ['ui.bootstrap']);
-
+var usr;
 app.controller('stationsController', [
     '$scope',
     '$http',
     '$window',
     '$modal',
     '$log',
-    function($scope, $http, $window, $modal, $log){
-        $scope.username ;
+    '$timeout',
+    function($scope, $http, $window, $modal, $log, $timeout){
+        $scope.username="";
         $scope.userId;
         $scope.stations = [];
         $scope.showCreateStation = true;
-        window.fbAsyncInit = function() {
+        fbAsyncInit = function() {
             FB.init({
                 appId: '690519131028878',
                 xfbml: true,
@@ -26,11 +27,12 @@ app.controller('stationsController', [
                         function (response) {
                             $http.get('/home/' + response.id).
                                 success(
-                                //$http.get('http://localhost:8888/home').success(
                                     function(data, status){
+                                        //TODO change to angular
+                                        $("#hello").append(response.first_name);
                                         $scope.username = response.first_name;
-                                        $scope.userId=response.id;
-                                        console.log($scope.username);
+                                        usr = $scope.userId=response.id;
+                                        poller();
                                         $scope.stations = data.stations;
                                         setupData();
                                     }
@@ -126,7 +128,7 @@ app.controller('stationsController', [
 
                 var modalInstance = $modal.open({
                   templateUrl: 'myModalContent.html',
-                  controller: 'ModalInstanceCtrl'
+                  controller: 'ModalRemoveStationInstanceCtrl'
                 });
 
                 modalInstance.result.then(function (deleted) {
@@ -152,12 +154,22 @@ app.controller('stationsController', [
                   $log.info('Modal dismissed at: ' + new Date());
                 });
             };
+             var poller = function() {
+                 
+                 $http.get('/invitation/'+$scope.userId).
+                    success(
+                      function(data,status) {
+                          console.log(data);
+                          $timeout(poller, 1000)
+                      }
+                    );
+              };
             
 	}
     ]
 );
 
-app.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
+app.controller('ModalRemoveStationInstanceCtrl', function ($scope, $modalInstance) {
 
   $scope.ok = function () {
     $modalInstance.close(true);
@@ -167,3 +179,24 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
     $modalInstance.dismiss('cancel');
   };
 });
+
+
+//app.run(function(Poller) {});
+
+//app.factory('Poller', function($http, $timeout) {
+//  var data = { response: {}, calls: 0 };
+//  var poller = function() {
+//    $http.get('/home'+usr).then(function(r) {
+//      data.response = r.data;
+//      data.calls++;
+//      conosle.log(data.calls);
+//      $timeout(poller, 1000);
+//    });
+//    
+//  };
+//  poller();
+//  
+//  return {
+//    data: data
+//  };
+//});

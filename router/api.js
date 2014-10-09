@@ -256,6 +256,39 @@ module.exports = function RequestsHandler(db){
 
     };
     
+    this.pollInvitation = function(req, res){
+        getInvitation(req,res,0);
+    };
+    
+    getInvitation = function(req,res,count){
+        var query = { _id : req.params.userId };
+        db.collection('users').findOne(query,
+            function(err, foundUser){
+                if(err){
+                    res.status(500).send({'err' : err});
+                    return;
+                }
+                else if(foundUser){
+                    if( foundUser.notifications){
+                        var notifications = foundUser.notifications;
+                        res.status(200).send({'notifications' : notifications});
+                    }else{
+                        if(count<15){
+                            count++;
+                            console.log(count);
+                            setTimeout( function(){getInvitation(req,res,count);}, 1000);
+                        }else{
+                            res.status(200).send({'msg':"not found"});
+                        }
+                    }
+                }
+                else{
+                    res.status(404).send({'err' : 'User not found.'});
+                    return;
+                }
+            }
+        ); 
+    }
 };
 
 
