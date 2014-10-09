@@ -164,7 +164,8 @@ module.exports = function RequestsHandler(db){
             songId : req.body.song.songId,
             title : req.body.song.title,
             artist : req.body.song.artist,
-            artwork : req.body.song.artwork
+            artwork : req.body.song.artwork,
+            url : req.body.song.url
         };
         var update = {
             '$push' : {
@@ -218,11 +219,26 @@ module.exports = function RequestsHandler(db){
     
     this.removeSong = function(req, res){
         var query = {
-            _id : new ObjectID.createFromHexString(req.body.stationId)
+            _id : new ObjectID.createFromHexString(req.params.stationId + '')
         };
         var update = {
-            
+            $pull : {
+                songs : {songId : parseInt(req.params.songId)}
+            }
         };
+        db.collection('stations').update(query, update,
+            function(err, updated){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(updated){
+                    res.status(200).send({'removedSongs' : updated});
+                }
+                else {
+                    res.status(404).send({'err' : 'Song not removed.'});
+                }
+            }
+        );
     };
     
      this.removeStation = function(req, res){

@@ -75,33 +75,63 @@ app.controller('bodyController',
             }
             
             function qmanager(song){
-                SC.stream(song.url, {onfinish:
-                            function(){
-                                $scope.songs.shift();
-                                $scope.$apply();
-                                qmanager($scope.songs[0]);
-                            }}, 
+                if(song.url){
+                    SC.stream(song.url, {onfinish:
+                        function(){
+                            var finishedSong = $scope.songs.shift();
+                            $scope.$apply();
+                            currentTrack = null;
+                            qmanager($scope.songs[0]);
+                            removeSong(localStorage.getItem('stationId'), finishedSong.songId);   
+                        }}, 
                         function(sound){
                             currentTrack = sound;
                             sound.play();
-                        });
+                        }
+                    );
+                }else if($scope.songs[0]){
+                    var lastSong = $scope.songs.shift();
+                    removeSong(localStorage.getItem('stationId'), lastSong.songId);
+                }
             }
             
-           $scope.next = function (){
-               currentTrack.stop();
-               $scope.songs.shift();
-               SC.stream($scope.songs[0].url, {onfinish:
-                    function(){ 
-                            $scope.songs.shift();
-                            $scope.$apply();
-                            qmanager($scope.songs[0]);
-                        }}, 
-                    function(sound){
-                        currentTrack = sound;
-                        sound.play();
-                    }
-                );
-           };
+            $scope.next = function (){
+                if($scope.songs[0]){
+                    currentTrack.stop();
+                    var lastSong = $scope.songs.shift();
+                    removeSong(localStorage.getItem('stationId'), lastSong.songId);
+                }
+                if($scope.songs[0]){
+                    SC.stream($scope.songs[0].url, {onfinish:
+                         function(){ 
+                                 var finishedSong = $scope.songs.shift();
+                                 $scope.$apply();
+                                 qmanager($scope.songs[0]);
+                                 removeSong(localStorage.getItem('stationId'), finishedSong.songId);                            
+                             }}, 
+                         function(sound){
+                             currentTrack = sound;
+                             sound.play();
+                         }
+                     );
+                }
+            };
+           
+            function removeSong(stationId, songId){
+               $http.get('/station/removeSong/'
+                    + stationId
+                    + '/' + songId).
+                    success(
+                        function(data, status){
+                            
+                        }
+                    ).
+                    error(
+                        function(data, status){
+                            console.log(data);
+                        }
+                    );
+            }
            
             $scope.search = function(text) {
                 SC.get('/tracks', {'q' : text},
@@ -122,11 +152,13 @@ app.controller('bodyController',
             };
             
             $scope.addSong = function(i){
+                console.log($scope.results[i].url)
                 var song = {
                     songId : $scope.results[i].songId,
                     title : $scope.results[i].title,
                     artist : $scope.results[i].artist,
-                    artwork : $scope.results[i].artwork
+                    artwork : $scope.results[i].artwork,
+                    url: $scope.results[i].url
                 };
                 var postData = {
                     stationId : localStorage.getItem('stationId'),
@@ -135,7 +167,10 @@ app.controller('bodyController',
                 $http.post('/newSong', postData).
                     success(
                         function(data, status){
-                            console.log(data.song);
+                            console.log(data);
+                            if(!$scope.songs[0]){
+                                qmanager(data.song);
+                            }
                             $scope.songs.push(data.song);
                         }
                     ).
