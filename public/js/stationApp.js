@@ -12,7 +12,8 @@ app.controller('bodyController',
         '$scope',
         '$http',
         '$window',
-        function($scope, $http, $window){
+        '$timeout',
+        function($scope, $http, $window, $timeout){
             
             $scope.songs = [];
             $scope.results = [];
@@ -22,6 +23,7 @@ app.controller('bodyController',
                         if(data.station.songs){
                            // setTimeout(setupSongs(data.station.songs), 100000);
                             setupSongs(data.station.songs);
+                            pollSongs();
                         }
                     }
                 ).
@@ -196,7 +198,32 @@ app.controller('bodyController',
                 $scope.isPlaying = false;
             };
             
-            
+            var pollSongs = function(){
+                console.log('Called pollSongs');
+                if($scope.songs && $scope.songs.length > 0){
+                    var currentSongObj = $scope.songs[0];
+                    $http.get('/pollStation/'
+                        + localStorage.getItem('stationId')
+                        + '/' + currentSongObj.songId).
+                    success(
+                        function(data, status){
+                            console.log(data);
+                            if(data.songs){
+                                $scope.songs = data.songs;
+                            }
+                            $timeout(pollSongs, 1000);
+                        }
+                    ).error(
+                        function(data, status){
+                            
+                            $timeout(pollSongs, 1000);
+                        }
+                    );
+                }
+                else{
+                    $timeout(pollSongs, 1000);
+                }
+            };
         }
     ]
 );
@@ -309,7 +336,7 @@ app.controller('ModalInstanceCtrl', function ($scope, $http,$modalInstance, item
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
     console.log( "cancel");
-    console.log(localStorage.getItem('stationName'))
+    console.log(localStorage.getItem('stationName'));
   };
   
   $scope.selectFriend = function(i){
@@ -318,6 +345,3 @@ app.controller('ModalInstanceCtrl', function ($scope, $http,$modalInstance, item
     console.log($scope.items);
   };
 });
-
-
-

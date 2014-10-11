@@ -268,7 +268,7 @@ module.exports = function RequestsHandler(db){
         getInvitation(req,res,0);
     };
     
-    getInvitation = function(req,res,count){
+    var getInvitation = function(req,res,count){
         var query = { _id : req.params.userId };
         var loaded = JSON.parse(req.params.loaded);
         db.collection('users').findOne(query,
@@ -320,7 +320,47 @@ module.exports = function RequestsHandler(db){
                 }
             }
         ); 
-    }
+    };
+    
+    this.pollSongs = function(req, res){
+        getSongs(req, res, 0);
+    };
+    
+    var getSongs = function(req, res, count){
+        var query = { _id : ObjectID.createFromHexString(req.params.stationId)};
+        var projection = {_id : false, songs : true};
+        var currentSongId = req.params.currentSongId;
+        db.collection('stations').findOne(query, projection,
+            function(err, station){
+                if(err){
+                    res.status(500).send({'err' : err});
+                    return;
+                }
+                else if(station){
+                    if(station.songs.length > 0){
+                        if(station.songs[0].songId != currentSongId){
+                            res.status(200).send({'songs' : station.songs});
+                        }
+                        else if(count < 15){
+                            setTimeout(
+                                function(){
+                                    count++;
+                                    getSongs(req, res, count);
+                                },
+                                1000
+                            );
+                        }
+                        else{
+                            res.status(200).send({msg : 'No changes.'});
+                        }
+                    }
+                }
+                else{
+                    res.status(404).send({msg : 'User not found.'});
+                }
+            }
+        );
+    };
 };
 
 
