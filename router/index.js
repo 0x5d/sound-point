@@ -14,6 +14,7 @@ module.exports = function(app, db){
     app.get('/pollStation/:stationId/:currentSongId', reqHandler.pollSongs);
     app.get('/station/removeSong/:stationId/:songId', reqHandler.removeSong);
     app.get('/removeStation/:stationId/:userId', reqHandler.removeStation);
+    app.get('/answer/:stationId/:ans/:userId', reqHandler.answerInvitations);
 };
 
 

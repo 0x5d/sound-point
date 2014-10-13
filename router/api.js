@@ -361,6 +361,44 @@ module.exports = function RequestsHandler(db){
             }
         );
     };
+    
+    this.answerInvitations = function(req,res){
+        var loaded = JSON.parse(req.params.ans);
+        var query = { _id : req.params.userId };
+        var update = {
+            $pull : {
+                notifications : {_id :  new ObjectID.createFromHexString(loaded._id)}
+            }
+        };
+        db.collection('users').update(query,update,
+            function(err, updated){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(updated){
+                    var update = {'$push' : {'stations' : loaded}};
+                    db.collection('users').update(query, update,
+                        function(err, updated){
+                            if(err){
+                                res.status(501).send({'err' : err});
+                            }
+                            else{
+                                if(updated == 1){
+                                    res.status(200).send({'updated' : updated});
+                                }
+                                else{
+                                    res.status(404).send({'error' : 'User not updated'});
+                                }
+                            }
+                        }
+                    );
+                }
+                else{
+                    res.status(404).send({'err' : 'station wasn´t remove.'});
+                }
+            }
+         );
+    };
 };
 
 

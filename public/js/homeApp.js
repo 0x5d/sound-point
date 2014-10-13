@@ -156,24 +156,46 @@ app.controller('stationsController', [
             };
             
             var poller = function() {
-                var loaded = $scope.invitations;
+                console.log("poll");
+                var loaded = $scope.invitations ;
                 $http.get('/invitation/'+$scope.userId+'/'+JSON.stringify(loaded)).
                     success(
                         function(data,status) {
                             if(data.notifications){
                                 for(var i = 0; i < data.notifications.length; i++){
                                     $scope.invitations.push(data.notifications[i]);
+                                    console.log(data.notifications[i]);
+                                    $("#invitations").append(
+                                    "<li role=\"presentation\" class=\"dropdown-header\">"+data.notifications[i].nmae+"<br>"+
+                                        "<button class=\"btn btn-primary\" onclick=\"answerInvitation("+i+",true)\">Accept</button>"+
+                                        "<button class=\"btn btn-warning\" onclick=\"answerInvitation("+i+",false)\">Cancel</button>"+
+                                    "</li>");
                                 }
+                                inv =  $scope.invitations;
+//                              TODO cahnge to angular
                             }
                             $timeout(poller, 1000);
                         }
                     );
               };
-            
 	}
     ]
 );
-
+var inv;
+ var answerInvitation=function(i,b){
+    console.log(b+i);
+    var ainv =[];
+    var send = inv[i];
+    for (var j=0;j<inv.length;j++){
+        if(i!=j){
+            ainv.push(inv[j]);
+        }
+    }
+    inv = ainv;
+    $.ajax({url:'/answer/'+i+"/"+JSON.stringify(send)+"/"+usr,type:'GET'}).success(function(data,status) {
+        console.log(data);
+    });
+};
 app.controller('ModalRemoveStationInstanceCtrl', function ($scope, $modalInstance) {
 
   $scope.ok = function () {

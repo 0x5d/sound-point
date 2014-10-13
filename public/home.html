@@ -44,15 +44,17 @@
                     </button>
                     <a class="navbar-brand" href="#">Soundpoint</a>
                 </div>
-
+                
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <form class="navbar-form navbar-right" role="search">
-                      <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search stations">
-                      </div>
-                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                    </form>
+                    <div class="dropdown nav navbar-nav navbar-right">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                            Invitations
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="invitations">
+                        </ul>
+                    </div>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#" ng-click="showCreate()">Create new <span class="glyphicon glyphicon-plus"></span></a></li>
                     </ul>
