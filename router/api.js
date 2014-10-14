@@ -243,11 +243,20 @@ module.exports = function RequestsHandler(db){
     
      this.removeStation = function(req, res){
         var query = { _id : req.params.userId };
-        var update = {
-            $pull : {
-                stations : {_id :  new ObjectID.createFromHexString(req.params.stationId)}
-            }
-        };
+        var update = null;
+        if(req.params.type == "Invited."){
+            update = {
+                $pull : {
+                    stations : {_id :  req.params.stationId}
+                }
+            };
+        }else{
+            update = {
+                $pull : {
+                    stations : {_id :   new ObjectID.createFromHexString(req.params.stationId)}
+                }
+            };
+        }
         db.collection('users').update(query,update,
             function(err, updated){
                 if(err){

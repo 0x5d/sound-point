@@ -135,9 +135,11 @@ app.controller('stationsController', [
                   if(deleted){
                        var btn = $(this);
                         btn.button('loading');
-                        $http.get('/removeStation/' + station._id+'/'+ $scope.userId).
+                        $http.get('/removeStation/' + station._id+'/'+ $scope.userId +'/'+station.description).
                         success(
-                            function (data,status){                       
+                            function (data,status){ 
+                                console.log(data);
+                                console.log(status);
                                 var index = $scope.stations.indexOf(station);
                                 if(index>-1){
                                     $scope.stations.splice(index, 1);
