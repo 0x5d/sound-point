@@ -309,7 +309,7 @@ app.controller('ModalInstanceCtrl', function ($scope, $http,$modalInstance, item
 
   $scope.ok = function () {
     $modalInstance.close($scope.selected.item);
-    console.log( "ok");
+    console.log(localStorage.getItem('stationName'));
     for(var i = 0; i < $scope.items.length;i++){
         if($scope.items[i].selected==true){
             var Station = {
@@ -336,12 +336,9 @@ app.controller('ModalInstanceCtrl', function ($scope, $http,$modalInstance, item
 
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
-    console.log( "cancel");
-    console.log(localStorage.getItem('stationName'));
   };
   
   $scope.selectFriend = function(i){
-    console.log("heal yes "+i);
     $scope.items[i].selected=!$scope.items[i].selected;
     console.log($scope.items);
   };

@@ -166,7 +166,7 @@ app.controller('stationsController', [
                                     $scope.invitations.push(data.notifications[i]);
                                     console.log(data.notifications[i]);
                                     $("#invitations").append(
-                                    "<li role=\"presentation\" class=\"dropdown-header\">"+data.notifications[i].nmae+"<br>"+
+                                    "<li role=\"presentation\" class=\"dropdown-header\">"+data.notifications[i].stationName+"<br>"+
                                         "<button class=\"btn btn-primary\" onclick=\"answerInvitation("+i+",true)\">Accept</button>"+
                                         "<button class=\"btn btn-warning\" onclick=\"answerInvitation("+i+",false)\">Cancel</button>"+
                                     "</li>");
