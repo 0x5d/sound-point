@@ -329,7 +329,7 @@ module.exports = function RequestsHandler(db){
     var getSongs = function(req, res, count){
         var query = { _id : ObjectID.createFromHexString(req.params.stationId)};
         var projection = {_id : false, songs : true};
-        var currentSongId = req.params.currentSongId;
+        var clientSongs = JSON.parse(req.params.clientSongs);
         db.collection('stations').findOne(query, projection,
             function(err, station){
                 if(err){
@@ -337,10 +337,21 @@ module.exports = function RequestsHandler(db){
                     return;
                 }
                 else if(station){
-                    if(station.songs.length > 0){
-                        if(station.songs[0].songId != currentSongId){
+                    if(station.songs.length != clientSongs.length){
+                        res.status(200).send({'songs' : station.songs});
+                    }
+                    else{
+                        var changes = false;
+                        for(var i = 0; i < station.songs.length; i++){
+                            if(station.songs[i].songId != clientSongs[i].songId){
+                                changes = true;
+                                break;
+                            }
+                        }
+                        if(changes){
                             res.status(200).send({'songs' : station.songs});
                         }
+                            
                         else if(count < 15){
                             setTimeout(
                                 function(){
@@ -356,7 +367,7 @@ module.exports = function RequestsHandler(db){
                     }
                 }
                 else{
-                    res.status(404).send({msg : 'User not found.'});
+                    res.status(404).send({msg : 'Station not found.'});
                 }
             }
         );

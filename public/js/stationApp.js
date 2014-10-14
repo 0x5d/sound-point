@@ -199,23 +199,24 @@ app.controller('bodyController',
             };
             
             var pollSongs = function(){
-                console.log('Called pollSongs');
-                if($scope.songs && $scope.songs.length > 0){
-                    var currentSongObj = $scope.songs[0];
+                if($scope.songs){
+                    var currentSongs = [];
+                    for(var i = 0; i < $scope.songs.length; i++){
+                        currentSongs.push({songId : $scope.songs[i].songId});
+                    }
                     $http.get('/pollStation/'
                         + localStorage.getItem('stationId')
-                        + '/' + currentSongObj.songId).
+                        + '/' + JSON.stringify(currentSongs)).
                     success(
                         function(data, status){
-                            console.log(data);
                             if(data.songs){
+                                $scope.songs = [];
                                 $scope.songs = data.songs;
                             }
                             $timeout(pollSongs, 1000);
                         }
                     ).error(
                         function(data, status){
-                            
                             $timeout(pollSongs, 1000);
                         }
                     );
