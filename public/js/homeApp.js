@@ -135,9 +135,11 @@ app.controller('stationsController', [
                   if(deleted){
                        var btn = $(this);
                         btn.button('loading');
-                        $http.get('/removeStation/' + station._id+'/'+ $scope.userId).
+                        $http.get('/removeStation/' + station._id+'/'+ $scope.userId +'/'+station.description).
                         success(
-                            function (data,status){                       
+                            function (data,status){ 
+                                console.log(data);
+                                console.log(status);
                                 var index = $scope.stations.indexOf(station);
                                 if(index>-1){
                                     $scope.stations.splice(index, 1);
@@ -166,7 +168,7 @@ app.controller('stationsController', [
                                     $scope.invitations.push(data.notifications[i]);
                                     console.log(data.notifications[i]);
                                     $("#invitations").append(
-                                    "<li role=\"presentation\" class=\"dropdown-header\">"+data.notifications[i].nmae+"<br>"+
+                                    "<li role=\"presentation\" class=\"dropdown-header\">"+data.notifications[i].stationName+"<br>"+
                                         "<button class=\"btn btn-primary\" onclick=\"answerInvitation("+i+",true)\">Accept</button>"+
                                         "<button class=\"btn btn-warning\" onclick=\"answerInvitation("+i+",false)\">Cancel</button>"+
                                     "</li>");
