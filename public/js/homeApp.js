@@ -153,7 +153,7 @@ app.controller('stationsController', [
                         );
                   }
                 }, function () {
-                  $log.info('Modal dismissed at: ' + new Date());
+                    //$log.info('Modal dismissed at: ' + new Date());
                 });
             };
             
