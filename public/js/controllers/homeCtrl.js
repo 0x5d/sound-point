@@ -52,9 +52,9 @@ app.controller('homeCtrl', [
         }
 
         $scope.goToStation = function(id, stationName){
-            localStorage.setItem('stationId', id);
-            localStorage.setItem('stationName', stationName);
-            $state.go('station');
+//            localStorage.setItem('stationId', id);
+//            localStorage.setItem('stationName', stationName);
+            $state.go('station', {stationId : id, 'stationName' : stationName});
 //            $window.location.href = '/station.html';
         };
         
@@ -94,8 +94,6 @@ app.controller('homeCtrl', [
                     $http.get('/removeStation/' + station._id+'/'+ $scope.userId +'/'+station.description).
                     success(
                         function (data,status){ 
-                            console.log(data);
-                            console.log(status);
                             var index = $scope.stations.indexOf(station);
                             if(index>-1){
                                 $scope.stations.splice(index, 1);
