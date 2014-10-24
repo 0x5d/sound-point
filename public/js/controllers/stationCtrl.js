@@ -14,6 +14,7 @@ app.controller('stationCtrl', [
 
         $scope.songs = [];
         $scope.results = [];
+        $scope.currentSong = {};
         $http.get('/station/' + $stateParams.stationId)//localStorage.getItem('stationId')).
             .success(
                 function(data, status){
@@ -31,6 +32,8 @@ app.controller('stationCtrl', [
 
         function setupSongs(songs){
             if(songs.length > 0){
+                $scope.currentSong.title = songs[0].title;
+                $scope.currentSong.artist = songs[0].artist;
                 var ids = songs[0].songId;
                 for(var i = 1; i < songs.length; i++){
                     ids += "," + songs[i].songId;
@@ -100,6 +103,8 @@ app.controller('stationCtrl', [
                 removeSong($stateParams.stationId /**localStorage.getItem('stationId')**/, lastSong.songId);
             }
             if($scope.songs[0]){
+                $scope.currentSong.title = $scope.songs[0].title;
+                $scope.currentSong.artist = $scope.songs[0].artist;
                 SC.stream($scope.songs[0].url, {onfinish:
                      function(){ 
                              var finishedSong = $scope.songs.shift();
