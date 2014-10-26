@@ -1,9 +1,8 @@
-angular.module('sound-point').controller('modalDemoCtrl', [
+app.controller('fbFriendsModalCtrl', [
     '$scope',
     '$modal',
     '$log',
     function ($scope, $modal, $log) {
-        console.log('lgglgli');
 
         $scope.items = [{name:"juanda",
             id:123,
@@ -39,7 +38,7 @@ angular.module('sound-point').controller('modalDemoCtrl', [
         $scope.open = function () {
 
         var modalInstance = $modal.open({
-          templateUrl: 'myModalContent.html',
+          templateUrl: 'fbFriendsModal.html',
           controller: 'ModalInstanceCtrl',
           resolve: {
             items: function () {

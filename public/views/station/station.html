@@ -36,13 +36,13 @@
                             <ul class="nav pull-right">
                                 <li>
                                     <div class="btn-group">
-                                        <button ng-controller="modalDemoCtrl" ng-click="addFriend()" type="button" class="btn btn-default navbar-btn">
-                                            <span class="glyphicon glyphicon-plus" ></span>
-                                            <span class="glyphicon glyphicon-user" ></span>
-                                        </button>
-                                        <button type="button" class="btn btn-default navbar-btn">
+                                        <button ng-controller="songSearchModalCtrl" ng-click="searchSong()" type="button" class="btn btn-default navbar-btn">
                                             <span class="glyphicon glyphicon-plus" ></span>
                                             <span class="glyphicon glyphicon-music" ></span>
+                                        </button>
+                                        <button ng-controller="fbFriendsModalCtrl" ng-click="addFriend()" type="button" class="btn btn-default navbar-btn">
+                                            <span class="glyphicon glyphicon-plus" ></span>
+                                            <span class="glyphicon glyphicon-user" ></span>
                                         </button>
                                     </div>
                                 </li>
@@ -136,8 +136,8 @@
 
         </div> <!-- /container -->
 
-        <div ng-controller="modalDemoCtrl">
-            <script type="text/ng-template" id="myModalContent.html">
+        <div ng-controller="fbFriendsModalCtrl">
+            <script type="text/ng-template" id="fbFriendsModal.html">
                 <div class="modal-header">
                     <h3 class="modal-title">Select friends</h3>
                 </div>
@@ -159,7 +159,30 @@
                     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
                 </div>
             </script>
-
+        </div>
+        <div ng-controller="songSearchModalCtrl">
+            <script type="text/ng-template" id="songSearchModal.html">
+                <div class="modal-header">
+                    <h3 class="modal-title">Search</h3>
+                </div>
+                <div class="modal-body">
+                    <ul class="media-list">
+                        <li class="media" ng-repeat="(i, item) in items">  
+                            <a class="pull-left" href="#">
+                                 <img class="media-object" ng-src="{{item.artwork_url}}" >
+                            </a>
+                            <div class="float left media-body">
+                                <h4 class="media-heading">{{ item.user.username }}</h4> 
+                                <input calss="pull-right"  type="checkbox" ng-click="selectSong(i)">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-click="ok()">OK</button>
+                    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                </div>
+            </script>
         </div>
     </body>
 </html>
