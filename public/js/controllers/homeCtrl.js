@@ -112,7 +112,6 @@ app.controller('homeCtrl', [
         };
             
         var poller = function() {
-            console.log("poll");
             var loaded = $scope.invitations ;
             $http.get('/invitation/'+$scope.userId+'/'+JSON.stringify(loaded)).
                 success(

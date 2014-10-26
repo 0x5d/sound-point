@@ -154,7 +154,6 @@ app.controller('stationCtrl', [
         };
 
         $scope.addSong = function(i){
-            console.log($scope.results[i].url)
             var song = {
                 songId : $scope.results[i].songId,
                 title : $scope.results[i].title,
