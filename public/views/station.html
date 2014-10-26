@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="container" ng-controller="songsController">
+        <div class="container">
             <button type="button" class="btn btn-default btn-lg" ng-click="pause()" ng-hide="isPlaying" >
                 <span class="glyphicon glyphicon-pause" ></span>
             </button>
@@ -66,7 +66,7 @@
             <button type="button" class="btn btn-default btn-lg" ng-click="next()">
                 <span class="glyphicon glyphicon-step-forward" ></span>
             </button>
-            <button ng-controller="ModalDemoCtrl" type="button" class="btn btn-default btn-lg" ng-click="addFriend()">
+            <button ng-controller="modalDemoCtrl" type="button" class="btn btn-default btn-lg" ng-click="addFriend()">
                 <span class="glyphicon glyphicon-plus" ></span>
                 <span class="glyphicon glyphicon-user" ></span>
             </button>
@@ -83,7 +83,7 @@
                 </li>
             </ul>
             <hr>
-            <p><a href="/home.html" class="btn btn-primary" role="button">Back</a> </p>
+            <p><a data-ui-sref="home" class="btn btn-primary" role="button">Back</a> </p>
             <hr>
             <input ng-model="searchText" type="search">
             <p><button class="btn btn-default" href="#" role="button" ng-click="search(searchText)">Search</button></p>
@@ -111,9 +111,8 @@
             </footer>
         </div> <!-- /container -->
 
-        
             
-        <div ng-controller="ModalDemoCtrl">
+        <div ng-controller="modalDemoCtrl">
             <script type="text/ng-template" id="myModalContent.html">
                 <div class="modal-header">
                     <h3 class="modal-title">Select friends</h3>
@@ -139,19 +138,11 @@
 
         </div>
         
-        
-         <!-- /container -->
-
-        
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="./lib/jquery-1.11.1.min.js" type="text/javascript"></script>
-        <script src="./lib/bootstrap-3.2.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="//connect.soundcloud.com/sdk.js"></script>
-        <script src="./lib/angular.min.js" type="text/javascript"></script>
-        <script src="./js/ui-bootstrap-tpls-0.11.2.min.js" type="text/javascript"></script>
-        <script src="./js/stationApp.js" type="text/javascript"></script>
-        <!-- <script src="./crudRequests.js" type="text/javascript"></script> -->
-
+        <script src="../lib/jquery-1.11.1.min.js" type="text/javascript"></script>
+        <script src="../lib/bootstrap-3.2.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../lib/angular.min.js" type="text/javascript"></script>
+        <script src="../js/ui-bootstrap-tpls-0.11.2.min.js" type="text/javascript"></script>
 
     </body>
 </html>

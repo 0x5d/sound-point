@@ -1,0 +1,89 @@
+<div>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Soundpoint</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="dropdown nav navbar-nav navbar-right">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                        Invitations
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="invitations">
+                    </ul>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" ng-click="showCreate()">Create new <span class="glyphicon glyphicon-plus"></span></a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    
+    <div class="jumbotron">
+        <div class="container">
+            <h1 id="hello">Hello, </h1>
+            <p>These are your stations</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row" ng-show="showCreateStation">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Station name" ng-model="newStationName">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="createNewStation(newStationName)">Create</button>
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+        <p></p>
+        <div class="container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="station in stations" >
+                        <div ng-click="goToStation(station._id,station.stationName)">
+                            <h2>{{station.stationName}}</h2>
+                            <p>{{station.description}}</p>
+                        </div>
+                        <div>
+                            <button type="button" id="delete-removeStation-btn" 
+                                    data-loading-text="Loading..." 
+                                    class="btn btn-danger"
+                                    ng-click=" removeStation(station)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                    <!-- <li class="list-group-item" ng-repeat="station in stations" ng-click="goToStation(station._id,station.stationName)">
+                        <h2>{{station.stationName}}</h2>
+                        <p>{{station.description}}</p> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div> <!-- /container -->
+    
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Alert!</h3>
+        </div>
+        <div class="modal-body">
+            <p>Do you want leave this station?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+</div>

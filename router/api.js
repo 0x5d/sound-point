@@ -263,7 +263,6 @@ module.exports = function RequestsHandler(db){
                     res.status(500).send({'err' : err});
                 }
                 else if(updated){
-                    console.log(updated===1);
                     res.status(200).send({'removeStation' : "ok"});
                 }
                 else{

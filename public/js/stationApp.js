@@ -11,9 +11,8 @@ app.controller('bodyController',
     [
         '$scope',
         '$http',
-        '$window',
         '$timeout',
-        function($scope, $http, $window, $timeout){
+        function($scope, $http, $timeout){
             
             $scope.songs = [];
             $scope.results = [];
@@ -228,19 +227,6 @@ app.controller('bodyController',
         }
     ]
 );
-app.controller('songsController', 
-    [
-        '$scope',
-        '$http',
-        '$window',
-        function($scope, $http, $window){
-            
-        }
-    ]
-);
-
-//prueba
-
 
 app.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
   

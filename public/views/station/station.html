@@ -1,0 +1,165 @@
+<html lang="en">
+    <body>
+        <div class="navbar-wrapper">
+            <div class="container">
+                <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" data-ui-sref="home">Soundpoint</a>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#">Home</a></li>
+                                <li><a href="#about">About</a></li>
+                                <!--
+                                <li><a href="#contact">Contact</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li class="dropdown-header">Nav header</li>
+                                        <li><a href="#">Separated link</a></li>
+                                        <li><a href="#">One more separated link</a></li>
+                                    </ul>
+                                </li>
+                                -->
+                            </ul>
+                            <ul class="nav pull-right">
+                                <li>
+                                    <div class="btn-group">
+                                        <button ng-controller="modalDemoCtrl" ng-click="addFriend()" type="button" class="btn btn-default navbar-btn">
+                                            <span class="glyphicon glyphicon-plus" ></span>
+                                            <span class="glyphicon glyphicon-user" ></span>
+                                        </button>
+                                        <button type="button" class="btn btn-default navbar-btn">
+                                            <span class="glyphicon glyphicon-plus" ></span>
+                                            <span class="glyphicon glyphicon-music" ></span>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        <div class="container">
+            <div class="jumbotron" ng-style="{'background-image':'url({{currentSong.artwork_url + ''}})'}">
+                <div class="text-center">
+                    <h1 ng-hide="songs.length == 0">{{currentSong.title}}</h1>
+                    <h1 ng-show="songs.length == 0">No songs on this playlist :(</h1>
+                    <p class="lead" ng-hide="currentSong.artist == undefined">
+                        by <b>{{currentTrack.artist}}</b>
+                    </p>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="pause()" ng-hide="isPlaying" >
+                        <span class="glyphicon glyphicon-pause" ></span>
+                    </button>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="play()" ng-hide="!isPlaying">
+                        <span class="glyphicon glyphicon-play" ></span>
+                    </button>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="next()">
+                        <span class="glyphicon glyphicon-step-forward" ></span>
+                    </button>
+                    </div>
+            </div>
+<!--
+            <div class="row marketing">
+                <div class="col-lg-6">
+                    <h4>Subheading</h4>
+                    <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+                    <h4>Subheading</h4>
+                    <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+                    <h4>Subheading</h4>
+                    <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                </div>
+
+                <div class="col-lg-6">
+                    <h4>Subheading</h4>
+                    <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+                    <h4>Subheading</h4>
+                    <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+                    <h4>Subheading</h4>
+                    <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                </div>
+            </div>
+-->
+            <ul class="media-list">
+                <li class="media" ng-repeat="song in songs">
+                    <h4 class="media-heading">{{song.title}}</h4>
+                    <a class="pull-left" href="#">
+                        <img class="media-object" ng-src="{{song.artwork}}" alt="...">
+                    </a>
+                    <div class="media-body">
+                        by {{song.artist}}<br>
+                    </div>
+                </li>
+            </ul>
+            <hr>
+            <p><a data-ui-sref="home" class="btn btn-primary" role="button">Back</a> </p>
+            <hr>
+            
+            <input ng-model="searchText" type="search">
+            <p><button class="btn btn-default" href="#" role="button" ng-click="search(searchText)">Search</button></p>
+            <div class="container">
+                <!-- Example row of columns -->
+                <ul class="media-list">
+                    <li class="media" ng-repeat="(i, result) in results" >
+                        <h4 class="media-heading">{{result.title}}</h4>
+                        <a class="pull-left" href="#">
+                            <img class="media-object" ng-src="{{result.artwork}}" >
+                        </a>
+                        <div class="media-body">
+                            by {{result.artist}}<br>
+                        </div>
+                        <button type="button" class="btn btn-default btn-lg" ng-click="addSong(i)">
+                            <span class="glyphicon glyphicon-plus" ></span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer">
+              <p>© Soundpoint 2014</p>
+            </div>
+
+        </div> <!-- /container -->
+
+        <div ng-controller="modalDemoCtrl">
+            <script type="text/ng-template" id="myModalContent.html">
+                <div class="modal-header">
+                    <h3 class="modal-title">Select friends</h3>
+                </div>
+                <div class="modal-body">
+                    <ul class="media-list">
+                        <li class="media" ng-repeat="(i,item) in items ">  
+                            <a class="pull-left" href="#">
+                                 <img class="media-object" ng-src="{{item.picture.data.url}}" >
+                            </a>
+                            <div class="float left media-body">
+                                <h4 class="media-heading">{{ item.name }}</h4> 
+                                <input calss="pull-right"  type="checkbox" ng-click="selectFriend(i)">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-click="ok()">OK</button>
+                    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                </div>
+            </script>
+
+        </div>
+    </body>
+</html>

@@ -90,8 +90,8 @@ var soundPoint = function(){
 		        self.app.use(session({secret: 'soundpoint'}));
 		        router(self.app, db);
 		        self.app.listen(self.port, self.ipaddress, function() {
-            	console.log('%s: Node server started on %s:%d ...',
-                        Date(Date.now() ), self.ipaddress, self.port);
+                            console.log('%s: Node server started on %s:%d ...',
+                            Date(Date.now() ), self.ipaddress, self.port);
         		});
 		        console.log('Server listening on port ' + self.port + '.');
 		    }
