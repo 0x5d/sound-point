@@ -20,7 +20,7 @@ describe('Array', function(){
 });
 
 describe('user',function(){
-    describe('null user',function(){
+    describe('finding home of null user',function(){
         it('should return 404', function(done){
             request('http://localhost:8888')
                 .get('/home/null')
@@ -32,11 +32,24 @@ describe('user',function(){
         });
     });
     
-    describe('insert user',function(){
+    describe('insert nad remove user',function(){
         it('should return 200 and a json',function(done){
+             var user = {
+                    userId: '123prueba',
+                    email: 'prueba',
+                    username: 'prueba'
+                }; 
             request('http://localhost:8888')
-                .get('/home/759347650777464')
-                .expect(200, done);
+                .post('/register')
+                .send(user)
+                .expect(200)
+                .end(function(err, res){
+                if(err) {
+                  done(err);
+                } else {
+                    //todo request eliminar
+                }
+      });
                 
             });
     });

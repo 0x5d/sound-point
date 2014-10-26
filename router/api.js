@@ -43,6 +43,17 @@ module.exports = function RequestsHandler(db){
         );
     };
     
+    //post
+    this.removeUser=function(req,res){
+       db.collection('users').remove({_id : ObjectID(req.body.userId)},function(err,result){
+            if(err){
+                res.status(501).send({'err' : err});
+            }else{
+                console.log(result);
+            }
+       });    
+   };
+    
     //POST
     this.addStationToUser = function(req, res){
         var query = {_id : req.body.userId};
