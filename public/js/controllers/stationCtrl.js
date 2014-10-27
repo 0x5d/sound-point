@@ -159,50 +159,51 @@ app.controller('stationCtrl', [
                 templateUrl: 'songSearchModal.html',
                 controller: 'songSearchModalCtrl',
                 resolve: {
-                    items: function () {
-                        return $scope.items;
+                    stationId: function () {
+                        return $stateParams.stationId;
                     }
                 }
             });
 
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
+            modalInstance.result.then(function (addedSong) {
+                if(!$scope.songs[0]){
+                    qmanager(addedSong);
+                }
             },
             function () {
             });
         };
 
-        $scope.addSong = function(i){
-            var song = {
-                songId : $scope.results[i].songId,
-                title : $scope.results[i].title,
-                artist : $scope.results[i].artist,
-                artwork : $scope.results[i].artwork,
-                url: $scope.results[i].url
-            };
-            var postData = {
-                stationId : $stateParams.stationId /**localStorage.getItem('stationId')**/,
-                'song' : song
-            };
-            $http.post('/newSong', postData).
-                success(
-                    function(data, status){
-                        console.log(data);
-                        if(!$scope.songs[0]){
-                            qmanager(data.song);
-                        }
-                        $scope.songs.push(data.song);
-                    }
-                ).
-                error(
-                    function(data, status){
-                        //TODO handle error
-                    }
-                );
-            //$scope.songs.push($scope.results[i]);
-            $scope.results = [];
-            //$scope.$apply();
-        };
+//        $scope.addSong = function(i){
+//            var song = {
+//                songId : $scope.results[i].songId,
+//                title : $scope.results[i].title,
+//                artist : $scope.results[i].artist,
+//                artwork : $scope.results[i].artwork,
+//                url: $scope.results[i].url
+//            };
+//            var postData = {
+//                stationId : $stateParams.stationId /**localStorage.getItem('stationId')**/,
+//                'song' : song
+//            };
+//            $http.post('/newSong', postData).
+//                success(
+//                    function(data, status){
+//                        if(!$scope.songs[0]){
+//                            qmanager(data.song);
+//                        }
+//                        $scope.songs.push(data.song);
+//                    }
+//                ).
+//                error(
+//                    function(data, status){
+//                        //TODO handle error
+//                    }
+//                );
+//            //$scope.songs.push($scope.results[i]);
+//            $scope.results = [];
+//            //$scope.$apply();
+//        };
 
         $scope.isPlaying = false;
 

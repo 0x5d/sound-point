@@ -2,11 +2,10 @@ app.controller('songSearchModalCtrl', [
     '$scope',
     '$http',
     '$modalInstance',
-    function ($scope, $http, $modalInstance) {
+    'stationId',
+    function ($scope, $http, $modalInstance, stationId) {
 
         $scope.items = [];
-        $scope.selected = {
-        };
         
         $scope.search = function(text){
             SC.get('/tracks', {'q' : text},
@@ -25,20 +24,26 @@ app.controller('songSearchModalCtrl', [
                 }
             );
         };
-
-        $scope.ok = function () {
-            $modalInstance.close($scope.selected.item);
-            for(var i = 0; i < $scope.items.length;i++){
-                
-            }
+        
+        $scope.addSong = function(song){
+            var postData = {
+                'stationId' : stationId,
+                'song' : song
+            };
+            $http.post('/newSong', postData).
+                success(
+                    function(data, status){
+                    }
+                ).
+                error(
+                    function(data, status){
+                        //TODO handle error
+                    }
+                );
+            $modalInstance.close(song);
         };
 
-        $scope.cancel = function () {
+        $scope.close = function () {
             $modalInstance.dismiss('cancel');
-        };
-
-        $scope.selectSong = function(i){
-            $scope.items[i].selected=!$scope.items[i].selected;
-            console.log($scope.items);
         };
 }]);

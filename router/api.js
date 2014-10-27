@@ -198,6 +198,44 @@ module.exports = function RequestsHandler(db){
         );
     };
     
+    this.addSongsToStation = function(req, res){
+        var query = {
+            _id : new ObjectID.createFromHexString(req.body.stationId)
+        };
+        var songs = req.body.songs;
+        var insert = [];
+        for(var i = 0; i < songs.length; i++){
+            var song = {
+                songId : songs[i].songId,
+                title : songs[i].title,
+                artist : songs[i].artist,
+                artwork : songs[i].artwork,
+                url : songs[i].url
+            };
+            insert.push(song);
+        }
+        var update = {
+            '$push' : {
+                'songs' : {
+                    '$each' : insert
+                }
+            }
+        };
+        db.collection('stations').update(query, update,
+            function(err, updated){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(updated){
+                    res.status(200).send({'song' : song});
+                }
+                else{
+                    res.status(404).send({'err' : 'Songs not added.'});
+                }
+            }
+        );
+    };
+    
     this.invite = function(req,res){
         var push={
             stationName : req.body.stationName,

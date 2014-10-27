@@ -58,7 +58,7 @@
                     <h1 ng-hide="songs.length == 0">{{currentSong.title}}</h1>
                     <h1 ng-show="songs.length == 0">No songs on this playlist :(</h1>
                     <p class="lead" ng-hide="currentSong.artist == undefined">
-                        by <b>{{currentTrack.artist}}</b>
+                        by <b>{{currentSong.artist}}</b>
                     </p>
                     <button type="button" class="btn btn-default btn-lg" ng-click="pause()" ng-hide="isPlaying" >
                         <span class="glyphicon glyphicon-pause" ></span>
@@ -96,25 +96,24 @@
                 </div>
             </div>
 -->
-            <ul class="media-list">
-                <li class="media" ng-repeat="song in songs">
-                    <h4 class="media-heading">{{song.title}}</h4>
-                    <a class="pull-left" href="#">
-                        <img class="media-object" ng-src="{{song.artwork}}" alt="...">
-                    </a>
-                    <div class="media-body">
-                        by {{song.artist}}<br>
-                    </div>
-                </li>
-            </ul>
-            <hr>
-            <p><a data-ui-sref="home" class="btn btn-primary" role="button">Back</a> </p>
-            <hr>
+                <ul class="media-list">
+                    <li class="media" ng-repeat="song in songs">
+                        <img class="media-object img-rounded img-responsive center-block" ng-src="{{song.artwork}}" alt="...">
+                        <div class="text-center">
+                            <h4 class="media-heading">{{song.title}}</h4><div class="media-body">
+                                by {{song.artist}}<br>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <hr>
+                <p><a data-ui-sref="home" class="btn btn-primary" role="button">Back</a> </p>
+                <hr>
             
+            <!--
             <input ng-model="searchText" type="search">
             <p><button class="btn btn-default" href="#" role="button" ng-click="search(searchText)">Search</button></p>
             <div class="container">
-                <!-- Example row of columns -->
                 <ul class="media-list">
                     <li class="media" ng-repeat="(i, result) in results" >
                         <h4 class="media-heading">{{result.title}}</h4>
@@ -130,6 +129,7 @@
                     </li>
                 </ul>
             </div>
+            -->
             <div class="footer">
               <p>© Soundpoint 2014</p>
             </div>
@@ -174,14 +174,14 @@
                             <img class="media-object pull-left" ng-src="{{item.artwork || 'https://cdn1.iconfinder.com/data/icons/appicns/128/appicns_iTunes.png'}}">
                             <div class="float left media-body">
                                 <h4 class="media-heading">{{ item.title }}</h4> 
-                                <input calss="pull-right"  type="checkbox" ng-click="selectSong(i)">
+                                <!--<input calss="pull-right"  type="checkbox" ng-click="selectSong(i)">-->
+                                <p><button class="btn btn-default pull-right" role="button" ng-click="addSong(item)"><span class="glyphicon glyphicon-plus"></span></button></p>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" ng-click="ok()">OK</button>
-                    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                    <button class="btn btn-warning" ng-click="close()">Back</button>
                 </div>
             </script>
         </div>
