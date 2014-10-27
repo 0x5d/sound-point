@@ -42,7 +42,6 @@ app.controller('fbFriendsModalCtrl', [
           controller: 'ModalInstanceCtrl',
           resolve: {
             items: function () {
-              console.log($scope.items);
               return $scope.items;
             }
           }
@@ -51,7 +50,6 @@ app.controller('fbFriendsModalCtrl', [
         modalInstance.result.then(function (selectedItem) {
           $scope.selected = selectedItem;
         }, function () {
-          $log.info('Modal dismissed at: ' + new Date());
         });
       };
     }]

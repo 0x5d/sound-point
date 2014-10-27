@@ -36,13 +36,13 @@
                             <ul class="nav pull-right">
                                 <li>
                                     <div class="btn-group">
-                                        <button ng-controller="songSearchModalCtrl" ng-click="searchSong()" type="button" class="btn btn-default navbar-btn">
-                                            <span class="glyphicon glyphicon-plus" ></span>
-                                            <span class="glyphicon glyphicon-music" ></span>
-                                        </button>
                                         <button ng-controller="fbFriendsModalCtrl" ng-click="addFriend()" type="button" class="btn btn-default navbar-btn">
                                             <span class="glyphicon glyphicon-plus" ></span>
                                             <span class="glyphicon glyphicon-user" ></span>
+                                        </button>
+                                        <button ng-click="openSongSearchModal()" type="button" class="btn btn-default navbar-btn">
+                                            <span class="glyphicon glyphicon-plus" ></span>
+                                            <span class="glyphicon glyphicon-music" ></span>
                                         </button>
                                     </div>
                                 </li>
@@ -136,7 +136,7 @@
 
         </div> <!-- /container -->
 
-        <div ng-controller="fbFriendsModalCtrl">
+        <div>
             <script type="text/ng-template" id="fbFriendsModal.html">
                 <div class="modal-header">
                     <h3 class="modal-title">Select friends</h3>
@@ -160,19 +160,20 @@
                 </div>
             </script>
         </div>
-        <div ng-controller="songSearchModalCtrl">
+        
+        <div>
             <script type="text/ng-template" id="songSearchModal.html">
                 <div class="modal-header">
                     <h3 class="modal-title">Search</h3>
                 </div>
                 <div class="modal-body">
+                    <input ng-model="searchText" type="search">
+                    <p><button class="btn btn-default" href="#" role="button" ng-click="search(searchText)">Search</button></p>
                     <ul class="media-list">
-                        <li class="media" ng-repeat="(i, item) in items">  
-                            <a class="pull-left" href="#">
-                                 <img class="media-object" ng-src="{{item.artwork_url}}" >
-                            </a>
+                        <li class="media" ng-repeat="(i, item) in items">
+                            <img class="media-object pull-left" ng-src="{{item.artwork || 'https://cdn1.iconfinder.com/data/icons/appicns/128/appicns_iTunes.png'}}">
                             <div class="float left media-body">
-                                <h4 class="media-heading">{{ item.user.username }}</h4> 
+                                <h4 class="media-heading">{{ item.title }}</h4> 
                                 <input calss="pull-right"  type="checkbox" ng-click="selectSong(i)">
                             </div>
                         </li>

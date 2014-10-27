@@ -1,33 +1,44 @@
 app.controller('songSearchModalCtrl', [
     '$scope',
-    '$modal',
-    '$log',
-    function ($scope, $modal, $log) {
+    '$http',
+    '$modalInstance',
+    function ($scope, $http, $modalInstance) {
+
         $scope.items = [];
-
-        var searchSong = function(){
-            $log.info('Add song clicked');
-            $scope.open();
+        $scope.selected = {
         };
-
-        $scope.open = function () {
-            var modalInstance = $modal.open({
-                templateUrl: 'songSearchModal.html',
-                controller: 'ModalInstanceCtrl',
-                resolve: {
-                    items: function () {
-                        return $scope.items;
+        
+        $scope.search = function(text){
+            SC.get('/tracks', {'q' : text},
+                function(tracks){
+                    for(var i = 0; i < tracks.length; i++){
+                        var track = {
+                            title : tracks[i].title,
+                            artwork : tracks[i].artwork_url,
+                            artist : tracks[i].user.username,
+                            songId : tracks[i].id,
+                            url : tracks[i].stream_url
+                        };
+                        $scope.items.push(track);
                     }
+                    $scope.$apply();
                 }
-            });
-
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
-            },
-            function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
+            );
         };
-    }]
-);
 
+        $scope.ok = function () {
+            $modalInstance.close($scope.selected.item);
+            for(var i = 0; i < $scope.items.length;i++){
+                
+            }
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+
+        $scope.selectSong = function(i){
+            $scope.items[i].selected=!$scope.items[i].selected;
+            console.log($scope.items);
+        };
+}]);

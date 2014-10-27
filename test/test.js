@@ -58,7 +58,6 @@ describe('user',function(){
             request('http://localhost:8888')
                 .get('/home/759347650777464')
                 .expect(200, done);
-                
         });
     });
 });

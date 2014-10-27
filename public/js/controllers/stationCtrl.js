@@ -10,7 +10,8 @@ app.controller('stationCtrl', [
     '$http',
     '$timeout',
     '$stateParams',
-    function($scope, $http, $timeout, $stateParams){
+    '$modal',
+    function($scope, $http, $timeout, $stateParams, $modal){
 
         $scope.songs = [];
         $scope.results = [];
@@ -135,22 +136,40 @@ app.controller('stationCtrl', [
                 );
         }
 
-        $scope.search = function(text) {
-            SC.get('/tracks', {'q' : text},
-                function(tracks){
-                    for(var i = 0; i < tracks.length; i++){
-                        var track = {
-                            title : tracks[i].title,
-                            artwork : tracks[i].artwork_url,
-                            artist : tracks[i].user.username,
-                            songId : tracks[i].id,
-                            url : tracks[i].stream_url
-                        };
-                        $scope.results.push(track);
+//        $scope.search = function(text) {
+//            SC.get('/tracks', {'q' : text},
+//                function(tracks){
+//                    for(var i = 0; i < tracks.length; i++){
+//                        var track = {
+//                            title : tracks[i].title,
+//                            artwork : tracks[i].artwork_url,
+//                            artist : tracks[i].user.username,
+//                            songId : tracks[i].id,
+//                            url : tracks[i].stream_url
+//                        };
+//                        $scope.results.push(track);
+//                    }
+//                    $scope.$apply();
+//                }
+//            );
+//        };
+        
+        $scope.openSongSearchModal = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'songSearchModal.html',
+                controller: 'songSearchModalCtrl',
+                resolve: {
+                    items: function () {
+                        return $scope.items;
                     }
-                    $scope.$apply();
                 }
-            );
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            },
+            function () {
+            });
         };
 
         $scope.addSong = function(i){
