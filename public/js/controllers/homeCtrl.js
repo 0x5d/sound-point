@@ -22,7 +22,7 @@ app.controller('homeCtrl', [
                                 success(
                                     function(data, status){
                                         //TODO change to angular
-                                        $("#hello").append(response.first_name);
+                                        //$("#hello").append(response.first_name);
                                         $scope.username = response.first_name;
                                         usr = $scope.userId=response.id;
                                         poller();
