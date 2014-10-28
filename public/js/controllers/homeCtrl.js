@@ -32,7 +32,6 @@ app.controller('homeCtrl', [
                                 ).
                                 error(
                                     function(data, status){
-                                        //console.log('Server returned with status ' + status + ': ' + data);
                                     }
                                 );
                         }
@@ -55,7 +54,6 @@ app.controller('homeCtrl', [
 //            localStorage.setItem('stationId', id);
 //            localStorage.setItem('stationName', stationName);
             $state.go('station', {stationId : id, 'stationName' : stationName});
-//            $window.location.href = '/station.html';
         };
         
         
@@ -107,7 +105,6 @@ app.controller('homeCtrl', [
               }
             },
             function () {
-//                $log.info('Modal dismissed at: ' + new Date());
             });
         };
             
