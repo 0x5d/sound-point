@@ -53,7 +53,7 @@
                 </div>
             </div>
         <div class="container">
-            <div class="jumbotron" ng-style="{'background-image':'url({{currentSong.artwork_url + ''}})'}">
+            <div class="jumbotron" ng-style="{'background-image': 'url(' + currentSong.artwork + ')', 'background-repeat' : 'no-repeat'}">
                 <div class="text-center">
                     <h1 ng-hide="songs.length == 0">{{currentSong.title}}</h1>
                     <h1 ng-show="songs.length == 0">No songs on this playlist :(</h1>

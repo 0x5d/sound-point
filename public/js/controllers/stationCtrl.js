@@ -12,7 +12,6 @@ app.controller('stationCtrl', [
     '$stateParams',
     '$modal',
     function($scope, $http, $timeout, $stateParams, $modal){
-
         $scope.songs = [];
         $scope.results = [];
         $scope.currentSong = {};
@@ -35,6 +34,7 @@ app.controller('stationCtrl', [
             if(songs.length > 0){
                 $scope.currentSong.title = songs[0].title;
                 $scope.currentSong.artist = songs[0].artist;
+                $scope.currentSong.artwork = songs[0].artwork;
                 var ids = songs[0].songId;
                 for(var i = 1; i < songs.length; i++){
                     ids += "," + songs[i].songId;
@@ -106,6 +106,7 @@ app.controller('stationCtrl', [
             if($scope.songs[0]){
                 $scope.currentSong.title = $scope.songs[0].title;
                 $scope.currentSong.artist = $scope.songs[0].artist;
+                $scope.currentSong.artwork = $scope.songs[0].artwork;
                 SC.stream($scope.songs[0].url, {onfinish:
                      function(){ 
                              var finishedSong = $scope.songs.shift();
