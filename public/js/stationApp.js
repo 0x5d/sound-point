@@ -151,6 +151,10 @@ app.controller('bodyController',
                     }
                 );
             };
+            $scope.dsearch = function() {
+                 $scope.results = [];
+                    $scope.$apply();
+            };
             
             $scope.addSong = function(i){
                 console.log($scope.results[i].url)
