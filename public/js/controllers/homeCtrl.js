@@ -112,7 +112,7 @@ app.controller('homeCtrl', [
                         if(data.notifications){
                             for(var i = 0; i < data.notifications.length; i++){
                                 $scope.invitations.push(data.notifications[i]);
-//                          TODO cahnge to angular
+//                              TODO cahnge to angular
                                 $("#invitations").append(
                                 "<li role=\"presentation\" class=\"dropdown-header\">"+data.notifications[i].stationName+"<br>"+
                                     "<button class=\"btn btn-primary\" onclick=\"answerInvitation("+i+",true)\">Accept</button>"+
