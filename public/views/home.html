@@ -23,10 +23,14 @@
                     </ul>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" ng-click="showCreate()">Create new <span class="glyphicon glyphicon-plus"></span></a></li>
+                    <li>
+                        <button ng-click="addNewStation()" type="button" class="btn btn-default navbar-btn">
+                            Create new <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </li>
                 </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+            </div>
+        </div>
     </nav>
     
     <div class="jumbotron">
@@ -53,9 +57,9 @@
             <div class="row">
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="station in stations" >
-                        <div ng-click="goToStation(station._id,station.stationName)">
+                        <div ng-click="goToStation(station._id, station.stationName, station.type)">
                             <h2>{{station.stationName}}</h2>
-                            <p>{{station.description}}</p>
+                            <p>{{station.type}} station</p>
                         </div>
                         <div>
                             <button type="button" id="delete-removeStation-btn" 
@@ -73,6 +77,40 @@
             </div>
         </div>
     </div> <!-- /container -->
+    
+    <script type="text/ng-template" id="addStationModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Add a new station</h3>
+        </div>
+        <div class="modal-body">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="nameInput">
+                <div class="input-group-btn">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                            type
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-form" role="menu">
+                            <li>
+                                <input type="radio" ng-click="setType('public')"> public
+                            </li>
+                            <li>
+                                <input type="radio" ng-click="setType('private')"> private
+                            </li>
+                            <li>
+                                <input type="radio" ng-click="setType('voting')"> voting
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
     
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">

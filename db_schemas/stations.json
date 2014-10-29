@@ -1,6 +1,7 @@
 {
     "_id" : "p0we8qe09rfqergqpoerg",
     "stationName": "SWAG",
+    "type" : "voting | public | private",
     "songs" : [
         {
             "songId" : "10976",

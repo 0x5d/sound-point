@@ -12,10 +12,14 @@ app.controller('stationCtrl', [
     '$stateParams',
     '$modal',
     function($scope, $http, $timeout, $stateParams, $modal){
+        $scope.station = {
+            stationId : $stateParams.stationId,
+            stationName : $stateParams.stationName
+        };
         $scope.songs = [];
         $scope.results = [];
         $scope.currentSong = {};
-        $http.get('/station/' + $stateParams.stationId)//localStorage.getItem('stationId')).
+        $http.get('/station/' + $scope.station.stationId)//localStorage.getItem('stationId')).
             .success(
                 function(data, status){
                     if(data.station.songs){
@@ -84,7 +88,7 @@ app.controller('stationCtrl', [
                         $scope.$apply();
                         currentTrack = null;
                         qmanager($scope.songs[0]);
-                        removeSong($stateParams.stationId /**localStorage.getItem('stationId')**/, finishedSong.songId);   
+                        removeSong($scope.station.stationId /**localStorage.getItem('stationId')**/, finishedSong.songId);   
                     }}, 
                     function(sound){
                         currentTrack = sound;
@@ -93,7 +97,7 @@ app.controller('stationCtrl', [
                 );
             }else if($scope.songs[0]){
                 var lastSong = $scope.songs.shift();
-                removeSong($stateParams.stationId /**localStorage.getItem('stationId')**/, lastSong.songId);
+                removeSong($scope.station.stationId /**localStorage.getItem('stationId')**/, lastSong.songId);
             }
         }
 
@@ -101,7 +105,7 @@ app.controller('stationCtrl', [
             if($scope.songs[0]){
                 currentTrack.stop();
                 var lastSong = $scope.songs.shift();
-                removeSong($stateParams.stationId /**localStorage.getItem('stationId')**/, lastSong.songId);
+                removeSong($scope.station.stationId /**localStorage.getItem('stationId')**/, lastSong.songId);
             }
             if($scope.songs[0]){
                 $scope.currentSong.title = $scope.songs[0].title;
@@ -112,7 +116,7 @@ app.controller('stationCtrl', [
                              var finishedSong = $scope.songs.shift();
                              $scope.$apply();
                              qmanager($scope.songs[0]);
-                             removeSong($stateParams.stationId /**localStorage.getItem('stationId')**/, finishedSong.songId);                            
+                             removeSong($scope.station.stationId /**localStorage.getItem('stationId')**/, finishedSong.songId);                            
                          }}, 
                      function(sound){
                          currentTrack = sound;
@@ -161,7 +165,7 @@ app.controller('stationCtrl', [
                 controller: 'songSearchModalCtrl',
                 resolve: {
                     stationId: function () {
-                        return $stateParams.stationId;
+                        return $scope.station.stationId;
                     }
                 }
             });
@@ -270,10 +274,10 @@ app.controller('stationCtrl', [
                                     return friends;
                                 },
                                 stationName : function(){
-                                    return $stateParams.stationName; 
+                                    return $scope.station.stationName; 
                                 },
                                 stationId : function(){
-                                    return $stateParams.stationId; 
+                                    return $scope.station.stationId; 
                                 }
                             }
                         });
@@ -295,7 +299,7 @@ app.controller('stationCtrl', [
                     currentSongs.push({songId : $scope.songs[i].songId});
                 }
                 $http.get('/pollStation/'
-                    + $stateParams.stationId /**localStorage.getItem('stationId')**/
+                    + $scope.station.stationId /**localStorage.getItem('stationId')**/
                     + '/' + JSON.stringify(currentSongs)).
                 success(
                     function(data, status){

@@ -80,8 +80,8 @@ module.exports = function RequestsHandler(db){
     this.createStation = function(req, res){
         var station = {
             stationName : req.body.stationName,
-            description : req.body.desc,
-            songs : []
+            songs : [],
+            type : req.body.type
         };
         db.collection('stations').insert(station,
             function(err, inserted){

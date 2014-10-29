@@ -5,7 +5,7 @@ app.controller('homeCtrl', [
     '$modal',
     '$timeout',
     function($scope, $http, $state, $modal, $timeout){
-        $scope.username="";
+        $scope.username = "";
         $scope.userId;
         $scope.stations = [];
         $scope.showCreateStation = true;
@@ -48,8 +48,8 @@ app.controller('homeCtrl', [
             }
         }
 
-        $scope.goToStation = function(id, stationName){
-            $state.go('station', {stationId : id, 'stationName' : stationName});
+        $scope.goToStation = function(id, stationName, type){
+            $state.go('station', {stationId : id, 'stationName' : stationName, 'type' : type});
         };
         
         
@@ -59,7 +59,7 @@ app.controller('homeCtrl', [
         
         $scope.createNewStation = function(){
             if($scope.stationName != ''){
-                var newStation = {'stationName' : $scope.newStationName, desc : 'Fresh.'};
+                var newStation = {'stationName' : $scope.newStationName, type : 'private'};
                 $http.post('/newStation', newStation).
                     success(
                         function(data, status){
@@ -72,7 +72,28 @@ app.controller('homeCtrl', [
                     );
             }
         };
-            
+        
+        $scope.addNewStation = function(){
+            var modalInstance = $modal.open({
+                templateUrl: 'addStationModal.html',
+                controller: 'addStationModalCtrl'
+            });
+            modalInstance.result.then(function (name, type) {
+                if(name){
+                    $http.get().
+                    success(
+                        function(data,status){
+                        }
+                    ).
+                    error(
+                        function(data, status){
+                        }
+                    );
+                }
+            },
+            function () {
+            });
+        };
           
         $scope.removeStation  = function (station) {
 
