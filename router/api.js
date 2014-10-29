@@ -463,7 +463,7 @@ module.exports = function RequestsHandler(db){
                     );
                 }
                 else{
-                    res.status(404).send({'err' : 'station wasn´t remove.'});
+                    res.status(404).send({'err' : 'station wasn´t removed.'});
                 }
             }
          );

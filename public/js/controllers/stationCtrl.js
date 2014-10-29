@@ -217,6 +217,76 @@ app.controller('stationCtrl', [
             currentTrack.play();
             $scope.isPlaying = false;
         };
+        
+//        $scope.addFriend = function(){
+//            FB.api(
+//                "/me/friends?fields=id,name,picture",
+//                function (response) {
+//                    if (response && !response.error) {
+//                        $scope.items=[];
+//                        response.data.forEach(function(friend) {
+//                            //console.log(friend);
+//                            var obj ={
+//                                name:friend.name,
+//                                id:friend.id,
+//                                picture:friend.picture,
+//                                selected:false
+//                            };
+//                            $scope.items.push(obj  );
+//                        });
+//                        //globalFriends = $scope.items;
+//                        $scope.$apply();
+//                        $scope.openFriendsModal();
+//                    }
+//                }
+//            );
+//        };
+
+
+        $scope.openFriendsModal = function () {
+            FB.api(
+                "/me/friends?fields=id,name,picture",
+                function (response) {
+                    if (response && !response.error) {
+                        var friends = [];
+                        response.data.forEach(function(friend) {
+                            //console.log(friend);
+                            var obj ={
+                                name:friend.name,
+                                id:friend.id,
+                                picture:friend.picture,
+                                selected:false
+                            };
+                            friends.push(obj);
+                        });
+                        //globalFriends = $scope.items;
+//                        $scope.$apply();
+//                        $scope.openFriendsModal();
+                        var modalInstance = $modal.open({
+                            templateUrl: 'fbFriendsModal.html',
+                            controller: 'modalInstanceCtrl',
+                            resolve: {
+                                items: function () {
+                                    return friends;
+                                },
+                                stationName : function(){
+                                    return $stateParams.stationName; 
+                                },
+                                stationId : function(){
+                                    return $stateParams.stationId; 
+                                }
+                            }
+                        });
+
+                        modalInstance.result.then(function (selectedItem) {
+                            $scope.selected = selectedItem;
+                        }, 
+                        function () {
+                        });
+                    }
+                }
+            );
+        };
 
         var pollSongs = function(){
             if($scope.songs){

@@ -21,8 +21,6 @@ app.controller('homeCtrl', [
                             $http.get('/home/' + response.id).
                                 success(
                                     function(data, status){
-                                        //TODO change to angular
-                                        //$("#hello").append(response.first_name);
                                         $scope.username = response.first_name;
                                         usr = $scope.userId=response.id;
                                         poller();
@@ -51,8 +49,6 @@ app.controller('homeCtrl', [
         }
 
         $scope.goToStation = function(id, stationName){
-//            localStorage.setItem('stationId', id);
-//            localStorage.setItem('stationName', stationName);
             $state.go('station', {stationId : id, 'stationName' : stationName});
         };
         
@@ -116,7 +112,7 @@ app.controller('homeCtrl', [
                         if(data.notifications){
                             for(var i = 0; i < data.notifications.length; i++){
                                 $scope.invitations.push(data.notifications[i]);
-                                console.log(data.notifications[i]);
+//                          TODO cahnge to angular
                                 $("#invitations").append(
                                 "<li role=\"presentation\" class=\"dropdown-header\">"+data.notifications[i].stationName+"<br>"+
                                     "<button class=\"btn btn-primary\" onclick=\"answerInvitation("+i+",true)\">Accept</button>"+
@@ -124,7 +120,6 @@ app.controller('homeCtrl', [
                                 "</li>");
                             }
                             inv =  $scope.invitations;
-//                          TODO cahnge to angular
                         }
                         $timeout(poller, 1000);
                     }
@@ -144,7 +139,6 @@ var answerInvitation = function(i, b){
     }
     inv = ainv;
     $.ajax({url:'/answer/'+i+"/"+JSON.stringify(send)+"/"+usr,type:'GET'}).success(function(data,status) {
-        console.log(data);
     });
 };
 

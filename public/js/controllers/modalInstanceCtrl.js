@@ -1,9 +1,11 @@
-app.controller('ModalInstanceCtrl', [
+app.controller('modalInstanceCtrl', [
     '$scope',
     '$http',
     '$modalInstance',
     'items',
-    function ($scope, $http,$modalInstance, items) {
+    'stationName',
+    'stationId',
+    function ($scope, $http,$modalInstance, items, stationName, stationId) {
 
         $scope.items = items;
         $scope.selected = {
@@ -12,25 +14,21 @@ app.controller('ModalInstanceCtrl', [
 
         $scope.ok = function () {
             $modalInstance.close($scope.selected.item);
-            console.log(localStorage.getItem('stationName'));
             for(var i = 0; i < $scope.items.length;i++){
                 if($scope.items[i].selected==true){
                     var Station = {
-                        stationName : localStorage.getItem('stationName'), 
+                        stationName : stationName, 
                         desc : 'Invited.',
-                        staionId : localStorage.getItem('stationId'),
+                        staionId : stationId,
                         userId : $scope.items[i].id
                     };
                     $http.post('/invite', Station).
                         success(
-                        //$http.post('http://localhost:8888/newStation', {'newStation' : newStation}).success(
                             function(data, status){
-                                console.log("done");
                             }
                         ).
                         error(
                             function(data, status){
-                                console.log(data);
                             }
                         );
                 }
@@ -43,7 +41,6 @@ app.controller('ModalInstanceCtrl', [
 
         $scope.selectFriend = function(i){
             $scope.items[i].selected=!$scope.items[i].selected;
-            console.log($scope.items);
         };
 }]);
 
