@@ -3,14 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var should = require('should'); 
-var assert = require('assert');
-var request = require('supertest');  
+var should ;//= require('should'); 
+var assert ;//= require('assert');
+var request ;//= require('supertest');  
 //var mongoose = require('mongoose');
 //var winston = require('winston');
 //var index = require("../router/index");
-var assert = require("assert"); // node.js core module
-
+var assert ;//= require("assert"); // node.js core module
+define(function (require) {
+     should = require('should');
+     assert = require('assert');
+     request = require('supertest');
+     assert = require('assert');
+});
 describe('Array', function(){
   describe('#indexOf()', function(){
     it('should return -1 when the value is not present', function(){
