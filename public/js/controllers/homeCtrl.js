@@ -133,35 +133,44 @@ app.controller('homeCtrl', [
                         if(data.notifications){
                             for(var i = 0; i < data.notifications.length; i++){
                                 $scope.invitations.push(data.notifications[i]);
-//                              TODO cahnge to angular
-                                $("#invitations").append(
-                                "<li role=\"presentation\" class=\"dropdown-header\">"+data.notifications[i].stationName+"<br>"+
-                                    "<button class=\"btn btn-primary\" onclick=\"answerInvitation("+i+",true)\">Accept</button>"+
-                                    "<button class=\"btn btn-warning\" onclick=\"answerInvitation("+i+",false)\">Cancel</button>"+
-                                "</li>");
                             }
-                            inv =  $scope.invitations;
                         }
                         $timeout(poller, 1000);
                     }
                 );
         };
+        
+        $scope.answerInvitation = function(i, accepted){
+            var ainv =[];
+            var send = $scope.invitations[i];
+            send.accepted = accepted;
+            for (var j=0;j<$scope.invitations.length;j++){
+                if(i!=j){
+                    ainv.push($scope.invitations[j]);
+                }
+            }
+            delete send.$$hashKey;
+            $scope.invitations = ainv;
+            $http.get('/answer/'+ JSON.stringify(send) +'/'+ $scope.userId).
+                success(
+                    function(data, status){
+                        delete send.accepted;
+                        $scope.stations.push(send);
+                        console.log(data);
+                        console.log($scope.stations);
+                        console.log(send);
+                    }
+                ).
+                error(
+                    function(data, status){
+                    }
+                );
+            
+        };
     }]
 );
 
-var inv;
-var answerInvitation = function(i, b){
-    var ainv =[];
-    var send = inv[i];
-    for (var j=0;j<inv.length;j++){
-        if(i!=j){
-            ainv.push(inv[j]);
-        }
-    }
-    inv = ainv;
-    $.ajax({url:'/answer/'+i+"/"+JSON.stringify(send)+"/"+usr,type:'GET'}).success(function(data,status) {
-    });
-};
+
 
 app.controller('ModalRemoveStationInstanceCtrl', function ($scope, $modalInstance) {
 

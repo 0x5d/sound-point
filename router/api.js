@@ -433,6 +433,7 @@ module.exports = function RequestsHandler(db){
     
     this.answerInvitations = function(req,res){
         var loaded = JSON.parse(req.params.ans);
+        console.log(loaded);
         var query = { _id : req.params.userId };
         var update = {
             $pull : {
@@ -445,22 +446,27 @@ module.exports = function RequestsHandler(db){
                     res.status(500).send({'err' : err});
                 }
                 else if(updated){
-                    var update = {'$push' : {'stations' : loaded}};
-                    db.collection('users').update(query, update,
-                        function(err, updated){
-                            if(err){
-                                res.status(501).send({'err' : err});
-                            }
-                            else{
-                                if(updated == 1){
-                                    res.status(200).send({'updated' : updated});
+                    if(loaded.accepted){
+                        var update = {'$push' : {'stations' : loaded}};
+                        db.collection('users').update(query, update,
+                            function(err, updated){
+                                if(err){
+                                    console.log(err);
+                                    res.status(500).send({'err' : err});
                                 }
                                 else{
-                                    res.status(404).send({'error' : 'User not updated'});
+                                    if(updated == 1){
+                                        res.status(200).send({'updated' : updated});
+                                    }
+                                    else{
+                                        res.status(404).send({'error' : 'User not updated'});
+                                    }
                                 }
                             }
-                        }
-                    );
+                        );
+                    }else{
+                        res.status(200).send({updated:"removed"});
+                    }
                 }
                 else{
                     res.status(404).send({'err' : 'station wasn´t removed.'});
