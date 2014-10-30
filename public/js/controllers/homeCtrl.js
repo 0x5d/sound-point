@@ -82,12 +82,12 @@ app.controller('homeCtrl', [
         
         $scope.addNewStation = function(){
             var modalInstance = $modal.open({
-                templateUrl: 'addStationModal.html',
-                controller: 'addStationModalCtrl'
+                templateUrl : 'addStationModal.html',
+                controller : 'addStationModalCtrl'
             });
             modalInstance.result.then(function (station) {
                 if(station.stationName){
-                    $http.post('/newStation', station).
+                    $http.post('/newStation', {station : station, userId : $scope.userId}).
                         success(
                             function(data, status){
                                 $scope.stations.push(data);
