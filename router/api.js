@@ -66,7 +66,29 @@ module.exports = function RequestsHandler(db){
                 }
                 else{
                     if(updated == 1){
-                        res.status(200).send({'updated' : updated});
+                        query = {
+                            _id : new ObjectID.createFromHexString(req.body.station._id)
+                        };
+                        update = {
+                            '$push' : {
+                                users : ObjectID.createFromHexString(req.body.userId)
+                            }
+                        };
+                        db.collection('stations').update(query, update,
+                            function(err, updated){
+                                if(err){
+                                    res.status(501).send({'err' : err});
+                                }
+                                else{
+                                    if(updated == 1){
+                                        
+                                     res.status(200).send({'updated' : updated});
+                                    }else{
+                                         res.status(404).send({'error' : 'User not updated'});
+                                    }
+                                }
+                            }
+                        );
                     }
                     else{
                         res.status(404).send({'error' : 'User not updated'});
