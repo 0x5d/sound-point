@@ -433,7 +433,6 @@ module.exports = function RequestsHandler(db){
     
     this.answerInvitations = function(req,res){
         var loaded = JSON.parse(req.params.ans);
-        console.log(loaded);
         var query = { _id : req.params.userId };
         var update = {
             $pull : {
@@ -451,7 +450,6 @@ module.exports = function RequestsHandler(db){
                         db.collection('users').update(query, update,
                             function(err, updated){
                                 if(err){
-                                    console.log(err);
                                     res.status(500).send({'err' : err});
                                 }
                                 else{
