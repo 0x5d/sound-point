@@ -89,7 +89,7 @@ app.controller('homeCtrl', [
             modalInstance.result.then(function (station) {
                 if(station.stationName){
                     console.log(station.stationName + ' ' + station.type);
-                    $http.post('/newStation', station).
+                    $http.post('/newStation', {station:station,userId:$scope.userId}).
                         success(
                             function(data, status){
                                 $scope.stations.push(data);

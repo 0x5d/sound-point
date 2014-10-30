@@ -101,7 +101,7 @@ module.exports = function RequestsHandler(db){
     //POST
     this.createStation = function(req, res){
         var station = {
-            stationName : req.body.stationName,
+            stationName : req.body.station.stationName,
             songs : [],
             type : req.body.type
         };
@@ -112,7 +112,7 @@ module.exports = function RequestsHandler(db){
                 }
                 else{
                     var query = {
-                        _id : req.session.userId + ''
+                        _id : req.body.userId + ''
                     };
                     var update = {
                         '$push' : {
