@@ -53,8 +53,8 @@
             <!-- Example row of columns -->
             <div class="row">
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="station in stations"  ng-click="goToStation(station._id, station.stationName, station.type)">
-                        <div>
+                    <li class="list-group-item" ng-repeat="station in stations">
+                        <div ng-click="goToStation(station._id, station.stationName, station.type)">
                             <h2>{{station.stationName}}</h2>
                             <p>{{station.type}} station</p>
                         </div>

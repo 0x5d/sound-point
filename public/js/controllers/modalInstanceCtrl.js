@@ -5,7 +5,7 @@ app.controller('modalInstanceCtrl', [
     'items',
     'stationName',
     'stationId',
-    function ($scope, $http,$modalInstance, items, stationName, stationId) {
+    function ($scope, $http, $modalInstance, items, stationName, stationId) {
 
         $scope.items = items;
         $scope.selected = {
@@ -17,8 +17,7 @@ app.controller('modalInstanceCtrl', [
             for(var i = 0; i < $scope.items.length;i++){
                 if($scope.items[i].selected==true){
                     var Station = {
-                        stationName : stationName, 
-                        desc : 'Invited.',
+                        stationName : stationName,
                         staionId : stationId,
                         userId : $scope.items[i].id
                     };
