@@ -8,7 +8,6 @@ app.controller('homeCtrl', [
         $scope.username = "";
         $scope.userId;
         $scope.stations = [];
-        $scope.showCreateStation = true;
         $scope.invitations =[];
         
         FB.getLoginStatus(
@@ -52,27 +51,6 @@ app.controller('homeCtrl', [
             $state.go('station', {stationId : id, 'stationName' : stationName, 'type' : type});
         };
         
-        
-        $scope.showCreate = function(){
-            $scope.showCreateStation = !$scope.showCreateStation;
-        };
-        
-        $scope.createNewStation = function(){
-            if($scope.stationName != ''){
-                var newStation = {'stationName' : $scope.newStationName, type : 'private'};
-                $http.post('/newStation', newStation).
-                    success(
-                        function(data, status){
-                            $scope.stations.push(data);
-                        }
-                    ).
-                    error(
-                        function(data, status){
-                        }
-                    );
-            }
-        };
-        
         $scope.addNewStation = function(){
             var modalInstance = $modal.open({
                 templateUrl: 'addStationModal.html',
@@ -81,15 +59,16 @@ app.controller('homeCtrl', [
             modalInstance.result.then(function (station) {
                 if(station.stationName){
                     console.log(station.stationName + ' ' + station.type);
-//                    $http.get().
-//                    success(
-//                        function(data,status){
-//                        }
-//                    ).
-//                    error(
-//                        function(data, status){
-//                        }
-//                    );
+                    $http.post('/newStation', station).
+                        success(
+                            function(data, status){
+                                $scope.stations.push(data);
+                            }
+                        ).
+                        error(
+                            function(data, status){
+                            }
+                        );
                 }
             },
             function () {

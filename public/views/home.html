@@ -14,24 +14,26 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <div class="dropdown nav navbar-nav navbar-right">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                        Invitations
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation" class="dropdown-header" ng-repeat="(i,invitation) in invitations">
-                            <h4>{{invitation.stationName}}</h4>
-                            <button class="btn btn-success" ng-click="answerInvitation(i,true)"><span class="glyphicon glyphicon-plus"></span></button>
-                            <button class="btn btn-danger" ng-click="answerInvitation(i,false)"><span class="glyphicon glyphicon-remove"></span></button>
-                        </li>
-                    </ul>
-                </div>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <button ng-click="addNewStation()" type="button" class="btn btn-default navbar-btn">
                             Create new <span class="glyphicon glyphicon-plus"></span>
                         </button>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                                Invitations
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li role="presentation" class="dropdown-header" ng-repeat="(i,invitation) in invitations">
+                                    <h4>{{invitation.stationName}}</h4>
+                                    <button class="btn btn-success" ng-click="answerInvitation(i,true)"><span class="glyphicon glyphicon-plus"></span></button>
+                                    <button class="btn btn-danger" ng-click="answerInvitation(i,false)"><span class="glyphicon glyphicon-remove"></span></button>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -46,23 +48,13 @@
     </div>
     
     <div class="container">
-        <div class="row" ng-show="showCreateStation">
-            <div class="col-lg-6">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Station name" ng-model="newStationName">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" ng-click="createNewStation(newStationName)">Create</button>
-                    </span>
-                </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
         <p></p>
         <div class="container">
             <!-- Example row of columns -->
             <div class="row">
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="station in stations" >
-                        <div ng-click="goToStation(station._id, station.stationName, station.type)">
+                    <li class="list-group-item" ng-repeat="station in stations"  ng-click="goToStation(station._id, station.stationName, station.type)">
+                        <div>
                             <h2>{{station.stationName}}</h2>
                             <p>{{station.type}} station</p>
                         </div>
@@ -74,14 +66,11 @@
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </div>
-                    <!-- <li class="list-group-item" ng-repeat="station in stations" ng-click="goToStation(station._id,station.stationName)">
-                        <h2>{{station.stationName}}</h2>
-                        <p>{{station.description}}</p> -->
                     </li>
                 </ul>
             </div>
         </div>
-    </div> <!-- /container -->
+    </div>
     
     <script type="text/ng-template" id="addStationModal.html">
         <div class="modal-header">
