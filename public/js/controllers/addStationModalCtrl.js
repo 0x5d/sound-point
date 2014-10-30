@@ -3,12 +3,18 @@ app.controller('addStationModalCtrl', [
     '$modalInstance',
     function ($scope, $modalInstance) {
 
+        $scope.station = {
+            type : 'private'
+        };
+
         $scope.setType = function(type){
-            
+            $scope.station.type = type;
+            console.log(type);
         };
 
         $scope.ok = function () {
-            $modalInstance.close($scope.nameInput);
+            $scope.station.stationName = $scope.nameInput;
+            $modalInstance.close($scope.station);
         };
 
         $scope.cancel = function () {
