@@ -9,7 +9,6 @@ app.controller('addStationModalCtrl', [
 
         $scope.setType = function(type){
             $scope.station.type = type;
-            console.log(type);
         };
 
         $scope.ok = function () {

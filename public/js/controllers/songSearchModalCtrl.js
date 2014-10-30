@@ -1,9 +1,7 @@
 app.controller('songSearchModalCtrl', [
     '$scope',
-    '$http',
     '$modalInstance',
-    'stationId',
-    function ($scope, $http, $modalInstance, stationId) {
+    function ($scope, $modalInstance) {
 
         $scope.items = [];
         
@@ -26,20 +24,6 @@ app.controller('songSearchModalCtrl', [
         };
         
         $scope.addSong = function(song){
-            var postData = {
-                'stationId' : stationId,
-                'song' : song
-            };
-            $http.post('/newSong', postData).
-                success(
-                    function(data, status){
-                    }
-                ).
-                error(
-                    function(data, status){
-                        //TODO handle error
-                    }
-                );
             $modalInstance.close(song);
         };
 

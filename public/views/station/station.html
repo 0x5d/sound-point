@@ -15,7 +15,7 @@
                         </div>
                         <div class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
-                                <li class="active"><a href="#">Home</a></li>
+                                <li class="active"><a data-ui-sref="home">Home</a></li>
                                 <li><a href="#about">About</a></li>
                             </ul>
                             <ul class="nav pull-right">
@@ -60,19 +60,21 @@
                 </div>
             </div>
             <ul class="media-list">
-                <li class="media" ng-repeat="song in songs">
+                <li class="media" ng-repeat="(i, song) in songs">
                     <img class="media-object img-rounded img-responsive center-block" ng-src="{{song.artwork  || 'https://cdn1.iconfinder.com/data/icons/appicns/128/appicns_iTunes.png'}}" alt="...">
                     <div class="text-center">
                         <h4 class="media-heading">{{song.title}}</h4><div class="media-body">
                             by {{song.artist}}<br>
                         </div>
-                        <button type="button" 
-                                data-loading-text="Loading..." 
-                                class="btn"
-                                ng-click=""
-                                ng-show="station.type == 'voting'">
-                            <span class="glyphicon glyphicon-thumbs-up"></span>
-                        </button>
+                        <div>
+                            {{song.votes}} votes
+                            <button type="button" 
+                                    data-loading-text="Loading..." 
+                                    class="btn"
+                                    ng-click="voteUp(i)">
+                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                            </button>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -122,8 +124,7 @@
                         <li class="media" ng-repeat="(i, item) in items">
                             <img class="media-object pull-left" ng-src="{{item.artwork || 'https://cdn1.iconfinder.com/data/icons/appicns/128/appicns_iTunes.png'}}">
                             <div class="float left media-body">
-                                <h4 class="media-heading">{{ item.title }}</h4> 
-                                <!--<input calss="pull-right"  type="checkbox" ng-click="selectSong(i)">-->
+                                <h4 class="media-heading">{{ item.title }}</h4>
                                 <p><button class="btn btn-default pull-right" role="button" ng-click="addSong(item)"><span class="glyphicon glyphicon-plus"></span></button></p>
                             </div>
                         </li>

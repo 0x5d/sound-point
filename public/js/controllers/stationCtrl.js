@@ -43,7 +43,8 @@ app.controller('stationCtrl', [
                 for(var i = 1; i < songs.length; i++){
                     ids += "," + songs[i].songId;
                 }
-                    getTracks(ids);
+                $scope.songs = songs;
+                getTracks(ids);
 
             }
         }
@@ -57,15 +58,21 @@ app.controller('stationCtrl', [
                         }
                         var track;
                         for(var i = 0; i < tracks.length; i++){
-                            track = {
-                                title : tracks[i].title,
-                                artwork : tracks[i].artwork_url,
-                                artist : tracks[i].user.username,
-                                description:tracks[i].description,
-                                songId : tracks[i].id,
-                                url : tracks[i].stream_url
-                            };
-                            $scope.songs.push(track);
+                            $scope.songs[i].title = tracks[i].title;
+                            $scope.songs[i].artwork = tracks[i].artwork_url;
+                            $scope.songs[i].artist = tracks[i].user.username;
+                            $scope.songs[i].description = tracks[i].description;
+                            $scope.songs[i].songId = tracks[i].id;
+                            $scope.songs[i].url = tracks[i].stream_url;
+//                            track = {
+//                                title : tracks[i].title,
+//                                artwork : tracks[i].artwork_url,
+//                                artist : tracks[i].user.username,
+//                                description:tracks[i].description,
+//                                songId : tracks[i].id,
+//                                url : tracks[i].stream_url
+//                            };
+//                            $scope.songs.push(track);
                         }
                         $scope.$apply();
                         qmanager($scope.songs[0]);
@@ -119,13 +126,32 @@ app.controller('stationCtrl', [
             }
         };
 
+        addSong = function(song){
+            if($scope.station.type == 'voting'){
+                song.votes = 1;
+            }
+            var postData = {
+                'stationId' : $scope.station.stationId,
+                'song' : song
+            };
+            $http.post('/newSong', postData).
+                success(
+                    function(data, status){
+                    }
+                ).
+                error(
+                    function(data, status){
+                        //TODO handle error
+                    }
+                );
+        };
+        
         function removeSong(stationId, songId){
            $http.get('/station/removeSong/'
                 + stationId
                 + '/' + songId).
                 success(
                     function(data, status){
-
                     }
                 ).
                 error(
@@ -137,15 +163,11 @@ app.controller('stationCtrl', [
         $scope.openSongSearchModal = function () {
             var modalInstance = $modal.open({
                 templateUrl: 'songSearchModal.html',
-                controller: 'songSearchModalCtrl',
-                resolve: {
-                    stationId: function () {
-                        return $scope.station.stationId;
-                    }
-                }
+                controller: 'songSearchModalCtrl'
             });
 
             modalInstance.result.then(function (addedSong) {
+                addSong(addedSong);
                 if(!$scope.songs[0]){
                     qmanager(addedSong);
                 }
@@ -164,6 +186,10 @@ app.controller('stationCtrl', [
         $scope.play = function(){
             currentTrack.play();
             $scope.isPlaying = false;
+        };
+        
+        $scope.voteUp = function(index){
+            
         };
 
         $scope.openFriendsModal = function () {

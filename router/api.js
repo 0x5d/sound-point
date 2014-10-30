@@ -178,6 +178,9 @@ module.exports = function RequestsHandler(db){
             artwork : req.body.song.artwork,
             url : req.body.song.url
         };
+        if(req.body.song.votes){
+            song.votes = req.body.song.votes;
+        }
         var update = {
             '$push' : {
                 songs : song

@@ -77,7 +77,6 @@ app.controller('homeCtrl', [
         }
 
         $scope.goToStation = function(id, stationName, type){
-            console.log(type);
             $state.go('station', {stationId : id, 'stationName' : stationName, 'type' : type});
         };
         
@@ -88,7 +87,6 @@ app.controller('homeCtrl', [
             });
             modalInstance.result.then(function (station) {
                 if(station.stationName){
-                    console.log(station.stationName + ' ' + station.type);
                     $http.post('/newStation', station).
                         success(
                             function(data, status){
