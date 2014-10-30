@@ -11,7 +11,8 @@ app.controller('stationCtrl', [
     '$timeout',
     '$stateParams',
     '$modal',
-    function($scope, $http, $timeout, $stateParams, $modal){
+    '$filter',
+    function($scope, $http, $timeout, $stateParams, $modal, $filter){
         $scope.station = {
             stationId : $stateParams.stationId,
             stationName : $stateParams.stationName,
@@ -189,7 +190,9 @@ app.controller('stationCtrl', [
         };
         
         $scope.voteUp = function(index){
-            
+            $scope.songs[index].votes++;
+            $scope.songs = $filter('orderBy')($scope.songs, 'votes', true);
+            $scope.$apply();
         };
 
         $scope.openFriendsModal = function () {
