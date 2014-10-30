@@ -4,43 +4,72 @@ app.controller('homeCtrl', [
     '$state',
     '$modal',
     '$timeout',
-    function($scope, $http, $state, $modal, $timeout){
+    '$window',
+    function($scope, $http, $state, $modal, $timeout,$window){
         $scope.username = "";
         $scope.userId;
         $scope.stations = [];
         $scope.showCreateStation = true;
         $scope.invitations =[];
-        
-        FB.getLoginStatus(
-            function(response1) {
-                if (response1 && !response1.error) {
-                    FB.api(
-                    "/me",
-                    function (response) {
-                        if(response.id){
-                            $http.get('/home/' + response.id).
-                                success(
-                                    function(data, status){
-                                        $scope.username = response.first_name;
-                                        usr = $scope.userId=response.id;
-                                        poller();
-                                        $scope.stations = data.stations;
-                                        setupData();
-                                    }
-                                ).
-                                error(
-                                    function(data, status){
-                                    }
-                                );
-                        }
-                        else{
-                            $state.go('login');
-                        }
-                    });
+        function fbinit(){
+            try{
+            FB.getLoginStatus(
+                function(response1) {
+                    if (response1 && !response1.error) {
+                        FB.api(
+                        "/me",
+                        function (response) {
+                            if(response.id){
+                                $http.get('/home/' + response.id).
+                                    success(
+                                        function(data, status){
+                                            $scope.username = response.first_name;
+                                            usr = $scope.userId=response.id;
+                                            poller();
+                                            $scope.stations = data.stations;
+                                            setupData();
+                                        }
+                                    ).
+                                    error(
+                                        function(data, status){
+                                        }
+                                    );
+                            }
+                            else{
+                                $state.go('login');
+                            }
+                        });
+                    }
                 }
-            }
-        );
+            );
+            }catch(err)
+            {
                 
+            }
+        }
+        fbinit();
+        
+        $window.fbAsyncInit = function() {
+            FB.init({
+                appId: '690519131028878',
+                xfbml: true,
+                version: 'v2.0',
+                status: true
+            });
+
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+            fbinit();
+        };
+        
         function setupData(){
             $scope.stationsMap = [];
             for(var i = 0; i < $scope.stations.length; i++){
@@ -154,11 +183,10 @@ app.controller('homeCtrl', [
             $http.get('/answer/'+ JSON.stringify(send) +'/'+ $scope.userId).
                 success(
                     function(data, status){
-                        delete send.accepted;
-                        $scope.stations.push(send);
-                        console.log(data);
-                        console.log($scope.stations);
-                        console.log(send);
+                        if(data.updated!="removed"){
+                            delete send.accepted;
+                            $scope.stations.push(send);
+                        }
                     }
                 ).
                 error(
