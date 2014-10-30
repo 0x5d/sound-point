@@ -66,6 +66,13 @@
                         <h4 class="media-heading">{{song.title}}</h4><div class="media-body">
                             by {{song.artist}}<br>
                         </div>
+                        <button type="button" 
+                                data-loading-text="Loading..." 
+                                class="btn"
+                                ng-click=""
+                                ng-show="station.type == 'voting'">
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                        </button>
                     </div>
                 </li>
             </ul>
