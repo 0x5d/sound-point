@@ -78,17 +78,18 @@ app.controller('homeCtrl', [
                 templateUrl: 'addStationModal.html',
                 controller: 'addStationModalCtrl'
             });
-            modalInstance.result.then(function (name, type) {
-                if(name){
-                    $http.get().
-                    success(
-                        function(data,status){
-                        }
-                    ).
-                    error(
-                        function(data, status){
-                        }
-                    );
+            modalInstance.result.then(function (station) {
+                if(station.stationName){
+                    console.log(station.stationName + ' ' + station.type);
+//                    $http.get().
+//                    success(
+//                        function(data,status){
+//                        }
+//                    ).
+//                    error(
+//                        function(data, status){
+//                        }
+//                    );
                 }
             },
             function () {
