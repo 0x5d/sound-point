@@ -103,8 +103,11 @@ module.exports = function RequestsHandler(db){
         var station = {
             stationName : req.body.station.stationName,
             songs : [],
-            type : req.body.type
+            type : req.body.type,
+            users:[],
+            invitations:[]
         };
+        station.users.push(req.body.userId);
         db.collection('stations').insert(station,
             function(err, inserted){
                 if(err){
@@ -282,7 +285,24 @@ module.exports = function RequestsHandler(db){
                     res.status(500).send({'err' : err});
                 }
                 else if(updated){
-                    res.status(200).send(push);
+                    query={_id:new ObjectID.createFromHexString(req.body.staionId)};
+                    update={
+                        '$push':{
+                            invitations:req.body.userId
+                        }
+                    };
+                    db.collection('stations').update(query, update,
+                        function(err, updated){
+                            if(err){
+                                res.status(500).send({'err' : err});
+                            }else if(updated){
+                                res.status(200).send(push);
+                                
+                            }else{
+                                res.status(404).send({err : 'No station found.'});
+                            }
+                        }
+                    );
                 }
                 else{
                     res.status(404).send({err : 'No user found.'});
@@ -471,6 +491,7 @@ module.exports = function RequestsHandler(db){
                 }
                 else if(updated){
                     if(loaded.accepted){
+                        loaded._id=new  ObjectID.createFromHexString(loaded._id);
                         var update = {'$push' : {'stations' : loaded}};
                         db.collection('users').update(query, update,
                             function(err, updated){
@@ -487,7 +508,38 @@ module.exports = function RequestsHandler(db){
                                 }
                             }
                         );
+                        query = {_id:loaded._id};
+                        update={
+                            $pull:{
+                                invitations:req.params.userId
+                            },
+                            '$push':{
+                                users:req.params.userId
+                            }
+                        };
+                        db.collection('stations').update(query,update,
+                            function(err, updated){
+                                if(err){
+                                    
+                                }
+                            }
+                        );
                     }else{
+                        console.log(loaded._id);
+                        query = {_id:loaded._id};
+                        update={
+                            $pull:{
+                                invitations:req.params.userId+""
+                            }
+                        };
+                        db.collection('stations').update(query,update,
+                            function(err, updated){
+                                if(err){
+                                    console.log(err);
+                                }
+                                console.log(req.params.userId + "up "+updated);
+                            }
+                        );
                         res.status(200).send({updated:"removed"});
                     }
                 }
