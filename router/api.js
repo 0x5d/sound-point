@@ -261,6 +261,31 @@ module.exports = function RequestsHandler(db){
         );
     };
     
+    this.voteSongUp = function(req, res){
+        var query = {
+            _id : new ObjectID.createFromHexString(req.body.stationId),
+            'songs.songId' : req.body.songId
+        };
+        var update = {
+            '$inc' : {
+                'songs.$.votes' : 1
+            }
+        };
+        db.collection('stations').update(query, update,
+            function(err, updated){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(updated == 1){
+                    res.status(200).send({'updated' : req.body.songId});
+                }
+                else{
+                    res.status(404).send({err : 'Song not voted.'});
+                }
+            }
+        );
+    };
+    
     this.invite = function(req,res){
         var push={
             stationName : req.body.stationName,
@@ -281,7 +306,7 @@ module.exports = function RequestsHandler(db){
                 if(err){
                     res.status(500).send({'err' : err});
                 }
-                else if(updated){
+                else if(updated == 1){
                     res.status(200).send(push);
                 }
                 else{

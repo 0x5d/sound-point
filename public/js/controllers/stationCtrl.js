@@ -190,9 +190,24 @@ app.controller('stationCtrl', [
         };
         
         $scope.voteUp = function(index){
-            $scope.songs[index].votes++;
-            $scope.songs = $filter('orderBy')($scope.songs, 'votes', true);
-            $scope.$apply();
+            var postData = {
+                'stationId' : $scope.station.stationId,
+                'songId' : $scope.songs[index].songId
+            };            
+            $http.post('/voteSong', postData)
+                .success(
+                    function(status, data){
+                        for(var i = 0; i < $scope.songs; i++){
+                            if($scope.songs[i].songId == data.updated){
+                                $scope.songs[i].votes++;
+                                break;
+                            }
+                        }
+                        $scope.songs = $filter('orderBy')($scope.songs, 'votes', true);
+                    }
+                )
+                .error(function(status, data){});
+            
         };
 
         $scope.openFriendsModal = function () {
