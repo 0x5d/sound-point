@@ -60,20 +60,22 @@
                 </div>
             </div>
             <ul class="media-list">
-                <li class="media" ng-repeat="(i, song) in songs">
-                    <img class="media-object img-rounded img-responsive center-block" ng-src="{{song.artwork  || 'https://cdn1.iconfinder.com/data/icons/appicns/128/appicns_iTunes.png'}}" alt="...">
-                    <div class="text-center">
-                        <h4 class="media-heading">{{song.title}}</h4><div class="media-body">
-                            by {{song.artist}}<br>
-                        </div>
-                        <div>
-                            {{song.votes}} votes
-                            <button type="button" 
-                                    data-loading-text="Loading..." 
-                                    class="btn"
-                                    ng-click="voteUp(i)">
-                                <span class="glyphicon glyphicon-thumbs-up"></span>
-                            </button>
+                <li class="media" ng-repeat="(i, song) in songs" >
+                    <div>
+                        <img class="media-object img-rounded img-responsive center-block" ng-src="{{song.artwork  || 'https://cdn1.iconfinder.com/data/icons/appicns/128/appicns_iTunes.png'}}" alt="...">
+                        <div class="text-center">
+                            <h4 class="media-heading">{{song.title}}</h4><div class="media-body">
+                                by {{song.artist}}<br>
+                            </div>
+                            <div>
+                                {{song.votes}} votes
+                                <button type="button" 
+                                        data-loading-text="Loading..." 
+                                        class="btn"
+                                        ng-click="voteUp(i)">
+                                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </li>

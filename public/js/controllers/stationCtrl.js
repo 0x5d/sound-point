@@ -11,7 +11,8 @@ app.controller('stationCtrl', [
     '$timeout',
     '$stateParams',
     '$modal',
-    function($scope, $http, $timeout, $stateParams, $modal){
+    '$filter',
+    function($scope, $http, $timeout, $stateParams, $modal, $filter){
         $scope.station = {
             stationId : $stateParams.stationId,
             stationName : $stateParams.stationName,
@@ -192,6 +193,23 @@ app.controller('stationCtrl', [
         };
         
         $scope.voteUp = function(index){
+            var postData = {
+                'stationId' : $scope.station.stationId,
+                'songId' : $scope.songs[index].songId
+            };            
+            $http.post('/voteSong', postData)
+                .success(
+                    function(status, data){
+                        for(var i = 0; i < $scope.songs; i++){
+                            if($scope.songs[i].songId == data.updated){
+                                $scope.songs[i].votes++;
+                                break;
+                            }
+                        }
+                        $scope.songs = $filter('orderBy')($scope.songs, 'votes', true);
+                    }
+                )
+                .error(function(status, data){});
             
         };
 
