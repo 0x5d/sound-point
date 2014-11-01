@@ -5,7 +5,8 @@ app.controller('modalInstanceCtrl', [
     'items',
     'stationName',
     'stationId',
-    function ($scope, $http, $modalInstance, items, stationName, stationId) {
+    'stationInvites',
+    function ($scope, $http, $modalInstance, items, stationName, stationId, invites) {
 
         $scope.items = items;
         $scope.selected = {
@@ -21,6 +22,7 @@ app.controller('modalInstanceCtrl', [
                         staionId : stationId,
                         userId : $scope.items[i].id
                     };
+                    invites.push($scope.items[i].id);
                     $http.post('/invite', Station).
                         success(
                             function(data, status){

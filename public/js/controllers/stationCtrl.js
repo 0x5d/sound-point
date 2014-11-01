@@ -25,7 +25,10 @@ app.controller('stationCtrl', [
             .success(
                 function(data, status){
                     if(data.station.songs){
-                        setupSongs(data.station.songs);
+                        console.log(data.station);
+                        $scope.station.users = data.station.users;
+                        $scope.station.invitations = data.station.invitations;
+                        setupSongs($scope.station);
                         pollSongs();
                     }
                 }
@@ -216,6 +219,17 @@ app.controller('stationCtrl', [
                 function (response) {
                     if (response && !response.error) {
                         var friends = [];
+                        for(var i = 0; i < response.data.length; i++){
+                            for(var j = 0; j < $scope.station.invitations.length; j++ ){
+                                if(response.data[i].id ==  $scope.station.invitations[j]){
+                                    response.data.splice(i,1);
+                                }
+                            }for(var j = 0; j < $scope.station.users.length; j++ ){
+                                if(response.data[i].id ==  $scope.station.users[j]){
+                                    response.data.splice(i,1);
+                                }
+                            }
+                        }
                         response.data.forEach(function(friend) {
                             var obj ={
                                 name:friend.name,
@@ -237,6 +251,8 @@ app.controller('stationCtrl', [
                                 },
                                 stationId : function(){
                                     return $scope.station.stationId; 
+                                },stationInvites : function(){
+                                    return $scope.station.invitations;
                                 }
                             }
                         });
