@@ -1,4 +1,4 @@
-<div>
+<div class="home">
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -40,7 +40,7 @@
         </div>
     </nav>
     
-    <div class="jumbotron">
+    <div class="jumbotron hello-bar">
         <div class="container">
             <h1 id="hello">Hello, {{username}}</h1>
             <p>These are your stations</p>
@@ -52,7 +52,7 @@
         <div class="container">
             <!-- Example row of columns -->
             <div class="row">
-                <ul class="list-group">
+                <ul class="list-group station-list">
                     <li class="list-group-item" ng-repeat="station in stations">
                         <div ng-click="goToStation(station._id, station.stationName, station.type)">
                             <h2>{{station.stationName}}</h2>
