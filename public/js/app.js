@@ -38,7 +38,7 @@ var app = angular.module('sound-point', ['ui.router', 'ui.bootstrap'])
                     controller : 'loginCtrl'
                 })
                 .state('station', {
-                    url : '/station/:stationId/:stationName/:type',
+                    url : '/station/:stationId/:stationName/:user/:type',
                     templateUrl : '../views/station/station.html',
                     controller : 'stationCtrl'
                 })

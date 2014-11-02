@@ -77,7 +77,7 @@ app.controller('homeCtrl', [
         }
 
         $scope.goToStation = function(id, stationName, type){
-            $state.go('station', {stationId : id, 'stationName' : stationName, 'type' : type});
+            $state.go('station', {stationId : id, 'stationName' : stationName, 'type' : type, user:$scope.userId});
         };
         
         $scope.addNewStation = function(){
