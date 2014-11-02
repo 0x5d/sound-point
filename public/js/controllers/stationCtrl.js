@@ -25,7 +25,6 @@ app.controller('stationCtrl', [
             .success(
                 function(data, status){
                     if(data.station.songs){
-                        console.log(data.station);
                         $scope.station.users = data.station.users;
                         $scope.station.invitations = data.station.invitations;
                         setupSongs($scope.station);
@@ -47,7 +46,9 @@ app.controller('stationCtrl', [
                 for(var i = 1; i < songs.length; i++){
                     ids += "," + songs[i].songId;
                 }
-                $scope.songs = songs;
+                if($scope.station.type == 'voting'){
+                    $scope.songs = $filter('orderBy')(songs, 'votes', true);
+                }
                 getTracks(ids);
 
             }
@@ -85,6 +86,7 @@ app.controller('stationCtrl', [
         }
 
         function qmanager(song){
+            console.log(song.title);
             if(song.url){
                 SC.stream(song.url, {onfinish:
                     function(){
@@ -280,7 +282,9 @@ app.controller('stationCtrl', [
                     function(data, status){
                         if(data.songs){
                             $scope.songs = [];
-                            $scope.songs = data.songs;
+                            if($scope.station.type == 'voting'){
+                                $scope.songs = $filter('orderBy')(data.songs, 'votes', true);
+                            }
                         }
                         $timeout(pollSongs, 1000);
                     }
