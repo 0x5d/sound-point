@@ -47,15 +47,17 @@
                         <p class="lead" ng-hide="currentSong.artist == undefined">
                             by <b>{{currentSong.artist}}</b>
                         </p>
-                        <button type="button" class="btn btn-default btn-lg" ng-click="pause()" ng-hide="isPlaying" >
-                            <span class="glyphicon glyphicon-pause" ></span>
-                        </button>
-                        <button type="button" class="btn btn-default btn-lg" ng-click="play()" ng-hide="!isPlaying">
-                            <span class="glyphicon glyphicon-play" ></span>
-                        </button>
-                        <button type="button" class="btn btn-default btn-lg" ng-click="next()">
-                            <span class="glyphicon glyphicon-step-forward" ></span>
-                        </button>
+                        <div ng-hide="!owner" >
+                            <button type="button" class="btn btn-default btn-lg" ng-click="pause()" ng-hide="isPlaying" >
+                                <span class="glyphicon glyphicon-pause" ></span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-lg" ng-click="play()" ng-hide="!isPlaying">
+                                <span class="glyphicon glyphicon-play" ></span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-lg" ng-click="next()">
+                                <span class="glyphicon glyphicon-step-forward" ></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

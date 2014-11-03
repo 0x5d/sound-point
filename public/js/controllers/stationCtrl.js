@@ -16,8 +16,10 @@ app.controller('stationCtrl', [
         $scope.station = {
             stationId : $stateParams.stationId,
             stationName : $stateParams.stationName,
-            type : $stateParams.type
+            type : $stateParams.type,
         };
+        $scope.owner = false;
+        $scope.userId = $stateParams.user;
         $scope.songs = [];
         $scope.results = [];
         $scope.currentSong = {};
@@ -27,7 +29,8 @@ app.controller('stationCtrl', [
                     if(data.station.songs){
                         $scope.station.users = data.station.users;
                         $scope.station.invitations = data.station.invitations;
-                        setupSongs($scope.station);
+                        $scope.owner = data.station.owner == $scope.userId;
+                        setupSongs(data.station.songs);
                         pollSongs();
                     }
                 }
@@ -86,8 +89,7 @@ app.controller('stationCtrl', [
         }
 
         function qmanager(song){
-            console.log(song.title);
-            if(song.url){
+            if(song.url && $scope.owner){
                 SC.stream(song.url, {onfinish:
                     function(){
                         var finishedSong = $scope.songs.shift();
@@ -101,7 +103,7 @@ app.controller('stationCtrl', [
                         sound.play();
                     }
                 );
-            }else if($scope.songs[0]){
+            }else if($scope.songs[0] && $scope.owner){
                 var lastSong = $scope.songs.shift();
                 removeSong($scope.station.stationId, lastSong.songId);
             }
@@ -181,9 +183,15 @@ app.controller('stationCtrl', [
             function () {
             });
         };
-
+        $scope.showPause = function(){
+            return $scope.isPlaying && !$scope.owner;
+        };
+        
+        $scope.showPlay = function(){
+            return !$scope.isPlaying && !$scope.owner;
+        };
+        
         $scope.isPlaying = false;
-
         $scope.pause= function(){
             currentTrack.pause();
             $scope.isPlaying = true;

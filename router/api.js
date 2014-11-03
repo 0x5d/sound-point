@@ -104,6 +104,7 @@ module.exports = function RequestsHandler(db){
             stationName : req.body.station.stationName,
             songs : [],
             type : req.body.type,
+            owner: req.body.userId,
             users:[],
             invitations:[]
         };
