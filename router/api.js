@@ -103,7 +103,8 @@ module.exports = function RequestsHandler(db){
         var station = {
             stationName : req.body.station.stationName,
             songs : [],
-            type : req.body.type,
+            type : req.body.station.type,
+            owner: req.body.userId,
             users:[],
             invitations:[]
         };
