@@ -16,7 +16,7 @@ app.controller('stationCtrl', [
         $scope.station = {
             stationId : $stateParams.stationId,
             stationName : $stateParams.stationName,
-            type : $stateParams.type,
+            type : $stateParams.type
         };
         $scope.owner = false;
         $scope.userId = $stateParams.user;
@@ -66,21 +66,14 @@ app.controller('stationCtrl', [
                         }
                         var track;
                         for(var i = 0; i < tracks.length; i++){
-                            $scope.songs[i].title = tracks[i].title;
-                            $scope.songs[i].artwork = tracks[i].artwork_url;
-                            $scope.songs[i].artist = tracks[i].user.username;
-                            $scope.songs[i].description = tracks[i].description;
-                            $scope.songs[i].songId = tracks[i].id;
-                            $scope.songs[i].url = tracks[i].stream_url;
-//                            track = {
-//                                title : tracks[i].title,
-//                                artwork : tracks[i].artwork_url,
-//                                artist : tracks[i].user.username,
-//                                description:tracks[i].description,
-//                                songId : tracks[i].id,
-//                                url : tracks[i].stream_url
-//                            };
-//                            $scope.songs.push(track);
+                            var newTrack = {
+                                title : tracks[i].title,
+                                artwork : tracks[i].artwork_url,
+                                artist : tracks[i].user.username,
+                                songId : tracks[i].id,
+                                url : tracks[i].stream_url
+                            };
+                            $scope.songs.push(newTrack);
                         }
                         $scope.$apply();
                         qmanager($scope.songs[0]);
@@ -145,6 +138,9 @@ app.controller('stationCtrl', [
             $http.post('/newSong', postData).
                 success(
                     function(data, status){
+                        if(!$scope.songs[0]){
+                            qmanager(data.song);
+                        }
                     }
                 ).
                 error(
@@ -175,10 +171,12 @@ app.controller('stationCtrl', [
             });
 
             modalInstance.result.then(function (addedSong) {
+                
+                $scope.currentSong.title = addedSong.title;
+                $scope.currentSong.artist = addedSong.artist;
+                $scope.currentSong.artwork = addedSong.artwork;
+                $scope.songs.push(addedSong);
                 addSong(addedSong);
-                if(!$scope.songs[0]){
-                    qmanager(addedSong);
-                }
             },
             function () {
             });

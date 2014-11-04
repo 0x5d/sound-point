@@ -38,6 +38,8 @@
                 </div>
             </div>
         <div class="container">
+            <p><a data-ui-sref="home" class="btn btn-primary" role="button">Back</a> </p>
+            <hr>
             <div class="jumbotron" ng-style="{'background-image': 'url(' + currentSong.artwork + ')', 'background-repeat' : 'no-repeat'}">
                 <div class="text-center">
                     
@@ -69,7 +71,7 @@
                             <h4 class="media-heading">{{song.title}}</h4><div class="media-body">
                                 by {{song.artist}}<br>
                             </div>
-                            <div>
+                            <div ng-show="station.type == 'voting'">
                                 {{song.votes}} votes
                                 <button type="button" 
                                         data-loading-text="Loading..." 
@@ -82,8 +84,6 @@
                     </div>
                 </li>
             </ul>
-            <hr>
-            <p><a data-ui-sref="home" class="btn btn-primary" role="button">Back</a> </p>
             <hr>
             <div class="footer">
               <p>© Soundpoint 2014</p>
