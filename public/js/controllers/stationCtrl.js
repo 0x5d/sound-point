@@ -98,8 +98,8 @@ app.controller('stationCtrl', [
                         var finishedSong = $scope.songs.shift();
                         $scope.$apply();
                         currentTrack = null;
-                        qmanager($scope.songs[0]);
-                        removeSong($scope.station.stationId, finishedSong.songId);   
+                        removeSong($scope.station.stationId, finishedSong.songId); 
+                        qmanager($scope.songs[0]);   
                     }}, 
                     function(sound){
                         currentTrack = sound;
