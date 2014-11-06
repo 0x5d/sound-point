@@ -65,7 +65,7 @@
             </div>
             <ul class="media-list">
                 <li class="media" ng-repeat="(i, song) in songs" >
-                    <div>
+                    <div ng-show="song.songId != currentSong.songId">
                         <img class="media-object img-rounded img-responsive center-block" ng-src="{{song.artwork  || 'https://cdn1.iconfinder.com/data/icons/appicns/128/appicns_iTunes.png'}}" alt="...">
                         <div class="text-center">
                             <h4 class="media-heading">{{song.title}}</h4><div class="media-body">
