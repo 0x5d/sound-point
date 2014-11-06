@@ -177,22 +177,6 @@ module.exports = function RequestsHandler(db){
         );
     };
     
-    this.getStations = function(req, res){
-        var stationsInfo = [
-                {
-                    stationId : 0,
-                    stationName : 'Chilling',
-                    description : 'SWAG'
-                },
-                {
-                    stationId : 1,
-                    stationName : 'Estación de estudio',
-                    description : 'Focus.'
-                }
-        ];
-        res.send(stationsInfo);
-    };
-    
     this.addSongToStation = function(req, res){
         var query = {
             _id : new ObjectID.createFromHexString(req.body.stationId)
@@ -293,7 +277,7 @@ module.exports = function RequestsHandler(db){
     this.invite = function(req,res){
         var push={
             stationName : req.body.stationName,
-            description : req.body.desc,
+            type : req.body.type,
             songs : [],
             _id : new ObjectID.createFromHexString(req.body.staionId) 
         };
