@@ -48,6 +48,8 @@ app.controller('homeCtrl', [
         }
         fbinit();
         
+        
+
         $window.fbAsyncInit = function() {
             FB.init({
                 appId: '690519131028878',
