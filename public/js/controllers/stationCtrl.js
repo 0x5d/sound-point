@@ -264,8 +264,12 @@ app.controller('stationCtrl', [
                                 },
                                 stationId : function(){
                                     return $scope.station.stationId; 
-                                },stationInvites : function(){
+                                },
+                                stationInvites : function(){
                                     return $scope.station.invitations;
+                                },
+                                stationType : function(){
+                                    return $scope.station.type;
                                 }
                             }
                         });
