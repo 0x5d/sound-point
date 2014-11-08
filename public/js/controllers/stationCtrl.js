@@ -176,10 +176,11 @@ app.controller('stationCtrl', [
             var cur = [songs[0]];
             var ranking = [];
             for(var i = 1; i < songs.length; i++){
-                ranking.push(songs[i]);
+                if(songs[i].songId != songs[0].songId){
+                    ranking.push(songs[i]);
+                }
             }
             var ordered = cur.concat($filter('orderBy')(ranking, 'votes', true));
-            console.log(ordered);
             return ordered;
         };
         
@@ -308,7 +309,7 @@ app.controller('stationCtrl', [
                         if(data.songs){
                             $scope.songs = [];
                             if($scope.station.type == 'voting'){
-                                $scope.songs = $filter('orderBy')(data.songs, 'votes', true);
+                                $scope.songs = sortSongsByVotes(data.songs);
                             }
                             else{
                                 $scope.songs = data.songs;
