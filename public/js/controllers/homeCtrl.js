@@ -72,6 +72,7 @@ app.controller('homeCtrl', [
         function setupData(){
             $scope.stationsMap = [];
             for(var i = 0; i < $scope.stations.length; i++){
+                console.log($scope.stations[i]);
                 $scope.stationsMap[$scope.stations[i].stationName] = $scope.stations[i];
             }
         }
