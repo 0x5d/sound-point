@@ -55,10 +55,9 @@ app.controller('stationCtrl', [
                     ids += "," + songs[i].songId;
                 }
                 if($scope.station.type == 'voting'){
-                    $scope.songs = $filter('orderBy')(songs, 'votes', true);
+                    $scope.songs = sortSongsByVotes(songs);
                 }
                 getTracks(ids);
-
             }
         }
 
@@ -82,7 +81,7 @@ app.controller('stationCtrl', [
                         }
                         
                         if($scope.station.type == 'voting'){
-                            $scope.songs = $filter('orderBy')($scope.songs, 'votes', true);
+                            $scope.songs = sortSongsByVotes($scope.songs);
                         }
                         $scope.$apply();
                         qmanager($scope.songs[0]);
@@ -91,8 +90,8 @@ app.controller('stationCtrl', [
         }
 
         function qmanager(song){
+            setCurrentSong(song);
             if(song.url && $scope.owner){
-                setCurrentSong(song);
                 SC.stream(song.url, {onfinish:
                     function(){
                         var finishedSong = $scope.songs.shift();
@@ -173,6 +172,17 @@ app.controller('stationCtrl', [
                 );
         }
         
+        function sortSongsByVotes(songs){
+            var cur = [songs[0]];
+            var ranking = [];
+            for(var i = 1; i < songs.length; i++){
+                ranking.push(songs[i]);
+            }
+            var ordered = cur.concat($filter('orderBy')(ranking, 'votes', true));
+            console.log(ordered);
+            return ordered;
+        };
+        
         $scope.openSongSearchModal = function () {
             var modalInstance = $modal.open({
                 templateUrl: 'songSearchModal.html',
@@ -186,6 +196,7 @@ app.controller('stationCtrl', [
             function () {
             });
         };
+        
         $scope.showPause = function(){
             return $scope.isPlaying && !$scope.owner;
         };
@@ -219,11 +230,10 @@ app.controller('stationCtrl', [
                                 break;
                             }
                         }
-                        $scope.songs = $filter('orderBy')($scope.songs, 'votes', true);
+                        $scope.songs = sortSongsByVotes($scope.songs);
                     }
                 )
                 .error(function(status, data){});
-            
         };
 
         $scope.openFriendsModal = function () {
@@ -292,8 +302,8 @@ app.controller('stationCtrl', [
                 }
                 $http.get('/pollStation/'
                     + $scope.station.stationId
-                    + '/' + JSON.stringify(currentSongs)).
-                success(
+                    + '/' + JSON.stringify(currentSongs))
+                .success(
                     function(data, status){
                         if(data.songs){
                             $scope.songs = [];
@@ -306,7 +316,8 @@ app.controller('stationCtrl', [
                         }
                         $timeout(pollSongs, 1000);
                     }
-                ).error(
+                )
+                .error(
                     function(data, status){
                         $timeout(pollSongs, 1000);
                     }
