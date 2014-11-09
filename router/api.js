@@ -177,22 +177,6 @@ module.exports = function RequestsHandler(db){
         );
     };
     
-    this.getStations = function(req, res){
-        var stationsInfo = [
-                {
-                    stationId : 0,
-                    stationName : 'Chilling',
-                    description : 'SWAG'
-                },
-                {
-                    stationId : 1,
-                    stationName : 'Estación de estudio',
-                    description : 'Focus.'
-                }
-        ];
-        res.send(stationsInfo);
-    };
-    
     this.addSongToStation = function(req, res){
         var query = {
             _id : new ObjectID.createFromHexString(req.body.stationId)
@@ -293,7 +277,7 @@ module.exports = function RequestsHandler(db){
     this.invite = function(req,res){
         var push={
             stationName : req.body.stationName,
-            description : req.body.desc,
+            type : req.body.type,
             songs : [],
             _id : new ObjectID.createFromHexString(req.body.staionId) 
         };
@@ -336,6 +320,51 @@ module.exports = function RequestsHandler(db){
             }
         );
     };
+
+    this.friendRemoveStation= function(req, res){
+        var query = { _id :req.params.userId };
+        var update = null;
+        update = {
+            $pull : {
+                stations : {_id :  req.params.stationId}
+            }
+        };
+    
+        db.collection('users').update(query,update,
+            function(err, updated){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(updated){
+                    res.status(200).send({'removeStation' : "ok"});
+                }
+                else{
+                    res.status(404).send({'err' : 'station wasn´t remove.'});
+                }
+            }
+         );
+
+       var query2 = { _id :  new ObjectID.createFromHexString(req.params.stationId) };
+        var update2 = null;
+        update2 = { $pull : {   users : req.params.userId  }
+               };
+    
+        db.collection('stations').update(query2,update2,
+            function(err, updated){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(updated){
+                    res.status(200).send({'removeUser' : "ok"});
+                    console.log("removeUser");
+                }
+                else{
+                    res.status(404).send({'err' : 'station wasn´t remove.'});
+                }
+            }
+         );
+
+    }
     
     this.removeSong = function(req, res){
         var query = {
@@ -361,7 +390,9 @@ module.exports = function RequestsHandler(db){
         );
     };
     
+
      this.removeStation = function(req, res){
+        
         var query = { _id : req.params.userId };
         var update = null;
         if(req.params.type == "Invited."){
@@ -384,6 +415,28 @@ module.exports = function RequestsHandler(db){
                 }
                 else if(updated){
                     res.status(200).send({'removeStation' : "ok"});
+                    console.log("removeStation");
+                }
+                else{
+                    res.status(404).send({'err' : 'station wasn´t remove.'});
+                }
+
+            }
+         );
+
+        var query2 = { _id :  new ObjectID.createFromHexString(req.params.stationId) };
+        var update2 = null;
+        update2 = { $pull : {   users : req.params.userId  }
+               };
+    
+        db.collection('stations').update(query2,update2,
+            function(err, updated){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(updated){
+                    res.status(200).send({'removeUser' : "ok"});
+                    console.log("removeUser");
                 }
                 else{
                     res.status(404).send({'err' : 'station wasn´t remove.'});

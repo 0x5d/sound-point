@@ -74,12 +74,17 @@ app.controller('homeCtrl', [
         function setupData(){
             $scope.stationsMap = [];
             for(var i = 0; i < $scope.stations.length; i++){
+                console.log($scope.stations[i]);
                 $scope.stationsMap[$scope.stations[i].stationName] = $scope.stations[i];
             }
         }
 
+        //cargar estacion
+
         $scope.goToStation = function(id, stationName, type){
+
             $state.go('station', {stationId : id, 'stationName' : stationName, 'type' : type, user:$scope.userId});
+            
         };
         
         $scope.addNewStation = function(){
@@ -116,7 +121,7 @@ app.controller('homeCtrl', [
               if(deleted){
                     var btn = $(this);
                     btn.button('loading');
-                    $http.get('/removeStation/' + station._id+'/'+ $scope.userId +'/'+station.description).
+                    $http.get('/removeStation/' + station._id+'/'+ $scope.userId +'/'+station.type).
                     success(
                         function (data,status){ 
                             var index = $scope.stations.indexOf(station);
