@@ -17,14 +17,14 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <button ng-click="addNewStation()" type="button" class="btn btn-default navbar-btn">
-                            Create new <span class="glyphicon glyphicon-plus"></span>
+                            <div class="icon-add"></div> <p>Create new station </p>
                         </button>
                     </li>
                     <li>
                         <div class="dropdown">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                                Invitations
-                                <span class="caret"></span>
+                            <button class="btn btn-default dropdown-toggle navbar-btn" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                                <p>View invitations</p>
+                                <div class="icon-dropdown"></div>
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                                 <li role="presentation" class="dropdown-header" ng-repeat="(i,invitation) in invitations">
@@ -59,12 +59,11 @@
                             <p>{{station.type}} station</p>
                         </div>
                         <div>
-                            <button type="button" id="delete-removeStation-btn" 
+                            <div type="button" id="delete-removeStation-btn" 
                                     data-loading-text="Loading..." 
-                                    class="btn btn-danger"
-                                    ng-click=" removeStation(station)">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </button>
+                                    ng-click=" removeStation(station)"
+                                    class="icon-delete">
+                            </div>
                         </div>
                     </li>
                 </ul>
@@ -74,7 +73,7 @@
     
     <script type="text/ng-template" id="addStationModal.html">
         <div class="modal-header">
-            <h3 class="modal-title">Add a new station</h3>
+            <h3 class="modal-title">New station</h3>
         </div>
         <div class="modal-body">
             <div class="input-group">

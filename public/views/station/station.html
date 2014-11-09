@@ -1,8 +1,9 @@
 <html lang="en">
     <body>
-        <div class="navbar-wrapper">
+    <div class="station">
+        <!--<div class="navbar-wrapper">
             <div class="container">
-                <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="navbar" role="navigation">
                     <div class="container">
                         <div class="navbar-header">
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -14,10 +15,6 @@
                             <a class="navbar-brand" data-ui-sref="home">Soundpoint</a>
                         </div>
                         <div class="navbar-collapse collapse">
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a data-ui-sref="home">Home</a></li>
-                                <li><a href="#about">About</a></li>
-                            </ul>
                             <ul class="nav pull-right">
                                 <li>
                                     <div class="btn-group">
@@ -36,13 +33,47 @@
                       </div>
                     </div>
                 </div>
+            </div>-->
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Soundpoint</a>
             </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                     <div class="btn-group">
+                       <button ng-click="openSongSearchModal()" type="button" class="btn btn-default navbar-btn">
+                            <div class="icon-add-music"></div>
+                            <p class="addMusic"> Add Music </p>
+                        </button>
+                     </div>
+                     </li>
+                   
+                </ul>
+            </div>
+        </div>
+    </nav>
         <div class="container">
-            <p><a data-ui-sref="home" class="btn btn-primary" role="button">Back</a> </p>
+            <div class="back">
+                <a data-ui-sref="home" class="btn btn-primary" role="button">
+                    <div class="icon-back"></div>
+                    <p>Back to stations</p>
+                </a> 
+            </div>
             <hr>
-            <div class="jumbotron" ng-style="{'background-image': 'url(' + currentSong.artwork + ')', 'background-repeat' : 'no-repeat'}">
+            <div class="jumbotron">
+                <div class="img-song" ng-style="{'background-image': 'url(' + currentSong.artwork + ')', 'background-repeat' : 'no-repeat'}"> </div>
                 <div class="text-center">
-                    
                     <h1 ng-show="songs.length == 0">No songs on this playlist :(</h1>
                     <div ng-hide="songs.length == 0">
                         <h1>{{currentSong.title}}</h1>
@@ -120,24 +151,23 @@
             <script type="text/ng-template" id="songSearchModal.html">
                 <div class="modal-header">
                     <h3 class="modal-title">Search</h3>
+                    <div class="close" ng-click="close()"> </div>
                 </div>
                 <div class="modal-body">
-                    <input ng-model="searchText" type="search">
-                    <p><button class="btn btn-default" href="#" role="button" ng-click="search(searchText)">Search</button></p>
+                    <input ng-model="searchText" type="search" class="song-search">
+                    <button class="btn btn-default search" href="#" role="button" ng-click="search(searchText)">Search</button>
                     <ul class="media-list">
                         <li class="media" ng-repeat="(i, item) in items">
                             <img class="media-object pull-left" ng-src="{{item.artwork || 'https://cdn1.iconfinder.com/data/icons/appicns/128/appicns_iTunes.png'}}">
                             <div class="float left media-body">
                                 <h4 class="media-heading">{{ item.title }}</h4>
-                                <p><button class="btn btn-default pull-right" role="button" ng-click="addSong(item)"><span class="glyphicon glyphicon-plus"></span></button></p>
+                                <p><button class="btn btn-default pull-right addnewSong" role="button" ng-click="addSong(item)"><div class="icon-add"></div></button></p>
                             </div>
                         </li>
                     </ul>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-warning" ng-click="close()">Back</button>
-                </div>
             </script>
         </div>
+    </div>
     </body>
 </html>
