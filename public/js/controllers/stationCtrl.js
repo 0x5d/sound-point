@@ -145,7 +145,8 @@ app.controller('stationCtrl', [
             $http.post('/newSong', postData).
                 success(
                     function(data, status){
-                        if(!$scope.songs[0]){
+                        if($scope.songs.length == 0){
+                            setCurrentSong(data.song);
                             qmanager(data.song);
                         }
                         $scope.songs.push(data.song);
@@ -159,7 +160,8 @@ app.controller('stationCtrl', [
         };
         
         function removeSong(stationId, songId){
-           $http.get('/station/removeSong/'
+            $scope.currentSong = {};
+            $http.get('/station/removeSong/'
                 + stationId
                 + '/' + songId).
                 success(
@@ -192,7 +194,6 @@ app.controller('stationCtrl', [
 
             modalInstance.result.then(function (addedSong) {
                 addSong(addedSong);
-                $scope.songs.push(addedSong);
             },
             function () {
             });
