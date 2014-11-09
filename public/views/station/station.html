@@ -52,7 +52,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                      <div class="btn-group">
-                       <button ng-click="openSongSearchModal()" type="button" class="btn btn-default navbar-btn">
+                        <button ng-hide="station.type == 'private'" ng-click="openFriendsModal()" type="button" class="btn btn-default navbar-btn">
+                            <span class="glyphicon glyphicon-plus" ></span>
+                            <span class="glyphicon glyphicon-user" ></span>
+                        </button>
+                        <button ng-click="openSongSearchModal()" type="button" class="btn btn-default navbar-btn">
                             <div class="icon-add-music"></div>
                             <p class="addMusic"> Add Music </p>
                         </button>
@@ -129,10 +133,8 @@
                 </div>
                 <div class="modal-body">
                     <ul class="media-list">
-                        <li class="media" ng-repeat="(i,item) in items ">  
-                            <a class="pull-left" href="#">
-                                 <img class="media-object" ng-src="{{item.picture.data.url}}" >
-                            </a>
+                        <li class="media" ng-repeat="(i,item) in items ">
+                            <img class="media-object pull-left" ng-src="{{item.picture.data.url}}" >
                             <div class="float left media-body">
                                 <h4 class="media-heading">{{ item.name }}</h4> 
                                 <input calss="pull-right"  type="checkbox" ng-click="selectFriend(i)">
