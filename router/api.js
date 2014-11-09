@@ -510,7 +510,7 @@ module.exports = function RequestsHandler(db){
     
     var getSongs = function(req, res, count){
         var query = { _id : ObjectID.createFromHexString(req.params.stationId)};
-        var projection = {_id : false, songs : true};
+        var projection = {_id : false, songs : true, type : true};
         var clientSongs = JSON.parse(req.params.clientSongs);
         db.collection('stations').findOne(query, projection,
             function(err, station){
@@ -529,12 +529,17 @@ module.exports = function RequestsHandler(db){
                                 changes = true;
                                 break;
                             }
+                            else if(station.type == 'voting'){
+                                if(station.songs[i].votes != clientSongs[i].votes){
+                                    changes = true;
+                                    break;
+                                }
+                            }
                         }
                         if(changes){
                             res.status(200).send({'songs' : station.songs});
                         }
-                            
-                        else if(count < 15){
+                        else if(count < 7){
                             setTimeout(
                                 function(){
                                     count++;
