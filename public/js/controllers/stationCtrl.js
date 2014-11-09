@@ -43,7 +43,7 @@ app.controller('stationCtrl', [
         function setCurrentSong(song){
                 $scope.currentSong.title = song.title;
                 $scope.currentSong.artist = song.artist;
-                $scope.currentSong.artwork = song.artwork;
+                $scope.currentSong.artwork = getLargeArtwork(song.artwork);
                 $scope.currentSong.songId = song.songId;
         }
 
@@ -215,6 +215,15 @@ app.controller('stationCtrl', [
         $scope.play = function(){
             currentTrack.play();
             $scope.isPlaying = false;
+        };
+        
+        var getLargeArtwork = function(artworkString){
+            if(artworkString){
+                var split = artworkString.split('large.jpg');
+                var largeURL = split[0] += 't300x300.jpg';
+                return largeURL;
+            }
+            return undefined;
         };
         
         $scope.voteUp = function(index){
