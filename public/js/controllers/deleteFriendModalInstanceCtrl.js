@@ -14,19 +14,13 @@ app.controller('deleteFriendModalInstanceCtrl', [
         };
 
         $scope.ok = function () {
+            
             $modalInstance.close($scope.selected.item);
             for(var i = 0; i < $scope.items.length;i++){
                 if($scope.items[i].selected==true){
-                    var Station = {
-                        stationName : stationName,
-                        type : stationType,
-                        staionId : stationId,
-                        userId : $scope.items[i].id
-                    };
-                    $http.get('/friendRemoveStation/'+$scope.items[i].id+'/'+staionId+'').
+                    $http.get('/friendRemoveStation/'+$scope.items[i].id+'/'+stationId+'').
                         success(
                             function(data, status){
-                                console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
                             }
                         ).
                         error(

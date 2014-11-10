@@ -121,7 +121,7 @@ app.controller('homeCtrl', [
               if(deleted){
                     var btn = $(this);
                     btn.button('loading');
-                    $http.get('/removeStation/' + station._id+'/'+ $scope.userId +'/'+station.type).
+                    $http.get('/removeStation/' + station._id+'/'+ $scope.userId ).
                     success(
                         function (data,status){ 
                             var index = $scope.stations.indexOf(station);

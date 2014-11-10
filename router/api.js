@@ -322,29 +322,32 @@ module.exports = function RequestsHandler(db){
     };
 
     this.friendRemoveStation= function(req, res){
-        var query = { _id :req.params.userId };
+        console.log(req.params);
+         
+        var query = { _id : req.params.userId };
         var update = null;
         update = {
             $pull : {
-                stations : {_id :  req.params.stationId}
+                stations : {_id :   new ObjectID.createFromHexString(req.params.stationId)}
             }
         };
-    
         db.collection('users').update(query,update,
             function(err, updated){
                 if(err){
                     res.status(500).send({'err' : err});
                 }
                 else if(updated){
-                    res.status(200).send({'removeStation' : "ok"});
+                    //res.status(200).send({'removeStation' : "ok"});
+                    console.log("removeStation");
                 }
                 else{
                     res.status(404).send({'err' : 'station wasn´t remove.'});
                 }
+
             }
          );
 
-       var query2 = { _id :  new ObjectID.createFromHexString(req.params.stationId) };
+        var query2 = { _id :  new ObjectID.createFromHexString(req.params.stationId) };
         var update2 = null;
         update2 = { $pull : {   users : req.params.userId  }
                };
@@ -355,8 +358,8 @@ module.exports = function RequestsHandler(db){
                     res.status(500).send({'err' : err});
                 }
                 else if(updated){
-                    res.status(200).send({'removeUser' : "ok"});
                     console.log("removeUser");
+                    res.status(200).send({'removeUser' : "ok"});
                 }
                 else{
                     res.status(404).send({'err' : 'station wasn´t remove.'});
@@ -364,6 +367,25 @@ module.exports = function RequestsHandler(db){
             }
          );
 
+
+    }
+
+    this.stationOwner = function(req, res){
+        var query ={
+          _id : new ObjectID.createFromHexString(req.params.stationId + '')};
+
+          db.collection('stations').findOne(query,function(err, data){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(data){
+                    console.log(data);
+                    res.status(200).send(data.owner);
+                }
+                else {
+                    res.status(404).send({'err' : 'Song not removed.'});
+                }
+            } );
     }
     
     this.removeSong = function(req, res){
@@ -395,27 +417,20 @@ module.exports = function RequestsHandler(db){
         
         var query = { _id : req.params.userId };
         var update = null;
-        if(req.params.type == "Invited."){
-            update = {
-                $pull : {
-                    stations : {_id :  req.params.stationId}
-                }
-            };
-        }else{
-            update = {
-                $pull : {
-                    stations : {_id :   new ObjectID.createFromHexString(req.params.stationId)}
-                }
-            };
-        }
+        update = {
+            $pull : {
+                stations : {_id :   new ObjectID.createFromHexString(req.params.stationId)}
+            }
+        };
+        
         db.collection('users').update(query,update,
             function(err, updated){
                 if(err){
                     res.status(500).send({'err' : err});
                 }
                 else if(updated){
-                    res.status(200).send({'removeStation' : "ok"});
-                    console.log("removeStation");
+                    //res.status(200).send({'removeStation' : "ok"});
+                    //console.log("removeStation");
                 }
                 else{
                     res.status(404).send({'err' : 'station wasn´t remove.'});
@@ -435,8 +450,8 @@ module.exports = function RequestsHandler(db){
                     res.status(500).send({'err' : err});
                 }
                 else if(updated){
+                    //console.log("removeUser");
                     res.status(200).send({'removeUser' : "ok"});
-                    console.log("removeUser");
                 }
                 else{
                     res.status(404).send({'err' : 'station wasn´t remove.'});

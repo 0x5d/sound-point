@@ -60,6 +60,10 @@
                             <span class="glyphicon glyphicon-plus" ></span>
                             <span class="glyphicon glyphicon-user" ></span>
                         </button>
+                        <button ng-hide="station.type == 'private' || !owner" ng-click="openDeleteFriendsModal()" type="button" class="btn btn-default navbar-btn">
+                            <span class="glyphicon glyphicon-minus" ></span>
+                            <span class="glyphicon glyphicon-user" ></span>
+                        </button>
                         <button ng-click="openSongSearchModal()" type="button" class="btn btn-default navbar-btn">
                             <div class="icon-add-music"></div>
                             <p class="addMusic"> Add Music </p>
