@@ -13,6 +13,7 @@ app.controller('stationCtrl', [
     '$modal',
     '$filter',
     function($scope, $http, $timeout, $stateParams, $modal, $filter){
+
         $scope.station = {
             stationId : $stateParams.stationId,
             stationName : $stateParams.stationName,
@@ -29,6 +30,7 @@ app.controller('stationCtrl', [
                     if(data.station.songs){
                         $scope.station.users = data.station.users;
                         $scope.station.invitations = data.station.invitations;
+                        //console.log(data.station.owner+'=='+$scope.userId);
                         $scope.owner = data.station.owner == $scope.userId;
                         setupSongs(data.station.songs);
                         pollSongs();
@@ -37,6 +39,7 @@ app.controller('stationCtrl', [
             )
             .error(
                 function(data, status){
+                    
                 }
             );
 
@@ -258,7 +261,8 @@ app.controller('stationCtrl', [
                                 if(response.data[i].id ==  $scope.station.invitations[j]){
                                     response.data.splice(i,1);
                                 }
-                            }for(var j = 0; j < $scope.station.users.length; j++ ){
+                            }
+                            for(var j = 0; j < $scope.station.users.length; j++ ){
                                 if(response.data[i].id ==  $scope.station.users[j]){
                                     response.data.splice(i,1);
                                 }
@@ -296,13 +300,70 @@ app.controller('stationCtrl', [
                         });
 
                         modalInstance.result.then(function (selectedItem) {
+                            
                             $scope.selected = selectedItem;
+
                         }, 
                         function () {
                         });
                     }
                 }
             );
+        };
+
+         $scope.openDeleteFriendsModal = function () {
+             FB.api(
+                "/me/friends?fields=id,name,picture",
+                function (response) {
+                    if (response && !response.error) {
+                        var friends = [];
+                        response.data.forEach(function(friend) {
+                            for(var j = 0; j < $scope.station.users.length; j++ ){
+                                if(friend.id == $scope.station.users[j]){
+                                   var obj ={
+                                        name:friend.name,
+                                        id:friend.id,
+                                        picture:friend.picture,
+                                        selected:false
+                                    };
+                                    friends.push(obj);
+                                }
+                            }
+                            
+                        });
+                        if(friends.length ==0){
+                            alert("No more users than you");
+                        }else{
+                            var modalInstance = $modal.open({
+                            templateUrl: 'fbFriendsModal.html',
+                            controller: 'deleteFriendModalInstanceCtrl',
+                            resolve: {
+                                items: function () {
+                                    return friends;
+                                },
+                                stationName : function(){
+                                    return $scope.station.stationName; 
+                                },
+                                stationId : function(){
+                                    return $scope.station.stationId; 
+                                },
+                                stationType : function(){
+                                    return $scope.station.type;
+                                }
+                            }
+                        });
+                     
+                         modalInstance.result.then(function (selectedItem) {
+                            $scope.selected = selectedItem;
+                        }, 
+                        function () {
+                        });
+                     }
+                    }
+
+                });
+              
+                
         };
 
         var pollSongs = function(){

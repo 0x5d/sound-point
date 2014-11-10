@@ -48,6 +48,8 @@ app.controller('homeCtrl', [
         }
         fbinit();
         
+        
+
         $window.fbAsyncInit = function() {
             FB.init({
                 appId: '690519131028878',
@@ -77,8 +79,12 @@ app.controller('homeCtrl', [
             }
         }
 
+        //cargar estacion
+
         $scope.goToStation = function(id, stationName, type){
+
             $state.go('station', {stationId : id, 'stationName' : stationName, 'type' : type, user:$scope.userId});
+            
         };
         
         $scope.addNewStation = function(){
@@ -115,7 +121,7 @@ app.controller('homeCtrl', [
               if(deleted){
                     var btn = $(this);
                     btn.button('loading');
-                    $http.get('/removeStation/' + station._id+'/'+ $scope.userId +'/'+station.description).
+                    $http.get('/removeStation/' + station._id+'/'+ $scope.userId ).
                     success(
                         function (data,status){ 
                             var index = $scope.stations.indexOf(station);

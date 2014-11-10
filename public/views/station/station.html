@@ -22,6 +22,10 @@
                                             <span class="glyphicon glyphicon-plus" ></span>
                                             <span class="glyphicon glyphicon-user" ></span>
                                         </button>
+                                        <button ng-hide="station.type == 'private'" ng-click=" openDeleteFriendsModal()" type="button" class="btn btn-default navbar-btn">
+                                            <span class="glyphicon glyphicon-plus" ></span>
+                                            <span class="glyphicon glyphicon-user" ></span>
+                                        </button>
                                         <button ng-click="openSongSearchModal()" type="button" class="btn btn-default navbar-btn">
                                             <span class="glyphicon glyphicon-plus" ></span>
                                             <span class="glyphicon glyphicon-music" ></span>
@@ -54,6 +58,10 @@
                      <div class="btn-group">
                         <button ng-hide="station.type == 'private'" ng-click="openFriendsModal()" type="button" class="btn btn-default navbar-btn">
                             <span class="glyphicon glyphicon-plus" ></span>
+                            <span class="glyphicon glyphicon-user" ></span>
+                        </button>
+                        <button ng-hide="station.type == 'private' || !owner" ng-click="openDeleteFriendsModal()" type="button" class="btn btn-default navbar-btn">
+                            <span class="glyphicon glyphicon-minus" ></span>
                             <span class="glyphicon glyphicon-user" ></span>
                         </button>
                         <button ng-click="openSongSearchModal()" type="button" class="btn btn-default navbar-btn">
@@ -154,6 +162,8 @@
             </script>
         </div>
         
+        
+
         <div>
             <script type="text/ng-template" id="songSearchModal.html">
                 <div class="modal-header">
