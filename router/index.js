@@ -11,6 +11,7 @@ module.exports = function(app, db){
     app.post('/invite', reqHandler.invite); 
     app.post('removeUser', reqHandler.removeUser);
     app.get('/home/:userId', reqHandler.getStationsByUser);
+    app.get('/public/:userId', reqHandler.getPublicStationsByUser);
     app.get('/station/:stationId', reqHandler.getStationById);
     app.get('/invitation/:userId/:loaded',reqHandler.pollInvitation);
     app.get('/pollStation/:stationId/:clientSongs', reqHandler.pollSongs);

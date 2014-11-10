@@ -19,6 +19,9 @@
                         <button ng-click="addNewStation()" type="button" class="btn btn-default navbar-btn">
                             Create new <span class="glyphicon glyphicon-plus"></span>
                         </button>
+                         <button ng-click="addPublicStation()" type="button" class="btn btn-default navbar-btn">
+                            Search stations <span class="glyphicon glyphicon-plus"></span>
+                        </button>
                     </li>
                     <li>
                         <div class="dropdown">
@@ -118,4 +121,33 @@
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </script>
+       <script type="text/ng-template" id="searchStationsModal.html">
+                <div class="modal-header">
+                    <h3 class="modal-title">Select friends</h3>
+                </div>
+                <div class="modal-body">
+                    <ul class="media-list">
+                        <li class="media" ng-repeat="(i,item) in items ">  
+                            <a class="pull-left" href="#">
+                                 <img class="media-object" ng-src="{{item.picture.data.url}}" >
+                            </a>
+                            <div class="float left media-body">
+                                <h4 class="media-heading">{{ item.name }}</h4> 
+                                <input class="pull-right"  type="checkbox" ng-click="selectFriend(i)">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                    <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="(i, publicStation) in publicStations">
+                             <h2>{{publicStation.stationName}}</h2>
+                            <p>{{publicStation.type}} station</p>
+                            <p><button class="btn btn-default" role="button" ng-click="addSong(item)"><span class="glyphicon glyphicon-plus"></span></button></p>  
+                        </li>
+                    </ul>
+                <div class="modal-footer">
+                   <button class="btn btn-warning" ng-click="cancel()">Close</button>
+                </div>
+            </script>
 </div>
+ 
