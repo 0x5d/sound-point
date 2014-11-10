@@ -9,7 +9,7 @@ module.exports = function(app, db){
     app.post('/newSong', reqHandler.addSongToStation);
     app.post('/voteSong', reqHandler.voteSongUp);
     app.post('/invite', reqHandler.invite); 
-    app.post('removeUser', reqHandler.removeUser);
+    app.post('/removeUser', reqHandler.removeUser);
     app.get('/home/:userId', reqHandler.getStationsByUser);
     app.get('/station/:stationId', reqHandler.getStationById);
     app.get('/invitation/:userId/:loaded',reqHandler.pollInvitation);

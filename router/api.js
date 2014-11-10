@@ -25,6 +25,7 @@ module.exports = function RequestsHandler(db){
     
     //POST
     this.register = function(req, res){
+        console.log(req.body);
         var user = {
             _id : req.body.userId + '',
             email : req.body.email,
@@ -45,11 +46,12 @@ module.exports = function RequestsHandler(db){
     
     //post
     this.removeUser=function(req,res){
-       db.collection('users').remove({_id : ObjectID(req.body.userId)},function(err,result){
-            if(err){
+       db.collection('users').remove({_id : req.body.userId},
+        function(err,result){
+            if(result != 1){
                 res.status(501).send({'err' : err});
             }else{
-                console.log(result);
+                res.status(200);
             }
        });    
    };
