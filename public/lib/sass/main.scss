@@ -58,6 +58,30 @@
     font-style: italic;
 }
 
+
+
+/*Experimenting and shit--*/
+
+@media (max-width: 400px){
+
+    .navbar-brand{
+        left: 34% !important;
+    }
+
+    .back{
+
+        p{
+            visibility: hidden !important;
+        }
+    }
+
+}
+
+
+.fix-height{
+    height: 100%;
+}
+
 /*General App Styles--*/
 
 .media-list{
@@ -103,6 +127,11 @@
         box-shadow: none;
     }
 
+    .navbar-brand{
+        position: absolute;
+        left: 45.5%;
+    }
+
     li{
         /*display: inline-block;*/
     }
@@ -139,6 +168,18 @@
 
 .navbar{
     margin-bottom: 50px;
+}
+
+.dropdown.invitations.open{
+    .btn-default{
+         color:#1eb39d !important;
+        background-color: #2E2F33 !important;
+    }
+    
+
+    .dropdown-menu{
+        background-color: #2E2F33;
+    }
 }
 
 /*Modales--*/
@@ -217,10 +258,25 @@ h1{
     opacity: initial !important;
 
 }
+
+.deleteStation{
+    color:#bebebe;
+}
 /*Footer---*/
 
 .footer{
-    color:#484747;
+    color:#bebebe;
+
+    img{
+        margin-bottom: 20px;
+    }
+
+    p{
+        float: right;
+        display: inline-block;
+        margin-bottom: 0px !important;
+        padding-top: 10px;
+    }
 }
 
 /*Home Styles--*/
@@ -228,6 +284,7 @@ h1{
 .home{
 	font-family:'Lato', sans-serif;
 	background: url(../img/bg-img.png)repeat;
+    height: 100%;
 
 	.hello-bar{
 		background: #1e2228;
@@ -264,11 +321,11 @@ h1{
 			background: #1e2228;
 			border-top: 1px solid #2C3034 !important;
 			border: none;
-            padding: 12px 15px !important;
+            padding: 10px 15px !important;
             cursor: pointer;
 
             h2{
-                font-size: 17px;
+                font-size: 16px;
                 color:#cecece;
                 font-weight: 300;
                 padding: 0px !important;
@@ -280,7 +337,7 @@ h1{
             p{
                 color:#575757;
                 margin-bottom: 0px !important;
-                font-size: 13px;
+                font-size: 11px;
             }
 
             .icon-delete{
@@ -317,11 +374,13 @@ h1{
     }
 
     .back{
+        float: left;
         
         .btn-primary{
             background-color:transparent !important;
             border: none !important;
             color:#1eb39d;
+            padding-top: 13px;
         }
 
         .icon-back{
@@ -334,7 +393,23 @@ h1{
         p{
             margin-left: 28px;
             font-size: 16px;
+            color: #888;
         }
+
+    }
+
+    .back:hover{
+        .icon-back{
+            background: url(../img/icon-back-hover.png)no-repeat !important;
+            width: 25px;
+            height: 25px;
+            position: absolute;  
+        }
+
+        p{
+            color: #1eb39d !important;
+        }
+
 
     }
 

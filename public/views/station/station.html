@@ -40,6 +40,12 @@
             </div>-->
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
+            <div class="back">
+                <a data-ui-sref="home" class="btn btn-primary" role="button">
+                    <div class="icon-back"></div>
+                    <p>Back to stations</p>
+                </a> 
+            </div>
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -76,12 +82,6 @@
         </div>
     </nav>
         <div class="container">
-            <div class="back">
-                <a data-ui-sref="home" class="btn btn-primary" role="button">
-                    <div class="icon-back"></div>
-                    <p>Back to stations</p>
-                </a> 
-            </div>
             <hr>
             <div class="jumbotron">
                 <div class="img-song" ng-style="{'background-image': 'url(' + currentSong.artwork + ')', 'background-repeat' : 'no-repeat'}"> </div>
@@ -129,18 +129,19 @@
             </ul>
             <hr>
             <div class="footer">
-              <p>© Soundpoint 2014</p>
               <a href="http://www.soundcloud.com">
                   <img
                       src="https://developers.soundcloud.com/assets/powered_by_white-7ee4327cfbe5d678897edf6b6c5dd30f.png"
                       alt="Powered by Soundcloud">
               </a>
+              <p>© Soundpoint 2014</p>
+
             </div>
 
         </div> <!-- /container -->
 
         <div>
-            <script type="text/ng-template" id="fbFriendsModal.html">
+            <script type="text/ng-template" id="fbFriendsdo.html">
                 <div class="modal-header">
                     <h3 class="modal-title">Select friends</h3>
                 </div>
