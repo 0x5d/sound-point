@@ -56,25 +56,35 @@
   height: 100%;
 }
 
+/* line 85, ../sass/main.scss */
+html {
+  height: 100%;
+}
+
+/* line 89, ../sass/main.scss */
+body {
+  height: 100%;
+}
+
 /*General App Styles--*/
-/* line 87, ../sass/main.scss */
+/* line 94, ../sass/main.scss */
 .media-list {
   margin-top: 30px;
 }
 
-/* line 91, ../sass/main.scss */
+/* line 98, ../sass/main.scss */
 .addnewSong {
   background-color: #1e2228;
   border: none;
 }
 
-/* line 96, ../sass/main.scss */
+/* line 103, ../sass/main.scss */
 .addnewSong:hover {
   background-color: #1e2228;
   border: none;
 }
 
-/* line 101, ../sass/main.scss */
+/* line 108, ../sass/main.scss */
 .icon-add {
   background: url(../img/icon-add.png) no-repeat;
   width: 25px;
@@ -82,41 +92,41 @@
 }
 
 /*Navigation--*/
-/* line 109, ../sass/main.scss */
+/* line 116, ../sass/main.scss */
 .navbar-default {
   background-color: rgba(255, 255, 255, 0.07);
   border: none;
 }
-/* line 113, ../sass/main.scss */
+/* line 120, ../sass/main.scss */
 .navbar-default .navbar-toggle {
   border: none;
   background-color: transparent !important;
 }
-/* line 120, ../sass/main.scss */
+/* line 127, ../sass/main.scss */
 .navbar-default .navbar-toggle:hover .icon-bar {
   background-color: #1eb39d;
 }
-/* line 125, ../sass/main.scss */
+/* line 132, ../sass/main.scss */
 .navbar-default .navbar-collapse {
   border: none;
   box-shadow: none;
 }
-/* line 130, ../sass/main.scss */
+/* line 137, ../sass/main.scss */
 .navbar-default .navbar-brand {
   position: absolute;
   left: 45.5%;
 }
-/* line 135, ../sass/main.scss */
+/* line 142, ../sass/main.scss */
 .navbar-default li {
   /*display: inline-block;*/
 }
-/* line 139, ../sass/main.scss */
+/* line 146, ../sass/main.scss */
 .navbar-default .btn-default {
   background-color: transparent;
   border: none;
   color: #1eb39d;
 }
-/* line 145, ../sass/main.scss */
+/* line 152, ../sass/main.scss */
 .navbar-default .icon-add {
   background: url(../img/icon-add.png) no-repeat;
   width: 25px;
@@ -124,7 +134,7 @@
   position: absolute;
   top: 12px;
 }
-/* line 153, ../sass/main.scss */
+/* line 160, ../sass/main.scss */
 .navbar-default .icon-dropdown {
   background: url(../img/icon-dropdown.png) no-repeat;
   background-size: 91%;
@@ -133,44 +143,44 @@
   position: absolute;
   top: 14px;
 }
-/* line 163, ../sass/main.scss */
+/* line 170, ../sass/main.scss */
 .navbar-default p {
   margin-bottom: 0px;
   margin-left: 30px;
 }
 
-/* line 169, ../sass/main.scss */
+/* line 176, ../sass/main.scss */
 .navbar {
   margin-bottom: 50px;
 }
 
-/* line 174, ../sass/main.scss */
+/* line 181, ../sass/main.scss */
 .dropdown.invitations.open .btn-default {
   color: #1eb39d !important;
   background-color: #2E2F33 !important;
 }
-/* line 180, ../sass/main.scss */
+/* line 187, ../sass/main.scss */
 .dropdown.invitations.open .dropdown-menu {
   background-color: #2E2F33;
 }
 
 /*Modales--*/
-/* line 187, ../sass/main.scss */
+/* line 194, ../sass/main.scss */
 .modal-content {
   background-color: #2E2F33;
 }
-/* line 190, ../sass/main.scss */
+/* line 197, ../sass/main.scss */
 .modal-content input {
   background: transparent;
   border: 1px solid #1eb39d;
   color: #e7e7e7;
 }
-/* line 197, ../sass/main.scss */
+/* line 204, ../sass/main.scss */
 .modal-content .dropdown a {
   color: #bebebe;
 }
 
-/* line 203, ../sass/main.scss */
+/* line 210, ../sass/main.scss */
 .modal-title {
   color: #1eb39d;
   font-weight: 300;
@@ -178,52 +188,52 @@
   font-family: 'Lato';
 }
 
-/* line 210, ../sass/main.scss */
+/* line 217, ../sass/main.scss */
 .modal-header {
   border-bottom: none;
 }
 
-/* line 215, ../sass/main.scss */
+/* line 222, ../sass/main.scss */
 .modal-body .dropdown-menu {
   color: #bebebe;
   background-color: #383A3F;
   padding: 10px;
 }
 
-/* line 222, ../sass/main.scss */
+/* line 229, ../sass/main.scss */
 .modal-footer {
   border: none;
 }
-/* line 225, ../sass/main.scss */
+/* line 232, ../sass/main.scss */
 .modal-footer .btn-primary {
   background-color: #1eb39d;
   border: none;
 }
 
-/* line 231, ../sass/main.scss */
+/* line 238, ../sass/main.scss */
 h1 {
   font-size: 50px;
 }
 
-/* line 235, ../sass/main.scss */
+/* line 242, ../sass/main.scss */
 .media-heading {
   color: #bebebe;
   font-weight: 300;
 }
 
-/* line 240, ../sass/main.scss */
+/* line 247, ../sass/main.scss */
 .song-search {
   width: 76%;
 }
 
-/* line 244, ../sass/main.scss */
+/* line 251, ../sass/main.scss */
 .btn-default.search {
   color: #fff;
   background-color: #1eb39d;
   border: none;
 }
 
-/* line 250, ../sass/main.scss */
+/* line 257, ../sass/main.scss */
 .close {
   background: url(../img/icon-delete.png) no-repeat;
   background-size: 80%;
@@ -235,21 +245,21 @@ h1 {
   opacity: initial !important;
 }
 
-/* line 262, ../sass/main.scss */
+/* line 269, ../sass/main.scss */
 .deleteStation {
   color: #bebebe;
 }
 
 /*Footer---*/
-/* line 267, ../sass/main.scss */
+/* line 274, ../sass/main.scss */
 .footer {
   color: #bebebe;
 }
-/* line 270, ../sass/main.scss */
+/* line 277, ../sass/main.scss */
 .footer img {
   margin-bottom: 20px;
 }
-/* line 274, ../sass/main.scss */
+/* line 281, ../sass/main.scss */
 .footer p {
   float: right;
   display: inline-block;
@@ -258,40 +268,40 @@ h1 {
 }
 
 /*Home Styles--*/
-/* line 284, ../sass/main.scss */
+/* line 291, ../sass/main.scss */
 .home {
   font-family: 'Lato', sans-serif;
   background: url(../img/bg-img.png) repeat;
   height: 100%;
   /*Editing bootstrap style classes---*/
 }
-/* line 289, ../sass/main.scss */
+/* line 296, ../sass/main.scss */
 .home .hello-bar {
   background: #1e2228;
   text-align: center;
 }
-/* line 293, ../sass/main.scss */
+/* line 300, ../sass/main.scss */
 .home .hello-bar h1 {
   font-family: 'League Gothic';
   text-transform: uppercase;
   color: #1eb39d;
   margin-bottom: -6px;
 }
-/* line 300, ../sass/main.scss */
+/* line 307, ../sass/main.scss */
 .home .hello-bar p {
   color: #bebebe;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
 }
-/* line 310, ../sass/main.scss */
+/* line 317, ../sass/main.scss */
 .home .list-group-item:first-child, .home .list-group-item:last-child {
   border-radius: 0;
 }
-/* line 314, ../sass/main.scss */
+/* line 321, ../sass/main.scss */
 .home .list-group-item:first-child {
   border-top: none !important;
 }
-/* line 320, ../sass/main.scss */
+/* line 327, ../sass/main.scss */
 .home .station-list li {
   background: #1e2228;
   border-top: 1px solid #2C3034 !important;
@@ -299,7 +309,7 @@ h1 {
   padding: 10px 15px !important;
   cursor: pointer;
 }
-/* line 327, ../sass/main.scss */
+/* line 334, ../sass/main.scss */
 .home .station-list li h2 {
   font-size: 16px;
   color: #cecece;
@@ -308,13 +318,13 @@ h1 {
   margin: 0px !important;
   display: inline-block;
 }
-/* line 337, ../sass/main.scss */
+/* line 344, ../sass/main.scss */
 .home .station-list li p {
   color: #575757;
   margin-bottom: 0px !important;
   font-size: 11px;
 }
-/* line 343, ../sass/main.scss */
+/* line 350, ../sass/main.scss */
 .home .station-list li .icon-delete {
   background: url(../img/icon-delete.png) no-repeat;
   background-size: 70%;
@@ -328,120 +338,120 @@ h1 {
 }
 
 /*Station Styles--*/
-/* line 361, ../sass/main.scss */
+/* line 368, ../sass/main.scss */
 .station {
   font-family: 'Lato', sans-serif;
   background: url(../img/bg-img.png) repeat;
   /*Song Part-- Be Carefull :c --*/
 }
-/* line 365, ../sass/main.scss */
+/* line 372, ../sass/main.scss */
 .station .icon-add-music {
   background: url(../img/icon-add-music.png) repeat;
   width: 47px;
   height: 25px;
   position: absolute;
 }
-/* line 372, ../sass/main.scss */
+/* line 379, ../sass/main.scss */
 .station .addMusic {
   margin-left: 54px;
 }
-/* line 376, ../sass/main.scss */
+/* line 383, ../sass/main.scss */
 .station .back {
   float: left;
 }
-/* line 379, ../sass/main.scss */
+/* line 386, ../sass/main.scss */
 .station .back .btn-primary {
   background-color: transparent !important;
   border: none !important;
   color: #1eb39d;
   padding-top: 13px;
 }
-/* line 386, ../sass/main.scss */
+/* line 393, ../sass/main.scss */
 .station .back .icon-back {
   background: url(../img/icon-back.png) no-repeat !important;
   width: 25px;
   height: 25px;
   position: absolute;
 }
-/* line 393, ../sass/main.scss */
+/* line 400, ../sass/main.scss */
 .station .back p {
   margin-left: 28px;
   font-size: 16px;
   color: #888;
 }
-/* line 402, ../sass/main.scss */
+/* line 409, ../sass/main.scss */
 .station .back:hover .icon-back {
   background: url(../img/icon-back-hover.png) no-repeat !important;
   width: 25px;
   height: 25px;
   position: absolute;
 }
-/* line 409, ../sass/main.scss */
+/* line 416, ../sass/main.scss */
 .station .back:hover p {
   color: #1eb39d !important;
 }
-/* line 416, ../sass/main.scss */
+/* line 423, ../sass/main.scss */
 .station hr {
   border: none;
 }
-/* line 422, ../sass/main.scss */
+/* line 429, ../sass/main.scss */
 .station .jumbotron {
   background-color: #1e2228;
 }
-/* line 425, ../sass/main.scss */
+/* line 432, ../sass/main.scss */
 .station .jumbotron h1 {
   color: #cecece;
 }
-/* line 429, ../sass/main.scss */
+/* line 436, ../sass/main.scss */
 .station .jumbotron .lead {
   color: #575757;
 }
-/* line 433, ../sass/main.scss */
+/* line 440, ../sass/main.scss */
 .station .jumbotron .btn-default {
   background-color: #1eb39d;
   border: none;
 }
-/* line 437, ../sass/main.scss */
+/* line 444, ../sass/main.scss */
 .station .jumbotron .btn-default span {
   color: #1e2228;
 }
-/* line 442, ../sass/main.scss */
+/* line 449, ../sass/main.scss */
 .station .jumbotron .forward {
   background: url(../img/icon-next.png) no-repeat;
   width: 50px;
   height: 50px;
 }
-/* line 448, ../sass/main.scss */
+/* line 455, ../sass/main.scss */
 .station .jumbotron .play {
   background: url(../img/icon-play.png) no-repeat;
   width: 50px;
   height: 50px;
 }
-/* line 454, ../sass/main.scss */
+/* line 461, ../sass/main.scss */
 .station .jumbotron .pause {
   background: url(../img/icon-pause.png) no-repeat;
   width: 50px;
   height: 50px;
 }
-/* line 460, ../sass/main.scss */
+/* line 467, ../sass/main.scss */
 .station .jumbotron .btn-lg {
   padding: 10px 12px !important;
   margin-left: 5px;
 }
-/* line 468, ../sass/main.scss */
+/* line 475, ../sass/main.scss */
 .station .img-song {
   height: 300px;
   width: 300px;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 477, ../sass/main.scss */
+/* line 484, ../sass/main.scss */
 .station .media .text-center {
   color: #727272;
   margin-top: 13px;
 }
 
-/* line 486, ../sass/main.scss */
+/* line 493, ../sass/main.scss */
 .navbar-wrapper .container {
   padding: 0px !important;
 }
