@@ -61,36 +61,45 @@ describe('user',function(){
                 
             });
     });
+    
     describe('findUser',function(){
-         var user =  JSON.stringify({
+         var user =  {
                     userId: '1234prueba',
                     email: 'prueba',
                     username: 'prueba'
-                }); 
+                }; 
         before(function(done){
             
-            http.post('http://localhost:8888/register',{userId: '1234prueba',
+            /*http.post('http://localhost:8888/register',{userId: '1234prueba',
                     email: 'prueba',
                     username: 'prueba'}, function(res){
                 console.log(res.body);
                 done();
-            });
-            /*var options = {
-                url: 'http://localhost:8888',
-                path: '/register',
-                method: 'POST',
-                form:user
-              };
-            auxreq.post(options, function(err,res,body) {
-                console.log(err);
-                done();
             });*/
+            var options = {
+                url: 'http://localhost:8888/register',
+                method: 'post',
+                json:user
+              };
+            auxreq(options, function(err,res,body) {
+                done();
+            });
         });//
         it('should return 200 and be a json', function(done){ 
             request('http://localhost:8888')
                 .get('/home/1234prueba')
                 .expect('Content-Type', /json/)
                 .expect(200, done);
+        });
+        after(function(done){
+            var options = {
+                url: 'http://localhost:8888/removeUser',
+                method: 'post',
+                json:user
+              };
+            auxreq(options, function(err,res,body) {
+            });
+            done();
         });
     });
 });
