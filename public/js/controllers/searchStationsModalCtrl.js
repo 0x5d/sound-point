@@ -17,7 +17,11 @@ app.controller('searchStationsModalCtrl', [
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-
+            $scope.addStation = function (station) {
+            
+               $modalInstance.close(station);
+            
+        };
         $scope.selectFriend = function(i){
             $scope.items[i].selected=!$scope.items[i].selected;
            for(var i = 0; i < $scope.items.length;i++){

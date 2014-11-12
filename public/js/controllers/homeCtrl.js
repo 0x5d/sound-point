@@ -130,10 +130,10 @@ app.controller('homeCtrl', [
                                 }
                         });
 
-            modalInstance.result.then(function () {
+            modalInstance.result.then(function (station) {
                 
-            /*    if(station.stationName){
-                    $http.post('/newStation', {station : station, userId : $scope.userId}).
+            
+                    $http.post('/joinPublicStation', {station : station, userId : $scope.userId}).
                         success(
                             function(data, status){
                                 $scope.stations.push(data);
@@ -141,10 +141,11 @@ app.controller('homeCtrl', [
                         ).
                         error(
                             function(data, status){
+                                console.error(data.err);
                             }
                         );
-                }*/
-            },
+                }
+            ,
             function () {
             });
                     }

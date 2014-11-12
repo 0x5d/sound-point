@@ -510,7 +510,37 @@ module.exports = function RequestsHandler(db){
             }
         );
     };
-    
+    this.join=function(req,res){
+      //  console.error(req.body);
+      // var joinStation=JSON.parse(req.body.station);
+        var update = {'$push' : {'stations' : req.body.station}};
+        var query = { _id : req.body.userId };
+        db.collection('users').update(query,update,function(err, updated){
+                                if(err){
+                                    res.status(500).send({'err' : err});
+                                }
+                                else{
+                                    if(updated == 1){
+                                        res.status(200).send({'updated' : updated});
+                                    }
+                                    else{
+                                        res.status(404).send({'error' : 'User not updated'});
+                                    }
+                                }
+                            }); 
+                            query = {_id:req.body.station._id};
+                            update={
+                              '$push':{
+                                users:req.params.userId
+                            }
+                        };
+                        db.collection('stations').update(query,update,
+                            function(err, updated){
+                                if(err){
+                                    
+                                }
+                            });
+    }
     this.answerInvitations = function(req,res){
         var loaded = JSON.parse(req.params.ans);
         var query = { _id : req.params.userId };

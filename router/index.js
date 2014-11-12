@@ -7,6 +7,7 @@ module.exports = function(app, db){
     app.post('/login', reqHandler.logIn);
     app.post('/newStation', reqHandler.createStation);
     app.post('/newSong', reqHandler.addSongToStation);
+    app.post('/joinPublicStation', reqHandler.join);
     app.post('/voteSong', reqHandler.voteSongUp);
     app.post('/invite', reqHandler.invite); 
     app.post('removeUser', reqHandler.removeUser);
