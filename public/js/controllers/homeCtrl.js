@@ -109,7 +109,11 @@ app.controller('homeCtrl', [
             function () {
             });
         };
-          
+        $scope.logout= function(){
+            FB.logout(function(response) {
+            window.location.replace('/index.html');
+            });
+         };  
         $scope.removeStation  = function (station) {
 
             var modalInstance = $modal.open({
@@ -154,7 +158,53 @@ app.controller('homeCtrl', [
                     }
                 );
         };
-        
+        $scope.addPublicStation = function(){
+            
+           /*station*/
+            FB.api(
+                "/me/friends?fields=id,name,picture",
+                function (response) {
+                    if (response && !response.error) {
+                        var friends = []; 
+                        response.data.forEach(function(friend) {
+                            var obj ={
+                                name:friend.name,
+                                id:friend.id,
+                                picture:friend.picture,
+                                selected:false
+                            };
+                            friends.push(obj);
+                        });
+                     var modalInstance = $modal.open({
+                templateUrl : 'searchStationsModal.html',
+                controller : 'searchStationsModalCtrl',
+                 resolve: {
+                                items: function () {
+                                    return friends;
+                                }
+                                }
+                        });
+
+            modalInstance.result.then(function (station) {
+                    $http.post('/joinPublicStation', {station : station, userId : $scope.userId}).
+                        success(
+                            function(data, status){
+                                $scope.stations.push(data);
+                            }
+                        ).
+                        error(
+                            function(data, status){
+                                console.error(data.err);
+                            }
+                        );
+                }
+            ,
+            function () {
+            });
+                    }
+                }
+                );
+        };
         $scope.answerInvitation = function(i, accepted){
             var ainv =[];
             var send = $scope.invitations[i];

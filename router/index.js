@@ -19,6 +19,8 @@ module.exports = function(app, db){
     app.get('/answer/:ans/:userId', reqHandler.answerInvitations);
     app.get('/friendRemoveStation/:userId/:stationId([0-9a-f]{24})', reqHandler.friendRemoveStation);
     app.get('/stationOwner/:stationId', reqHandler.stationOwner);
+    app.post('/joinPublicStation', reqHandler.join);  
+    app.get('/public/:userId', reqHandler.getPublicStationsByUser);
 };
 
 
