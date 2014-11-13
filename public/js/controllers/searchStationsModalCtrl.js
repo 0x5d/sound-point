@@ -3,7 +3,6 @@ app.controller('searchStationsModalCtrl', [
     '$http',
     '$modalInstance',
     'items',
-   
     function ($scope, $http, $modalInstance, items) {
         $scope.publicStations = [];
         $scope.items = items;

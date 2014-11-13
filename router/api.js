@@ -161,6 +161,31 @@ module.exports = function RequestsHandler(db){
             }
         );
     };
+    this.getPublicStationsByUser = function(req, res){
+        var query = {_id : req.params.userId + ''};
+        db.collection('users').findOne(query,
+            function(err, foundUser){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(foundUser){
+                    var stations = foundUser.stations;
+                    var publicStations=[];
+                    var cont=0;
+                    for(var i=0;i<stations.length;i++){
+                       if(stations[i].type=='public'){
+                          publicStations[cont]=stations[i];
+                          cont++;
+                       } 
+                    }
+                    res.status(200).send({'stations' : publicStations});
+                }
+                else{
+                    res.status(404).send({'err' : 'User not found.'});
+                }
+            }
+        );
+    };
     
     this.getStationById = function(req, res){
         var query = {_id : new ObjectID.createFromHexString(req.params.stationId)};
@@ -576,6 +601,7 @@ module.exports = function RequestsHandler(db){
             }
         );
     };
+
     this.getPublicStationsByUser = function(req, res){
         var query = {_id : req.params.userId + ''};
         db.collection('users').findOne(query,
@@ -601,9 +627,8 @@ module.exports = function RequestsHandler(db){
             }
         );
     };
-this.join=function(req,res){
-      //  console.error(req.body);
-      // var joinStation=JSON.parse(req.body.station);
+
+    this.join=function(req,res){
         var update = {'$push' : {'stations' : req.body.station}};
         var query = { _id : req.body.userId };
         db.collection('users').update(query,update,function(err, updated){
@@ -706,5 +731,3 @@ this.join=function(req,res){
          );
     };
 };
-
-
