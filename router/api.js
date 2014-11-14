@@ -644,18 +644,7 @@ module.exports = function RequestsHandler(db){
                                     }
                                 }
                             }); 
-                            query = {_id:req.body.station._id};
-                            update={
-                              '$push':{
-                                users:req.params.userId
-                            }
-                        };
-                        db.collection('stations').update(query,update,
-                            function(err, updated){
-                                if(err){
-                                    
-                                }
-                            });
+                     
     }
     this.answerInvitations = function(req,res){
         var loaded = JSON.parse(req.params.ans);
