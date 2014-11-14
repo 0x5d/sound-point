@@ -136,14 +136,14 @@
                             </div>
                         </li>
                     </ul>
-                </div>
                     <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="(i, publicStation) in publicStations">
+                    <li class="list-group-item" ng-repeat="(i, publicStation) in publicStations" ng-style=" {'background-color': '#1e2228', 'margin': '1px', 'border' : 'none', 'color' : '#cecece'}">
                              <h2>{{publicStation.stationName}}</h2>
                             <p>{{publicStation.type}} station</p>
-                            <p><button class="btn btn-default" role="button" ng-click="addStation(publicStation)"><span class="glyphicon glyphicon-plus"></span></button></p>  
+                            <p><button class="btn btn-default" role="button" ng-click="addStation(publicStation)" ng-style=" {'background-color': '#1e2228'}"><span class="glyphicon glyphicon-plus" ng-style=" {'color': '#1eb39d'}"></span></button></p>  
                         </li>
                     </ul>
+               </div>
                 <div class="modal-footer">
                    <button class="btn btn-warning" ng-click="cancel()">Close</button>
                 </div>
