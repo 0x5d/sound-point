@@ -452,6 +452,7 @@ module.exports = function RequestsHandler(db){
         
         db.collection('users').update(query,update,
             function(err, updated){
+                
                 if(err){
                     res.status(500).send({'err' : err});
                 }
@@ -629,7 +630,9 @@ module.exports = function RequestsHandler(db){
     };
 
     this.join=function(req,res){
-        var update = {'$push' : {'stations' : req.body.station}};
+        var station=req.body.station;
+        station._id=new ObjectID.createFromHexString(req.body.station._id);
+        var update = {'$push' : {'stations' : station}};
         var query = { _id : req.body.userId };
         db.collection('users').update(query,update,function(err, updated){
                                 if(err){
@@ -643,8 +646,7 @@ module.exports = function RequestsHandler(db){
                                         res.status(404).send({'error' : 'User not updated'});
                                     }
                                 }
-                            }); 
-                     
+                            });                 
     }
     this.answerInvitations = function(req,res){
         var loaded = JSON.parse(req.params.ans);
@@ -689,6 +691,7 @@ module.exports = function RequestsHandler(db){
                         };
                         db.collection('stations').update(query,update,
                             function(err, updated){
+                                
                                 if(err){
                                     
                                 }
