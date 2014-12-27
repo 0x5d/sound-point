@@ -1,27 +1,6 @@
 var ObjectID = require('../node_modules/mongodb').BSONPure.ObjectID;
 
 module.exports = function RequestsHandler(db){
-    //POST
-    this.logIn = function(req, res){
-        req.session.userId = req.body.userId;
-        //res.status(200).send({'login' : req.body.userId});
-        var query = {
-            _id : req.body.userId + ''
-        };
-        db.collection('users').findOne(query,
-            function(err, foundUser){
-                if(err){
-                    res.status(500).send({'err' : err});
-                }
-                else if(foundUser){
-                    res.status(200).send({'user' : foundUser});
-                }
-                else{
-                    res.status(404).send({err : 'User not found.'});
-                }
-            }
-        );
-    };
     
     //POST
     this.register = function(req, res){
@@ -39,6 +18,28 @@ module.exports = function RequestsHandler(db){
                 }
                 else{
                     res.status(200).send({'inserted' : inserted});
+                }
+            }
+        );
+    };
+    
+    //POST
+    this.logIn = function(req, res){
+        req.session.userId = req.body.userId;
+        //res.status(200).send({'login' : req.body.userId});
+        var query = {
+            _id : req.body.userId + ''
+        };
+        db.collection('users').findOne(query,
+            function(err, foundUser){
+                if(err){
+                    res.status(500).send({'err' : err});
+                }
+                else if(foundUser){
+                    res.status(200).send({'user' : foundUser});
+                }
+                else{
+                    res.status(404).send({err : 'User not found.'});
                 }
             }
         );

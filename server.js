@@ -13,7 +13,6 @@ var soundPoint = function(){
 
 	self.setupVariables = function() {
 
-
         //  Set the environment variables we need.
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || config.serverPort;
@@ -71,32 +70,31 @@ var soundPoint = function(){
     self.initialize = function() {
         self.setupVariables();
         self.setupTerminationHandlers();
-
         // Create the express server and routes.
     };
 
-	self.start = function(){
-		mongoClient.connect('mongodb://'+ self.connection_string,
-		    function(err, db){
-		        if(err){
-		                throw err;
-		        }
-		        console.log('DB up.');
+    self.start = function(){
+        mongoClient.connect('mongodb://'+ self.connection_string,
+            function(err, db){
+                if(err){
+                        throw err;
+                }
+                console.log('DB up.');
 
-    			self.app = express();
-		        http.createServer(self.app);
-		        self.app.use(express.static(__dirname + '/' + config.staticContentFolder));
-		        self.app.use(bodyParser.json());
-		        self.app.use(session({secret: 'soundpoint'}));
-		        router(self.app, db);
-		        self.app.listen(self.port, self.ipaddress, function() {
-                            console.log('%s: Node server started on %s:%d ...',
-                            Date(Date.now() ), self.ipaddress, self.port);
-        		});
-		        console.log('Server listening on port ' + self.port + '.');
-		    }
-		);
-	}
+                self.app = express();
+                http.createServer(self.app);
+                self.app.use(express.static(__dirname + '/' + config.staticContentFolder));
+                self.app.use(bodyParser.json());
+                self.app.use(session({secret: 'soundpoint'}));
+                router(self.app, db);
+                self.app.listen(self.port, self.ipaddress, function() {
+                    console.log('%s: Node server started on %s:%d ...',
+                    Date(Date.now() ), self.ipaddress, self.port);
+                });
+                console.log('Server listening on port ' + self.port + '.');
+            }
+        );
+    };
 };
 
 var sp = new soundPoint();
