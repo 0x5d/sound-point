@@ -1,0 +1,32 @@
+{
+  "name": "sound-point",
+  "version": "0.0.0",
+  "homepage": "https://github.com/castillobg/sound-point",
+  "authors": [
+    "shard"
+  ],
+  "description": "Music 4 da mazze$$",
+  "keywords": [
+    "music",
+    "life",
+    "god",
+    "42"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.9",
+    "angular-ui": "~0.4.0",
+    "jquery": "~2.1.3",
+    "bootstrap": "~3.3.1",
+    "ui-router": "~0.2.13",
+    "angular-ui-bootstrap-bower": "~0.12.0"
+  }
+}
