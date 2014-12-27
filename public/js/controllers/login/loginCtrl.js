@@ -4,6 +4,8 @@ app.controller('loginCtrl',
         function($scope){
             $scope.login = function(){
                 // Call log in service.
+                alert("Biatch");
+                
             };
         }
     ]);
