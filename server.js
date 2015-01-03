@@ -3,8 +3,6 @@ var config = require('./config.json'),
     router = require('./router'),
     http = require('http'),
     express = require('express'),
-    session = require('express-session');
-    bodyParser = require('body-parser'),
     mongoClient = require('mongodb').MongoClient;
 
 var soundPoint = function(){
@@ -84,8 +82,6 @@ var soundPoint = function(){
                 self.app = express();
                 http.createServer(self.app);
                 self.app.use(express.static(__dirname + '/' + config.staticContentFolder));
-                self.app.use(bodyParser.json());
-                self.app.use(session({secret: 'soundpoint'}));
                 router(self.app, db);
                 self.app.listen(self.port, self.ipaddress, function() {
                     console.log('%s: Node server started on %s:%d ...',
